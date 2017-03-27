@@ -1,24 +1,15 @@
 package ru.tsystems.tchallenge.service.kernel.domain.account;
 
-import java.time.Instant;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 
 import ru.tsystems.tchallenge.service.kernel.domain.account.realm.AccountRealm;
 import ru.tsystems.tchallenge.service.kernel.domain.account.status.AccountStatus;
+import ru.tsystems.tchallenge.service.kernel.domain.shared.Sequential;
 
 @Entity
-public class Account {
-
-    @Id
-    @GeneratedValue
-    @Column
-    private Long id;
+public class Account extends Sequential {
 
     @Column
     private String email;
@@ -35,52 +26,43 @@ public class Account {
     @Column
     private String secretHash;
 
-    @Column
-    private Instant createdAt;
-
-    @Column
-    private Instant modifiedAt;
-
-    public Long getId() {
-        return id;
-    }
-
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getLogin() {
         return login;
     }
 
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     public AccountRealm getRealm() {
         return realm;
+    }
+
+    public void setRealm(AccountRealm realm) {
+        this.realm = realm;
     }
 
     public AccountStatus getStatus() {
         return status;
     }
 
+    public void setStatus(AccountStatus status) {
+        this.status = status;
+    }
+
     public String getSecretHash() {
         return secretHash;
     }
 
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
-    public Instant getModifiedAt() {
-        return modifiedAt;
-    }
-
-    @PrePersist
-    protected void onCreated() {
-        this.createdAt = Instant.now();
-        this.modifiedAt = Instant.now();
-    }
-
-    @PreUpdate
-    protected void onModified() {
-        this.modifiedAt = Instant.now();
+    public void setSecretHash(String secretHash) {
+        this.secretHash = secretHash;
     }
 }

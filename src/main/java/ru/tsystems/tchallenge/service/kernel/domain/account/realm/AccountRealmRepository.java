@@ -1,10 +1,7 @@
 package ru.tsystems.tchallenge.service.kernel.domain.account.realm;
 
-import org.springframework.data.repository.Repository;
+import ru.tsystems.tchallenge.service.kernel.domain.shared.NominalRepository;
 
-public interface AccountRealmRepository extends Repository<AccountRealm, String> {
+public interface AccountRealmRepository extends NominalRepository<AccountRealm> {
 
-    AccountRealm findById(String id);
-
-    AccountRealm save(AccountRealm realm);
 }

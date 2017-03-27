@@ -1,13 +1,10 @@
 package ru.tsystems.tchallenge.service.kernel.domain.account.status;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
+
+import ru.tsystems.tchallenge.service.kernel.domain.shared.Nominal;
 
 @Entity
-public class AccountStatus {
+public class AccountStatus extends Nominal {
 
-    @Id
-    @Column
-    private String id;
 }

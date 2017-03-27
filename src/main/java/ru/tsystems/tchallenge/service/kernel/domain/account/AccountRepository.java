@@ -1,7 +1,10 @@
 package ru.tsystems.tchallenge.service.kernel.domain.account;
 
-import org.springframework.data.repository.Repository;
+import ru.tsystems.tchallenge.service.kernel.domain.shared.SequentialRepository;
 
-public interface AccountRepository extends Repository<Account, Long> {
+public interface AccountRepository extends SequentialRepository<Account> {
 
+    Account findByEmail(String email);
+
+    Account findByLogin(String login);
 }
