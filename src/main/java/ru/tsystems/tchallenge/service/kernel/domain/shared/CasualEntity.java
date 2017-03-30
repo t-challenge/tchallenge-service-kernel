@@ -7,12 +7,17 @@ import javax.persistence.MappedSuperclass;
 import ru.tsystems.tchallenge.service.kernel.utility.Generators;
 
 @MappedSuperclass
-public abstract class Casual extends Timestamped {
+public abstract class CasualEntity extends TimestampedEntity<String> {
 
     @Id
     @Column
     private String id;
 
+    protected CasualEntity() {
+
+    }
+
+    @Override
     public String getId() {
         return id;
     }

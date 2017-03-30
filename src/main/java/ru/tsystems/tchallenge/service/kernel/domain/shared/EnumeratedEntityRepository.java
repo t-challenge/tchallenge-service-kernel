@@ -5,11 +5,7 @@ import java.util.Collection;
 import org.springframework.data.repository.NoRepositoryBean;
 
 @NoRepositoryBean
-public interface NominalRepository<E extends Nominal> extends PersistentRepository<E, String> {
+public interface EnumeratedEntityRepository<E extends EnumeratedEntity> extends BaseEntityRepository<E, String> {
 
     Collection<E> findAll();
-
-    E findById(String id);
-
-    E save(E entity);
 }

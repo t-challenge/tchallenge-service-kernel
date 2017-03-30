@@ -1,21 +1,24 @@
 package ru.tsystems.tchallenge.service.kernel.domain.shared;
 
+import java.io.Serializable;
 import java.time.Instant;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
 
 import ru.tsystems.tchallenge.service.kernel.utility.Generators;
 
 @MappedSuperclass
-public abstract class Timestamped extends Persistent {
+public abstract class TimestampedEntity<ID extends Serializable> extends BaseEntity<ID> {
 
     @Column
     private Instant createdAt;
 
     @Column
     private Instant modifiedAt;
+
+    protected TimestampedEntity() {
+
+    }
 
     public Instant getCreatedAt() {
         return createdAt;
@@ -26,18 +29,16 @@ public abstract class Timestamped extends Persistent {
     }
 
     @Override
-    @PrePersist
     protected void onCreated() {
         super.onCreated();
-        Instant now = Generators.now();
-        createdAt = now;
-        modifiedAt = now;
+        Instant timestamp = Generators.now();
+        createdAt = timestamp;
+        modifiedAt = timestamp;
     }
 
     @Override
-    @PreUpdate
     protected void onModified() {
-        super.onModified();
-        modifiedAt = Generators.now();
+        super.onCreated();
+        modifiedAt = Instant.now();
     }
 }

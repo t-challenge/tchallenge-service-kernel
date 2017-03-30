@@ -6,10 +6,10 @@ import javax.persistence.ManyToOne;
 
 import ru.tsystems.tchallenge.service.kernel.domain.account.realm.AccountRealm;
 import ru.tsystems.tchallenge.service.kernel.domain.account.status.AccountStatus;
-import ru.tsystems.tchallenge.service.kernel.domain.shared.Sequential;
+import ru.tsystems.tchallenge.service.kernel.domain.shared.SequentialEntity;
 
 @Entity
-public class Account extends Sequential {
+public class Account extends SequentialEntity {
 
     @Column
     private String email;
@@ -25,6 +25,10 @@ public class Account extends Sequential {
 
     @Column
     private String secretHash;
+
+    public Account() {
+
+    }
 
     public String getEmail() {
         return email;

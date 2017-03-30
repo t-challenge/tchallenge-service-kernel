@@ -2,24 +2,30 @@ package ru.tsystems.tchallenge.service.kernel.domain.account.realm;
 
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
-import ru.tsystems.tchallenge.service.kernel.domain.shared.NominalBootstrap;
+import ru.tsystems.tchallenge.service.kernel.domain.shared.BootstrapAwareService;
+import ru.tsystems.tchallenge.service.kernel.domain.shared.EnumeratedEntityBootstrap;
 
 @Component
-@Transactional
-public class AccountRealmBootstrap extends NominalBootstrap<AccountRealm> {
+@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
+public class AccountRealmBootstrap extends EnumeratedEntityBootstrap {
+
+    @Autowired
+    private AccountRealmService accountRealmService;
 
     @Override
-    protected void collectIds(Collection<String> ids) {
-        ids.add("CANDIDATE");
-        ids.add("EMPLOYEE");
-        ids.add("ROBOT");
+    protected BootstrapAwareService<String> getService() {
+        return accountRealmService;
     }
 
     @Override
-    protected AccountRealm nominal() {
-        return new AccountRealm();
+    protected void collectProperties(Collection<String> properties) {
+        properties.add("CANDIDATE");
+        properties.add("EMPLOYEE");
+        properties.add("SYSTEM");
     }
 }

@@ -1,10 +1,8 @@
 package ru.tsystems.tchallenge.service.kernel.domain.account;
 
-import ru.tsystems.tchallenge.service.kernel.domain.shared.SequentialRepository;
+import ru.tsystems.tchallenge.service.kernel.domain.shared.OrdinalEntityRepository;
 
-public interface AccountRepository extends SequentialRepository<Account> {
-
-    Account findByEmail(String email);
+public interface AccountRepository extends OrdinalEntityRepository<Account> {
 
     Account findByLogin(String login);
 }

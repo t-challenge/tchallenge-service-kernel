@@ -5,17 +5,22 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public abstract class Nominal extends Persistent {
+public abstract class SubsequentEntity extends OrdinalEntity {
 
     @Id
     @Column
-    private String id;
+    private Long id;
 
-    public String getId() {
-        return id;
+    protected SubsequentEntity() {
+
     }
 
-    public void setId(String id) {
+    protected SubsequentEntity(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public Long getId() {
+        return id;
     }
 }

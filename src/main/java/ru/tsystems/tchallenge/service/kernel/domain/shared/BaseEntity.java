@@ -6,7 +6,13 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
 @MappedSuperclass
-public abstract class Persistent {
+public abstract class BaseEntity<ID extends Serializable> implements Serializable {
+
+    protected BaseEntity() {
+
+    }
+
+    public abstract ID getId();
 
     @PrePersist
     protected void onCreated() {

@@ -6,13 +6,18 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public abstract class Sequential extends Timestamped {
+public abstract class SequentialEntity extends OrdinalEntity {
 
     @Id
     @GeneratedValue
     @Column
     private Long id;
 
+    protected SequentialEntity() {
+
+    }
+
+    @Override
     public Long getId() {
         return id;
     }

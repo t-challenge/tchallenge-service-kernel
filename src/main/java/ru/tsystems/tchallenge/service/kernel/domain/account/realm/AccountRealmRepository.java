@@ -1,7 +1,7 @@
 package ru.tsystems.tchallenge.service.kernel.domain.account.realm;
 
-import ru.tsystems.tchallenge.service.kernel.domain.shared.NominalRepository;
+import ru.tsystems.tchallenge.service.kernel.domain.shared.EnumeratedEntityRepository;
 
-public interface AccountRealmRepository extends NominalRepository<AccountRealm> {
+public interface AccountRealmRepository extends EnumeratedEntityRepository<AccountRealm> {
 
 }

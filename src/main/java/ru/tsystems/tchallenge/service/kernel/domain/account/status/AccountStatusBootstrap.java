@@ -2,25 +2,28 @@ package ru.tsystems.tchallenge.service.kernel.domain.account.status;
 
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
-import ru.tsystems.tchallenge.service.kernel.domain.shared.NominalBootstrap;
+import ru.tsystems.tchallenge.service.kernel.domain.shared.BootstrapAwareService;
+import ru.tsystems.tchallenge.service.kernel.domain.shared.EnumeratedEntityBootstrap;
 
 @Component
-@Transactional
-public class AccountStatusBootstrap extends NominalBootstrap<AccountStatus> {
+public class AccountStatusBootstrap extends EnumeratedEntityBootstrap {
+
+    @Autowired
+    private AccountStatusService accountStatusService;
 
     @Override
-    protected void collectIds(Collection<String> ids) {
-        ids.add("CREATED");
-        ids.add("APPROVED");
-        ids.add("SUSPENDED");
-        ids.add("BLOCKED");
+    protected BootstrapAwareService<String> getService() {
+        return accountStatusService;
     }
 
     @Override
-    protected AccountStatus nominal() {
-        return new AccountStatus();
+    protected void collectProperties(Collection<String> properties) {
+        properties.add("CREATED");
+        properties.add("APPROVED");
+        properties.add("SUSPENDED");
+        properties.add("BLOCKED");
     }
 }
