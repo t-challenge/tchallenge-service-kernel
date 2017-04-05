@@ -12,10 +12,9 @@ import ru.tsystems.tchallenge.service.kernel.domain.account.Account;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountInfo;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountMapper;
 import ru.tsystems.tchallenge.service.kernel.domain.employee.role.EmployeeRole;
-import ru.tsystems.tchallenge.service.kernel.domain.shared.GenericMapper;
+import ru.tsystems.tchallenge.service.kernel.generic.GenericMapper;
 
 @Service
-@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class EmployeeMapper extends GenericMapper {
 
     @Autowired

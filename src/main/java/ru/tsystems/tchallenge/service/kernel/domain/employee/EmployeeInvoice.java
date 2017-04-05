@@ -2,7 +2,7 @@ package ru.tsystems.tchallenge.service.kernel.domain.employee;
 
 import java.util.Collection;
 
-public class EmployeeProperties {
+public class EmployeeInvoice {
 
     private String email;
     private String login;

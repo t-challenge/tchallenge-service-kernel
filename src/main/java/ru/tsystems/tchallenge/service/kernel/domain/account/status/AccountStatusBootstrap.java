@@ -5,25 +5,30 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ru.tsystems.tchallenge.service.kernel.domain.shared.BootstrapAwareService;
-import ru.tsystems.tchallenge.service.kernel.domain.shared.EnumeratedEntityBootstrap;
+import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.EnumeratedEntityBootstrap;
+import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
 
 @Component
-public class AccountStatusBootstrap extends EnumeratedEntityBootstrap {
+public class AccountStatusBootstrap extends EnumeratedEntityBootstrap<AccountStatus> {
 
     @Autowired
-    private AccountStatusService accountStatusService;
+    private AccountStatusRepository repository;
 
     @Override
-    protected BootstrapAwareService<String> getService() {
-        return accountStatusService;
+    protected void collectIds(final Collection<String> ids) {
+        ids.add("CREATED");
+        ids.add("APPROVED");
+        ids.add("SUSPENDED");
+        ids.add("BLOCKED");
     }
 
     @Override
-    protected void collectProperties(Collection<String> properties) {
-        properties.add("CREATED");
-        properties.add("APPROVED");
-        properties.add("SUSPENDED");
-        properties.add("BLOCKED");
+    protected AccountStatus enumerated(final String id) {
+        return new AccountStatus(id);
+    }
+
+    @Override
+    protected GenericEntityRepository<AccountStatus, String> getRepository() {
+        return repository;
     }
 }

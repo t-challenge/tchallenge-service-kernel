@@ -6,7 +6,7 @@ import javax.persistence.ManyToOne;
 
 import ru.tsystems.tchallenge.service.kernel.domain.account.realm.AccountRealm;
 import ru.tsystems.tchallenge.service.kernel.domain.account.status.AccountStatus;
-import ru.tsystems.tchallenge.service.kernel.domain.shared.SequentialEntity;
+import ru.tsystems.tchallenge.service.kernel.generic.entity.SequentialEntity;
 
 @Entity
 public class Account extends SequentialEntity {
@@ -34,7 +34,7 @@ public class Account extends SequentialEntity {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(final String email) {
         this.email = email;
     }
 
@@ -42,7 +42,7 @@ public class Account extends SequentialEntity {
         return login;
     }
 
-    public void setLogin(String login) {
+    public void setLogin(final String login) {
         this.login = login;
     }
 
@@ -50,7 +50,7 @@ public class Account extends SequentialEntity {
         return realm;
     }
 
-    public void setRealm(AccountRealm realm) {
+    public void setRealm(final AccountRealm realm) {
         this.realm = realm;
     }
 
@@ -58,7 +58,7 @@ public class Account extends SequentialEntity {
         return status;
     }
 
-    public void setStatus(AccountStatus status) {
+    public void setStatus(final AccountStatus status) {
         this.status = status;
     }
 
@@ -66,7 +66,7 @@ public class Account extends SequentialEntity {
         return secretHash;
     }
 
-    public void setSecretHash(String secretHash) {
+    public void setSecretHash(final String secretHash) {
         this.secretHash = secretHash;
     }
 }

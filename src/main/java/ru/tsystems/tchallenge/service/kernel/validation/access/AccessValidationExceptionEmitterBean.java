@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import org.springframework.stereotype.Service;
 
-import ru.tsystems.tchallenge.service.kernel.domain.shared.GenericService;
+import ru.tsystems.tchallenge.service.kernel.generic.GenericService;
 
 @Service
 public class AccessValidationExceptionEmitterBean extends GenericService implements AccessValidationExceptionEmitter {

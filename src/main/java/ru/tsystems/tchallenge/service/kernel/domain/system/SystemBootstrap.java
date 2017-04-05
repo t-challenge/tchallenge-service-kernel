@@ -6,49 +6,56 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ru.tsystems.tchallenge.service.kernel.domain.account.realm.AccountRealmBootstrap;
-import ru.tsystems.tchallenge.service.kernel.domain.account.status.AccountStatusBootstrap;
-import ru.tsystems.tchallenge.service.kernel.domain.shared.BootstrapAwareService;
-import ru.tsystems.tchallenge.service.kernel.domain.shared.GenericBootstrap;
+import ru.tsystems.tchallenge.service.kernel.domain.account.Account;
+import ru.tsystems.tchallenge.service.kernel.domain.account.AccountBootstrap;
+import ru.tsystems.tchallenge.service.kernel.domain.account.AccountRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.system.role.SystemRoleBootstrap;
+import ru.tsystems.tchallenge.service.kernel.domain.system.role.SystemRoleRepository;
+import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.GenericEntityBootstrap;
+import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
 
 @Component
-public class SystemBootstrap extends GenericBootstrap<SystemProperties> {
+public class SystemBootstrap extends GenericEntityBootstrap<System, Long> {
 
     @Autowired
-    private AccountRealmBootstrap accountRealmBootstrap;
+    private SystemRepository repository;
 
     @Autowired
-    private AccountStatusBootstrap accountStatusBootstrap;
+    private AccountRepository accountRepository;
 
     @Autowired
-    private SystemRoleBootstrap systemRoleBootstrap;
+    private SystemRoleRepository roleRepository;
 
     @Autowired
-    private SystemService systemService;
+    private AccountBootstrap accountBootstrap;
+
+    @Autowired
+    private SystemRoleBootstrap roleBootstrap;
 
     @Override
-    protected BootstrapAwareService<SystemProperties> getService() {
-        return systemService;
+    protected void collectEntities(final Collection<System> entities) {
+        entities.add(systemA());
     }
 
     @Override
-    protected void collectProperties(Collection<SystemProperties> systems) {
-        systems.add(systemA());
+    protected GenericEntityRepository<System, Long> getRepository() {
+        return repository;
     }
 
-    private SystemProperties systemA() {
-        return employee("system.a@some-email.com", "System A", "Some system A", "CANDIDATE_VIEWER");
+    private System systemA() {
+        return system("system.a@some-email.com", "System A", "Some system A", "CANDIDATE_VIEWER");
     }
 
-    private SystemProperties employee(String email, String title, String description, String... roles) {
-        SystemProperties systemProperties = new SystemProperties();
-        systemProperties.setEmail(email);
-        systemProperties.setLogin(email);
-        systemProperties.setSecret(email);
-        systemProperties.setTitle(title);
-        systemProperties.setDescription(description);
-        systemProperties.setRoles(Arrays.asList(roles));
-        return systemProperties;
+    private System system(final String email,
+                          final String title,
+                          final String description,
+                          final String... roles) {
+        final Account account = accountRepository.findByEmail(email);
+        final System system = new System(account.getId());
+        system.setAccount(account);
+        system.setTitle(title);
+        system.setDescription(description);
+        system.getRoles().addAll(roleRepository.findAllById(Arrays.asList(roles)));
+        return system;
     }
 }

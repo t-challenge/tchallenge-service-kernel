@@ -1,4 +1,4 @@
-package ru.tsystems.tchallenge.service.kernel.domain.shared;
+package ru.tsystems.tchallenge.service.kernel.generic.entity;
 
 import java.io.Serializable;
 import javax.persistence.MappedSuperclass;
@@ -6,9 +6,9 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
 @MappedSuperclass
-public abstract class BaseEntity<ID extends Serializable> implements Serializable {
+public abstract class GenericEntity<ID extends Serializable> implements Serializable {
 
-    protected BaseEntity() {
+    public GenericEntity() {
 
     }
 

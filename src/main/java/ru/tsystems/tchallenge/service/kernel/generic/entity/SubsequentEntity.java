@@ -1,4 +1,4 @@
-package ru.tsystems.tchallenge.service.kernel.domain.shared;
+package ru.tsystems.tchallenge.service.kernel.generic.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -15,7 +15,7 @@ public abstract class SubsequentEntity extends OrdinalEntity {
 
     }
 
-    protected SubsequentEntity(Long id) {
+    public SubsequentEntity(final Long id) {
         this.id = id;
     }
 

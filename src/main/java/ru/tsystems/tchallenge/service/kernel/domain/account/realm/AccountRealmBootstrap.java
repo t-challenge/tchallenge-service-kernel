@@ -3,29 +3,31 @@ package ru.tsystems.tchallenge.service.kernel.domain.account.realm;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
-import ru.tsystems.tchallenge.service.kernel.domain.shared.BootstrapAwareService;
-import ru.tsystems.tchallenge.service.kernel.domain.shared.EnumeratedEntityBootstrap;
+import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.EnumeratedEntityBootstrap;
+import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
 
 @Component
-@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class AccountRealmBootstrap extends EnumeratedEntityBootstrap {
+public class AccountRealmBootstrap extends EnumeratedEntityBootstrap<AccountRealm> {
 
     @Autowired
-    private AccountRealmService accountRealmService;
+    private AccountRealmRepository repository;
 
     @Override
-    protected BootstrapAwareService<String> getService() {
-        return accountRealmService;
+    protected void collectIds(final Collection<String> ids) {
+        ids.add("CANDIDATE");
+        ids.add("EMPLOYEE");
+        ids.add("SYSTEM");
     }
 
     @Override
-    protected void collectProperties(Collection<String> properties) {
-        properties.add("CANDIDATE");
-        properties.add("EMPLOYEE");
-        properties.add("SYSTEM");
+    protected AccountRealm enumerated(final String id) {
+        return new AccountRealm(id);
+    }
+
+    @Override
+    protected GenericEntityRepository<AccountRealm, String> getRepository() {
+        return repository;
     }
 }

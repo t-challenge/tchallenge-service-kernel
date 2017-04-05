@@ -4,23 +4,19 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
 import ru.tsystems.tchallenge.service.kernel.domain.account.Account;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountInfo;
-import ru.tsystems.tchallenge.service.kernel.domain.account.AccountProperties;
+import ru.tsystems.tchallenge.service.kernel.domain.account.AccountInvoice;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountService;
 import ru.tsystems.tchallenge.service.kernel.domain.employee.role.EmployeeRole;
 import ru.tsystems.tchallenge.service.kernel.domain.employee.role.EmployeeRoleRepository;
-import ru.tsystems.tchallenge.service.kernel.domain.shared.BootstrapAwareService;
-import ru.tsystems.tchallenge.service.kernel.domain.shared.GenericService;
+import ru.tsystems.tchallenge.service.kernel.generic.GenericService;
 
 @Service
-@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class EmployeeService extends GenericService implements BootstrapAwareService<EmployeeProperties> {
+public class EmployeeService extends GenericService {
 
     @Autowired
     private AccountRepository accountRepository;
@@ -37,13 +33,7 @@ public class EmployeeService extends GenericService implements BootstrapAwareSer
     @Autowired
     private AccountService accountService;
 
-    @Override
-    public EmployeeInfo bootstrap(EmployeeProperties employeeProperties) {
-        bootstrapAccount(employeeProperties);
-        return save(fromProperties(employeeProperties));
-    }
-
-    public EmployeeInfo create(EmployeeProperties employeeProperties) {
+    public EmployeeInfo create(EmployeeInvoice employeeProperties) {
         createAccount(employeeProperties);
         return save(fromProperties(employeeProperties));
     }
@@ -60,11 +50,7 @@ public class EmployeeService extends GenericService implements BootstrapAwareSer
         return info(byLogin(login));
     }
 
-    private AccountInfo bootstrapAccount(EmployeeProperties employeeProperties) {
-        return accountService.bootstrap(accountProperties(employeeProperties));
-    }
-
-    private AccountInfo createAccount(EmployeeProperties employeeProperties) {
+    private AccountInfo createAccount(EmployeeInvoice employeeProperties) {
         return accountService.create(accountProperties(employeeProperties));
     }
 
@@ -80,7 +66,7 @@ public class EmployeeService extends GenericService implements BootstrapAwareSer
         return employeeMapper.employeeInfo(employee);
     }
 
-    private Employee fromProperties(EmployeeProperties employeeProperties) {
+    private Employee fromProperties(EmployeeInvoice employeeProperties) {
         Account account = accountByLogin(employeeProperties.getLogin());
         Employee employee = new Employee(account.getId());
         employee.setAccount(account);
@@ -94,8 +80,8 @@ public class EmployeeService extends GenericService implements BootstrapAwareSer
         return accountRepository.findByLogin(login);
     }
 
-    private AccountProperties accountProperties(EmployeeProperties employeeProperties) {
-        AccountProperties accountProperties = new AccountProperties();
+    private AccountInvoice accountProperties(EmployeeInvoice employeeProperties) {
+        AccountInvoice accountProperties = new AccountInvoice();
         accountProperties.setEmail(employeeProperties.getEmail());
         accountProperties.setLogin(employeeProperties.getLogin());
         accountProperties.setSecret(employeeProperties.getSecret());

@@ -1,4 +1,4 @@
-package ru.tsystems.tchallenge.service.kernel.domain.shared;
+package ru.tsystems.tchallenge.service.kernel.generic.entity;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -13,7 +13,7 @@ public abstract class SequentialEntity extends OrdinalEntity {
     @Column
     private Long id;
 
-    protected SequentialEntity() {
+    public SequentialEntity() {
 
     }
 

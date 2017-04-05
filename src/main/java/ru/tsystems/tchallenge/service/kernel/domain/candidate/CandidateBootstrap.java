@@ -5,44 +5,46 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ru.tsystems.tchallenge.service.kernel.domain.account.realm.AccountRealmBootstrap;
-import ru.tsystems.tchallenge.service.kernel.domain.account.status.AccountStatusBootstrap;
-import ru.tsystems.tchallenge.service.kernel.domain.shared.BootstrapAwareService;
-import ru.tsystems.tchallenge.service.kernel.domain.shared.GenericBootstrap;
+import ru.tsystems.tchallenge.service.kernel.domain.account.Account;
+import ru.tsystems.tchallenge.service.kernel.domain.account.AccountBootstrap;
+import ru.tsystems.tchallenge.service.kernel.domain.account.AccountRepository;
+import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.GenericEntityBootstrap;
+import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
 
 @Component
-public class CandidateBootstrap extends GenericBootstrap<CandidateProperties> {
+public class CandidateBootstrap extends GenericEntityBootstrap<Candidate, Long> {
 
     @Autowired
-    private AccountRealmBootstrap accountRealmBootstrap;
+    private CandidateRepository repository;
 
     @Autowired
-    private AccountStatusBootstrap accountStatusBootstrap;
+    private AccountRepository accountRepository;
 
     @Autowired
-    private CandidateService candidateService;
+    private AccountBootstrap accountBootstrap;
 
     @Override
-    protected BootstrapAwareService<CandidateProperties> getService() {
-        return candidateService;
+    protected void collectEntities(Collection<Candidate> entities) {
+        entities.add(sidorov());
     }
 
     @Override
-    protected void collectProperties(Collection<CandidateProperties> candidates) {
-        candidates.add(sidorov());
+    protected GenericEntityRepository<Candidate, Long> getRepository() {
+        return repository;
     }
 
-    private CandidateProperties sidorov() {
+    private Candidate sidorov() {
         return candidate("egor.sidorov@some-email.com", "Егор", "Сидоров");
     }
 
-    private CandidateProperties candidate(String email, String firstname, String lastname) {
-        CandidateProperties candidateProperties = new CandidateProperties();
-        candidateProperties.setEmail(email);
-        candidateProperties.setLogin(email);
-        candidateProperties.setSecret(email);
-        candidateProperties.setFirstname(firstname);
-        candidateProperties.setLastname(lastname);
-        return candidateProperties;
+    private Candidate candidate(final String email,
+                                final String firstname,
+                                final String lastname) {
+        final Account account = accountRepository.findByEmail(email);
+        Candidate candidate = new Candidate(account.getId());
+        candidate.setAccount(account);
+        candidate.setFirstname(firstname);
+        candidate.setLastname(lastname);
+        return candidate;
     }
 }

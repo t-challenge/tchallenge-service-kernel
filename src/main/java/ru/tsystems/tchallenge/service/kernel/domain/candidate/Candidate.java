@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 import ru.tsystems.tchallenge.service.kernel.domain.account.Account;
-import ru.tsystems.tchallenge.service.kernel.domain.shared.SubsequentEntity;
+import ru.tsystems.tchallenge.service.kernel.generic.entity.SubsequentEntity;
 
 @Entity
 public class Candidate extends SubsequentEntity {

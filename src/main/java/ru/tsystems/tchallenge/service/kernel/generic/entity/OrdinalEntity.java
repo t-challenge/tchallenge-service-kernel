@@ -1,11 +1,11 @@
-package ru.tsystems.tchallenge.service.kernel.domain.shared;
+package ru.tsystems.tchallenge.service.kernel.generic.entity;
 
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
 public abstract class OrdinalEntity extends TimestampedEntity<Long> {
 
-    protected OrdinalEntity() {
+    public OrdinalEntity() {
 
     }
 }

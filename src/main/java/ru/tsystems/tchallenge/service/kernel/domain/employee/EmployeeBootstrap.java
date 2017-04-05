@@ -6,54 +6,61 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ru.tsystems.tchallenge.service.kernel.domain.account.realm.AccountRealmBootstrap;
-import ru.tsystems.tchallenge.service.kernel.domain.account.status.AccountStatusBootstrap;
+import ru.tsystems.tchallenge.service.kernel.domain.account.Account;
+import ru.tsystems.tchallenge.service.kernel.domain.account.AccountBootstrap;
+import ru.tsystems.tchallenge.service.kernel.domain.account.AccountRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.employee.role.EmployeeRoleBootstrap;
-import ru.tsystems.tchallenge.service.kernel.domain.shared.BootstrapAwareService;
-import ru.tsystems.tchallenge.service.kernel.domain.shared.GenericBootstrap;
+import ru.tsystems.tchallenge.service.kernel.domain.employee.role.EmployeeRoleRepository;
+import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.GenericEntityBootstrap;
+import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
 
 @Component
-public class EmployeeBootstrap extends GenericBootstrap<EmployeeProperties> {
+public class EmployeeBootstrap extends GenericEntityBootstrap<Employee, Long> {
 
     @Autowired
-    private AccountRealmBootstrap accountRealmBootstrap;
+    private EmployeeRepository repository;
 
     @Autowired
-    private AccountStatusBootstrap accountStatusBootstrap;
+    private AccountRepository accountRepository;
+
+    @Autowired
+    private EmployeeRoleRepository roleRepository;
+
+    @Autowired
+    private AccountBootstrap accountBootstrap;
 
     @Autowired
     private EmployeeRoleBootstrap roleBootstrap;
 
-    @Autowired
-    private EmployeeService employeeService;
-
     @Override
-    protected BootstrapAwareService<EmployeeProperties> getService() {
-        return employeeService;
-    }
-
-    @Override
-    protected void collectProperties(Collection<EmployeeProperties> employees) {
+    protected void collectEntities(final Collection<Employee> employees) {
         employees.add(petrov());
         employees.add(kuznetcov());
     }
 
-    private EmployeeProperties petrov() {
+    @Override
+    protected GenericEntityRepository<Employee, Long> getRepository() {
+        return repository;
+    }
+
+    private Employee petrov() {
         return employee("ivan.petrov@some-email.com", "Иван", "Петров", "EVENT_MODERATOR");
     }
 
-    private EmployeeProperties kuznetcov() {
+    private Employee kuznetcov() {
         return employee("sergei.kuznetcov@some-email.com", "Сергей", "Кузнетцов", "TASK_MODERATOR");
     }
 
-    private EmployeeProperties employee(String email, String firstname, String lastname, String... roles) {
-        EmployeeProperties employeeProperties = new EmployeeProperties();
-        employeeProperties.setEmail(email);
-        employeeProperties.setLogin(email);
-        employeeProperties.setSecret(email);
-        employeeProperties.setFirstname(firstname);
-        employeeProperties.setLastname(lastname);
-        employeeProperties.setRoles(Arrays.asList(roles));
-        return employeeProperties;
+    private Employee employee(final String email,
+                              final String firstname,
+                              final String lastname,
+                              final String... roles) {
+        final Account account = accountRepository.findByEmail(email);
+        Employee employee = new Employee(account.getId());
+        employee.setAccount(account);
+        employee.setFirstname(firstname);
+        employee.setLastname(lastname);
+        employee.getRoles().addAll(roleRepository.findAllById(Arrays.asList(roles)));
+        return employee;
     }
 }

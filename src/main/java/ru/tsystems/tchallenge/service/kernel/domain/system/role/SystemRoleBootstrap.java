@@ -5,22 +5,27 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import ru.tsystems.tchallenge.service.kernel.domain.shared.BootstrapAwareService;
-import ru.tsystems.tchallenge.service.kernel.domain.shared.EnumeratedEntityBootstrap;
+import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.EnumeratedEntityBootstrap;
+import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
 
 @Component
-public class SystemRoleBootstrap extends EnumeratedEntityBootstrap {
+public class SystemRoleBootstrap extends EnumeratedEntityBootstrap<SystemRole> {
 
     @Autowired
-    private SystemRoleService systemRoleService;
+    private SystemRoleRepository repository;
 
     @Override
-    protected BootstrapAwareService<String> getService() {
-        return systemRoleService;
+    protected void collectIds(final Collection<String> ids) {
+        ids.add("CANDIDATE_VIEWER");
     }
 
     @Override
-    protected void collectProperties(Collection<String> ids) {
-        ids.add("CANDIDATE_VIEWER");
+    protected SystemRole enumerated(final String id) {
+        return new SystemRole(id);
+    }
+
+    @Override
+    protected GenericEntityRepository<SystemRole, String> getRepository() {
+        return repository;
     }
 }

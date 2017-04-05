@@ -1,4 +1,4 @@
-package ru.tsystems.tchallenge.service.kernel.domain.shared;
+package ru.tsystems.tchallenge.service.kernel.generic.entity;
 
 import java.io.Serializable;
 import java.time.Instant;
@@ -8,7 +8,7 @@ import javax.persistence.MappedSuperclass;
 import ru.tsystems.tchallenge.service.kernel.utility.Generators;
 
 @MappedSuperclass
-public abstract class TimestampedEntity<ID extends Serializable> extends BaseEntity<ID> {
+public abstract class TimestampedEntity<ID extends Serializable> extends GenericEntity<ID> {
 
     @Column
     private Instant createdAt;
@@ -16,7 +16,7 @@ public abstract class TimestampedEntity<ID extends Serializable> extends BaseEnt
     @Column
     private Instant modifiedAt;
 
-    protected TimestampedEntity() {
+    public TimestampedEntity() {
 
     }
 
@@ -31,14 +31,18 @@ public abstract class TimestampedEntity<ID extends Serializable> extends BaseEnt
     @Override
     protected void onCreated() {
         super.onCreated();
-        Instant timestamp = Generators.now();
+        final Instant timestamp = timestamp();
         createdAt = timestamp;
         modifiedAt = timestamp;
     }
 
     @Override
     protected void onModified() {
-        super.onCreated();
-        modifiedAt = Instant.now();
+        super.onModified();
+        modifiedAt = timestamp();
+    }
+
+    private Instant timestamp() {
+        return Generators.now();
     }
 }

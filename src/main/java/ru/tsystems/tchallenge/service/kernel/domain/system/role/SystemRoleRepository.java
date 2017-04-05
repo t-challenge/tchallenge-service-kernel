@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import ru.tsystems.tchallenge.service.kernel.domain.shared.EnumeratedEntityRepository;
+import ru.tsystems.tchallenge.service.kernel.generic.repository.EnumeratedEntityRepository;
 
 public interface SystemRoleRepository extends EnumeratedEntityRepository<SystemRole> {
 

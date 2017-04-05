@@ -5,7 +5,7 @@ import java.util.Collection;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import ru.tsystems.tchallenge.service.kernel.domain.shared.OrdinalEntityRepository;import ru.tsystems.tchallenge.service.kernel.domain.shared.SubsequentEntity;
+import ru.tsystems.tchallenge.service.kernel.generic.repository.OrdinalEntityRepository;
 
 public interface CandidateRepository extends OrdinalEntityRepository<Candidate> {
 

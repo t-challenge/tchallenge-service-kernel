@@ -8,8 +8,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 import ru.tsystems.tchallenge.service.kernel.domain.account.Account;
-import ru.tsystems.tchallenge.service.kernel.domain.shared.SubsequentEntity;
 import ru.tsystems.tchallenge.service.kernel.domain.system.role.SystemRole;
+import ru.tsystems.tchallenge.service.kernel.generic.entity.SubsequentEntity;
 
 @Entity
 public class System extends SubsequentEntity {

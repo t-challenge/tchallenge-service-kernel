@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ru.tsystems.tchallenge.service.kernel.domain.shared.GenericController;
+import ru.tsystems.tchallenge.service.kernel.generic.GenericController;
 import ru.tsystems.tchallenge.service.kernel.security.credential.SimpleLogonPairInvoice;
 
 @RestController

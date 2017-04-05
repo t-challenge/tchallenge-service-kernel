@@ -1,13 +1,15 @@
 package ru.tsystems.tchallenge.service.kernel.domain.account;
 
+import java.time.Instant;
+
 public class AccountInfo {
 
     private String email;
     private String login;
     private String realm;
     private String status;
-    private String createdAt;
-    private String modifiedAt;
+    private Instant createdAt;
+    private Instant modifiedAt;
 
     public String getEmail() {
         return email;
@@ -41,19 +43,19 @@ public class AccountInfo {
         this.status = status;
     }
 
-    public String getCreatedAt() {
+    public Instant getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
     }
 
-    public String getModifiedAt() {
+    public Instant getModifiedAt() {
         return modifiedAt;
     }
 
-    public void setModifiedAt(String modifiedAt) {
+    public void setModifiedAt(Instant modifiedAt) {
         this.modifiedAt = modifiedAt;
     }
 }

@@ -4,21 +4,17 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Service;
 
 import ru.tsystems.tchallenge.service.kernel.domain.account.Account;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountInfo;
-import ru.tsystems.tchallenge.service.kernel.domain.account.AccountProperties;
+import ru.tsystems.tchallenge.service.kernel.domain.account.AccountInvoice;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountService;
-import ru.tsystems.tchallenge.service.kernel.domain.shared.BootstrapAwareService;
-import ru.tsystems.tchallenge.service.kernel.domain.shared.GenericService;
+import ru.tsystems.tchallenge.service.kernel.generic.GenericService;
 
 @Service
-@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class CandidateService extends GenericService implements BootstrapAwareService<CandidateProperties> {
+public class CandidateService extends GenericService {
 
     @Autowired
     private AccountRepository accountRepository;
@@ -32,13 +28,7 @@ public class CandidateService extends GenericService implements BootstrapAwareSe
     @Autowired
     private AccountService accountService;
 
-    @Override
-    public CandidateInfo bootstrap(CandidateProperties candidateProperties) {
-        bootstrapAccount(candidateProperties);
-        return save(fromProperties(candidateProperties));
-    }
-
-    public CandidateInfo create(CandidateProperties candidateProperties) {
+    public CandidateInfo create(CandidateInvoice candidateProperties) {
         createAccount(candidateProperties);
         return save(fromProperties(candidateProperties));
     }
@@ -55,11 +45,7 @@ public class CandidateService extends GenericService implements BootstrapAwareSe
         return info(byLogin(login));
     }
 
-    private AccountInfo bootstrapAccount(CandidateProperties candidateProperties) {
-        return accountService.bootstrap(accountProperties(candidateProperties));
-    }
-
-    private AccountInfo createAccount(CandidateProperties candidateProperties) {
+    private AccountInfo createAccount(CandidateInvoice candidateProperties) {
         return accountService.create(accountProperties(candidateProperties));
     }
 
@@ -75,7 +61,7 @@ public class CandidateService extends GenericService implements BootstrapAwareSe
         return candidateMapper.candidateInfo(candidate);
     }
 
-    private Candidate fromProperties(CandidateProperties candidateProperties) {
+    private Candidate fromProperties(CandidateInvoice candidateProperties) {
         Account account = accountByLogin(candidateProperties.getLogin());
         Candidate candidate = new Candidate(account.getId());
         candidate.setAccount(account);
@@ -88,8 +74,8 @@ public class CandidateService extends GenericService implements BootstrapAwareSe
         return accountRepository.findByLogin(login);
     }
 
-    private AccountProperties accountProperties(CandidateProperties candidateProperties) {
-        AccountProperties accountProperties = new AccountProperties();
+    private AccountInvoice accountProperties(CandidateInvoice candidateProperties) {
+        AccountInvoice accountProperties = new AccountInvoice();
         accountProperties.setEmail(candidateProperties.getEmail());
         accountProperties.setLogin(candidateProperties.getEmail());
         accountProperties.setSecret(candidateProperties.getSecret());

@@ -10,13 +10,11 @@ import ru.tsystems.tchallenge.service.kernel.domain.account.realm.AccountRealm;
 import ru.tsystems.tchallenge.service.kernel.domain.account.realm.AccountRealmRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.account.status.AccountStatus;
 import ru.tsystems.tchallenge.service.kernel.domain.account.status.AccountStatusRepository;
-import ru.tsystems.tchallenge.service.kernel.domain.shared.BootstrapAwareService;
+import ru.tsystems.tchallenge.service.kernel.generic.GenericService;
 import ru.tsystems.tchallenge.service.kernel.utility.encryption.EncryptionService;
 
 @Service
-@Transactional
-@Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class AccountService implements BootstrapAwareService<AccountProperties> {
+public class AccountService extends GenericService {
 
     @Autowired
     private AccountRepository accountRepository;
@@ -33,12 +31,7 @@ public class AccountService implements BootstrapAwareService<AccountProperties> 
     @Autowired
     private EncryptionService encryptionService;
 
-    public AccountInfo bootstrap(AccountProperties accountProperties) {
-        Account account = accountFromProperties(accountProperties);
-        return save(account);
-    }
-
-    public AccountInfo create(AccountProperties accountProperties) {
+    public AccountInfo create(AccountInvoice accountProperties) {
         Account account = accountFromProperties(accountProperties);
         return save(account);
     }
@@ -76,7 +69,7 @@ public class AccountService implements BootstrapAwareService<AccountProperties> 
         return accountRepository.findByLogin(login);
     }
 
-    private Account accountFromProperties(AccountProperties accountProperties) {
+    private Account accountFromProperties(AccountInvoice accountProperties) {
         Account account = new Account();
         account.setEmail(accountProperties.getEmail());
         account.setLogin(accountProperties.getLogin());

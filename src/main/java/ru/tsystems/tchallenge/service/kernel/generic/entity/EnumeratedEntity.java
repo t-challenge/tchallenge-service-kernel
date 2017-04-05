@@ -1,11 +1,11 @@
-package ru.tsystems.tchallenge.service.kernel.domain.shared;
+package ru.tsystems.tchallenge.service.kernel.generic.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public abstract class EnumeratedEntity extends BaseEntity<String> {
+public abstract class EnumeratedEntity extends GenericEntity<String> {
 
     @Id
     @Column
@@ -15,7 +15,7 @@ public abstract class EnumeratedEntity extends BaseEntity<String> {
 
     }
 
-    protected EnumeratedEntity(String id) {
+    public EnumeratedEntity(final String id) {
         this.id = id;
     }
 
