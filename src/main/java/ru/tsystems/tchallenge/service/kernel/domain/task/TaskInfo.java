@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import ru.tsystems.tchallenge.service.kernel.domain.employee.EmployeeInfoShort;
 import ru.tsystems.tchallenge.service.kernel.domain.solution.input.SolutionInputInfo;
+import ru.tsystems.tchallenge.service.kernel.domain.solution.option.SolutionOptionInfoComplete;
 import ru.tsystems.tchallenge.service.kernel.generic.GenericInfo;
 
 public final class TaskInfo extends GenericInfo {
@@ -18,6 +19,7 @@ public final class TaskInfo extends GenericInfo {
     private String expectation;
     private Collection<String> categories;
     private SolutionInputInfo solutionInput;
+    private Collection<SolutionOptionInfoComplete> solutionOptions;
     private Collection<EmployeeInfoShort> authors;
     private EmployeeInfoShort createdBy;
     private Instant createdAt;
@@ -93,6 +95,14 @@ public final class TaskInfo extends GenericInfo {
 
     public void setSolutionInput(SolutionInputInfo solutionInput) {
         this.solutionInput = solutionInput;
+    }
+
+    public Collection<SolutionOptionInfoComplete> getSolutionOptions() {
+        return solutionOptions;
+    }
+
+    public void setSolutionOptions(Collection<SolutionOptionInfoComplete> solutionOptions) {
+        this.solutionOptions = solutionOptions;
     }
 
     public Collection<EmployeeInfoShort> getAuthors() {

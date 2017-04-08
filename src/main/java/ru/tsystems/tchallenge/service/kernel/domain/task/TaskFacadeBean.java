@@ -8,6 +8,7 @@ import ru.tsystems.tchallenge.service.kernel.conventions.FacadeService;
 import ru.tsystems.tchallenge.service.kernel.domain.employee.EmployeeMapper;
 import ru.tsystems.tchallenge.service.kernel.domain.employee.EmployeeRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.solution.input.SolutionInputMapperBean;
+import ru.tsystems.tchallenge.service.kernel.domain.solution.option.SolutionOptionMapper;
 import ru.tsystems.tchallenge.service.kernel.domain.task.category.TaskCategory;
 import ru.tsystems.tchallenge.service.kernel.domain.task.status.TaskStatusRepository;
 import ru.tsystems.tchallenge.service.kernel.generic.GenericFacade;
@@ -27,6 +28,9 @@ public class TaskFacadeBean extends GenericFacade {
 
     @Autowired
     private SolutionInputMapperBean solutionInputMapper;
+
+    @Autowired
+    private SolutionOptionMapper solutionOptionMapper;
 
     @Autowired
     private TaskStatusRepository taskStatusRepository;
@@ -92,7 +96,10 @@ public class TaskFacadeBean extends GenericFacade {
         info.setCategories(task.getCategories().stream().map(TaskCategory::getId).collect(Collectors.toList()));
         info.setDifficulty(task.getDifficulty().getId());
         info.setExpectation(task.getExpectation().getId());
-        info.setSolutionInput(solutionInputMapper.info(task.getSolutionInput()));
+        if (task.getSolutionInput() != null) {
+            info.setSolutionInput(solutionInputMapper.info(task.getSolutionInput()));
+        }
+        info.setSolutionOptions(task.getSolutionOptions().stream().map(solutionOptionMapper::infoComplete).collect(Collectors.toList()));
         info.setAuthors(task.getAuthors().stream().map(employeeMapper::infoShort).collect(Collectors.toList()));
         info.setCreatedBy(employeeMapper.infoShort(task.getCreatedBy()));
         info.setCreatedAt(task.getCreatedAt());

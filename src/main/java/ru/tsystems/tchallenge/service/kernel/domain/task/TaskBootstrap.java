@@ -10,6 +10,7 @@ import ru.tsystems.tchallenge.service.kernel.domain.employee.Employee;
 import ru.tsystems.tchallenge.service.kernel.domain.employee.EmployeeBootstrap;
 import ru.tsystems.tchallenge.service.kernel.domain.employee.EmployeeRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.solution.input.SolutionInput;
+import ru.tsystems.tchallenge.service.kernel.domain.solution.option.SolutionOption;
 import ru.tsystems.tchallenge.service.kernel.domain.task.category.TaskCategory;
 import ru.tsystems.tchallenge.service.kernel.domain.task.category.TaskCategoryBootstrap;
 import ru.tsystems.tchallenge.service.kernel.domain.task.category.TaskCategoryRepository;
@@ -61,8 +62,9 @@ public class TaskBootstrap extends OrdinalEntityBootstrap<Task> {
     private TaskStatusRepository taskStatusRepository;
 
     @Override
-    protected void collectEntities(final Collection<Task> entities) {
-        entities.add(seattleTask());
+    protected void collectEntities(final Collection<Task> tasks) {
+        tasks.add(seattleTask());
+        tasks.add(jarTask());
     }
 
     @Override
@@ -82,10 +84,26 @@ public class TaskBootstrap extends OrdinalEntityBootstrap<Task> {
         task.setCreatedBy(petrov());
         task.getAuthors().add(petrov());
         task.getAuthors().add(kuznetcov());
-        final SolutionInput input = new SolutionInput();
-        input.setContent("4");
-        input.setExplanation("Просто так");
-        task.setSolutionInput(input);
+        task.setSolutionInput(input("4", "Просто так"));
+        return task;
+    }
+
+    private Task jarTask() {
+        final Task task = new Task();
+        task.setTitle("Кто здесь 'Номер Первый'?");
+        task.setQuestion("Сколько классов с методом public static void main() может быть помещено в один Jar-файл?");
+        task.setStatus(taskStatusRepository.findById("APPROVED"));
+        task.setComplexity(5);
+        task.setCategories(categories("JAVA"));
+        task.setDifficulty(difficulty("EASY"));
+        task.setExpectation(expectation("SINGLESELECT"));
+        task.setCreatedBy(petrov());
+        task.getAuthors().add(petrov());
+        task.getAuthors().add(kuznetcov());
+        task.getSolutionOptions().add(option("A", "Только один класс.", 0, ""));
+        task.getSolutionOptions().add(option("B", "По одному классу в каждом пакете.", 0, ""));
+        task.getSolutionOptions().add(option("C", "Сколь угодно много классов.", 1, ""));
+        task.getSolutionOptions().add(option("D", "Сколь угодно много классов, если каждый из них записан в манифесте.", 0, ""));
         return task;
     }
 
@@ -111,5 +129,25 @@ public class TaskBootstrap extends OrdinalEntityBootstrap<Task> {
 
     private TaskExpectation expectation(final String id) {
         return taskExpectationRepository.findById(id);
+    }
+
+    private SolutionInput input(final String content,
+                                final String explanation) {
+        final SolutionInput input = new SolutionInput();
+        input.setContent(content);
+        input.setExplanation(explanation);
+        return input;
+    }
+
+    private SolutionOption option(final String textcode,
+                                  final String content,
+                                  final Integer correct,
+                                  final String explanation) {
+        final SolutionOption option = new SolutionOption();
+        option.setTextcode(textcode);
+        option.setContent(content);
+        option.setCorrect(correct);
+        option.setExplanation(explanation);
+        return option;
     }
 }

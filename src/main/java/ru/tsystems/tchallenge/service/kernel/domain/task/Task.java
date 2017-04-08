@@ -7,10 +7,12 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import ru.tsystems.tchallenge.service.kernel.domain.employee.Employee;
 import ru.tsystems.tchallenge.service.kernel.domain.solution.input.SolutionInput;
+import ru.tsystems.tchallenge.service.kernel.domain.solution.option.SolutionOption;
 import ru.tsystems.tchallenge.service.kernel.domain.task.category.TaskCategory;
 import ru.tsystems.tchallenge.service.kernel.domain.task.difficulty.TaskDifficulty;
 import ru.tsystems.tchallenge.service.kernel.domain.task.expectation.TaskExpectation;
@@ -46,6 +48,9 @@ public class Task extends SequentialEntity {
 
     @OneToOne(cascade = CascadeType.ALL)
     private SolutionInput solutionInput;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private Collection<SolutionOption> solutionOptions = new ArrayList<>();
 
     @ManyToMany
     private Collection<Employee> authors = new ArrayList<>();
@@ -123,6 +128,14 @@ public class Task extends SequentialEntity {
 
     public void setSolutionInput(SolutionInput solutionInput) {
         this.solutionInput = solutionInput;
+    }
+
+    public Collection<SolutionOption> getSolutionOptions() {
+        return solutionOptions;
+    }
+
+    public void setSolutionOptions(Collection<SolutionOption> solutionOptions) {
+        this.solutionOptions = solutionOptions;
     }
 
     public Collection<Employee> getAuthors() {
