@@ -8,10 +8,6 @@ import javax.persistence.PreUpdate;
 @MappedSuperclass
 public abstract class GenericEntity<ID extends Serializable> implements Serializable {
 
-    public GenericEntity() {
-
-    }
-
     public abstract ID getId();
 
     @PrePersist

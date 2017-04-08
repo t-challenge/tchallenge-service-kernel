@@ -2,7 +2,6 @@ package ru.tsystems.tchallenge.service.kernel.generic.bootstrap;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 import ru.tsystems.tchallenge.service.kernel.generic.entity.EnumeratedEntity;
 

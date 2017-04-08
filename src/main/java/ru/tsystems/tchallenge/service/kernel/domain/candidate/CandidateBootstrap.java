@@ -3,15 +3,15 @@ package ru.tsystems.tchallenge.service.kernel.domain.candidate;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
+import ru.tsystems.tchallenge.service.kernel.conventions.BootstrapComponent;
 import ru.tsystems.tchallenge.service.kernel.domain.account.Account;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountBootstrap;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountRepository;
 import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.GenericEntityBootstrap;
 import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
 
-@Component
+@BootstrapComponent
 public class CandidateBootstrap extends GenericEntityBootstrap<Candidate, Long> {
 
     @Autowired

@@ -3,12 +3,12 @@ package ru.tsystems.tchallenge.service.kernel.domain.account.realm;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
+import ru.tsystems.tchallenge.service.kernel.conventions.BootstrapComponent;
 import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.EnumeratedEntityBootstrap;
 import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
 
-@Component
+@BootstrapComponent
 public class AccountRealmBootstrap extends EnumeratedEntityBootstrap<AccountRealm> {
 
     @Autowired

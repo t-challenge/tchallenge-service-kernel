@@ -4,8 +4,8 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
+import ru.tsystems.tchallenge.service.kernel.conventions.BootstrapComponent;
 import ru.tsystems.tchallenge.service.kernel.domain.account.Account;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountBootstrap;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountRepository;
@@ -14,7 +14,7 @@ import ru.tsystems.tchallenge.service.kernel.domain.employee.role.EmployeeRoleRe
 import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.GenericEntityBootstrap;
 import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
 
-@Component
+@BootstrapComponent
 public class EmployeeBootstrap extends GenericEntityBootstrap<Employee, Long> {
 
     @Autowired

@@ -29,6 +29,14 @@ public class EmployeeMapper extends GenericMapper {
         return employeeInfo;
     }
 
+    public EmployeeInfoShort infoShort(Employee employee) {
+        EmployeeInfoShort info = new EmployeeInfoShort();
+        info.setFirstname(employee.getFirstname());
+        info.setLastname(employee.getLastname());
+        info.setLogin(employee.getAccount().getLogin());
+        return info;
+    }
+
     private AccountInfo accountInfo(Account account) {
         return accountMapper.accountInfo(account);
     }

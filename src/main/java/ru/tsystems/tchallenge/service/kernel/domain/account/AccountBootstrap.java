@@ -3,18 +3,18 @@ package ru.tsystems.tchallenge.service.kernel.domain.account;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
+import ru.tsystems.tchallenge.service.kernel.conventions.BootstrapComponent;
 import ru.tsystems.tchallenge.service.kernel.domain.account.realm.AccountRealmBootstrap;
 import ru.tsystems.tchallenge.service.kernel.domain.account.realm.AccountRealmRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.account.status.AccountStatusBootstrap;
 import ru.tsystems.tchallenge.service.kernel.domain.account.status.AccountStatusRepository;
-import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.GenericEntityBootstrap;
+import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.OrdinalEntityBootstrap;
 import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
 import ru.tsystems.tchallenge.service.kernel.utility.encryption.EncryptionService;
 
-@Component
-public class AccountBootstrap extends GenericEntityBootstrap<Account, Long> {
+@BootstrapComponent
+public class AccountBootstrap extends OrdinalEntityBootstrap<Account> {
 
     @Autowired
     private AccountRepository repository;
@@ -81,13 +81,13 @@ public class AccountBootstrap extends GenericEntityBootstrap<Account, Long> {
         final Account account = new Account();
         account.setEmail(email);
         account.setLogin(email);
-        account.setSecretHash(encryptionService.accountSecretHash(accountSecret(email)));
+        account.setSecretHash(accountSecretHash(email));
         account.setRealm(realmRepository.findById(realm));
         account.setStatus(statusRepository.findById(status));
         return account;
     }
 
-    private String accountSecret(final String login) {
-        return login + "123";
+    private String accountSecretHash(final String login) {
+        return encryptionService.accountSecretHash(login + "123");
     }
 }

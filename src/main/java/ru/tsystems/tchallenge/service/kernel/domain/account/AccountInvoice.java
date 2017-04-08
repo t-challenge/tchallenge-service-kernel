@@ -11,7 +11,7 @@ public class AccountInvoice {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(final String email) {
         this.email = email;
     }
 
@@ -19,7 +19,7 @@ public class AccountInvoice {
         return login;
     }
 
-    public void setLogin(String login) {
+    public void setLogin(final String login) {
         this.login = login;
     }
 
@@ -27,7 +27,7 @@ public class AccountInvoice {
         return realm;
     }
 
-    public void setRealm(String realm) {
+    public void setRealm(final String realm) {
         this.realm = realm;
     }
 
@@ -35,7 +35,7 @@ public class AccountInvoice {
         return secret;
     }
 
-    public void setSecret(String secret) {
+    public void setSecret(final String secret) {
         this.secret = secret;
     }
 }
