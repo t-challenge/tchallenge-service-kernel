@@ -11,12 +11,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import ru.tsystems.tchallenge.service.kernel.domain.employee.Employee;
-import ru.tsystems.tchallenge.service.kernel.domain.solution.input.SolutionInput;
-import ru.tsystems.tchallenge.service.kernel.domain.solution.option.SolutionOption;
+import ru.tsystems.tchallenge.service.kernel.domain.task.image.TaskImage;
+import ru.tsystems.tchallenge.service.kernel.domain.task.input.TaskInput;
+import ru.tsystems.tchallenge.service.kernel.domain.task.option.TaskOption;
 import ru.tsystems.tchallenge.service.kernel.domain.task.category.TaskCategory;
 import ru.tsystems.tchallenge.service.kernel.domain.task.difficulty.TaskDifficulty;
 import ru.tsystems.tchallenge.service.kernel.domain.task.expectation.TaskExpectation;
+import ru.tsystems.tchallenge.service.kernel.domain.task.ownership.TaskOwnership;
+import ru.tsystems.tchallenge.service.kernel.domain.task.snippet.TaskSnippet;
 import ru.tsystems.tchallenge.service.kernel.domain.task.status.TaskStatus;
+import ru.tsystems.tchallenge.service.kernel.domain.task.workflow.TaskWorkflow;
 import ru.tsystems.tchallenge.service.kernel.generic.entity.SequentialEntity;
 
 @Entity
@@ -46,11 +50,23 @@ public class Task extends SequentialEntity {
     @ManyToOne
     private TaskExpectation expectation;
 
+    @ManyToOne
+    private TaskOwnership ownership;
+
+    @ManyToOne
+    private TaskWorkflow workflow;
+
     @OneToOne(cascade = CascadeType.ALL)
-    private SolutionInput solutionInput;
+    private TaskInput input;
 
     @OneToMany(cascade = CascadeType.ALL)
-    private Collection<SolutionOption> solutionOptions = new ArrayList<>();
+    private Collection<TaskOption> options = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private Collection<TaskImage> images = new ArrayList<>();
+
+    @OneToMany(cascade = CascadeType.ALL)
+    private Collection<TaskSnippet> snippets = new ArrayList<>();
 
     @ManyToMany
     private Collection<Employee> authors = new ArrayList<>();
@@ -86,7 +102,7 @@ public class Task extends SequentialEntity {
         return status;
     }
 
-    public void setStatus(TaskStatus status) {
+    public void setStatus(final TaskStatus status) {
         this.status = status;
     }
 
@@ -94,7 +110,7 @@ public class Task extends SequentialEntity {
         return complexity;
     }
 
-    public void setComplexity(Integer complexity) {
+    public void setComplexity(final Integer complexity) {
         this.complexity = complexity;
     }
 
@@ -102,15 +118,11 @@ public class Task extends SequentialEntity {
         return categories;
     }
 
-    public void setCategories(Collection<TaskCategory> categories) {
-        this.categories = categories;
-    }
-
     public TaskDifficulty getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(TaskDifficulty difficulty) {
+    public void setDifficulty(final TaskDifficulty difficulty) {
         this.difficulty = difficulty;
     }
 
@@ -118,39 +130,55 @@ public class Task extends SequentialEntity {
         return expectation;
     }
 
-    public void setExpectation(TaskExpectation expectation) {
+    public void setExpectation(final TaskExpectation expectation) {
         this.expectation = expectation;
     }
 
-    public SolutionInput getSolutionInput() {
-        return solutionInput;
+    public TaskOwnership getOwnership() {
+        return ownership;
     }
 
-    public void setSolutionInput(SolutionInput solutionInput) {
-        this.solutionInput = solutionInput;
+    public void setOwnership(final TaskOwnership ownership) {
+        this.ownership = ownership;
     }
 
-    public Collection<SolutionOption> getSolutionOptions() {
-        return solutionOptions;
+    public TaskWorkflow getWorkflow() {
+        return workflow;
     }
 
-    public void setSolutionOptions(Collection<SolutionOption> solutionOptions) {
-        this.solutionOptions = solutionOptions;
+    public void setWorkflow(final TaskWorkflow workflow) {
+        this.workflow = workflow;
+    }
+
+    public TaskInput getInput() {
+        return input;
+    }
+
+    public void setInput(final TaskInput input) {
+        this.input = input;
+    }
+
+    public Collection<TaskOption> getOptions() {
+        return options;
+    }
+
+    public Collection<TaskImage> getImages() {
+        return images;
+    }
+
+    public Collection<TaskSnippet> getSnippets() {
+        return snippets;
     }
 
     public Collection<Employee> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(Collection<Employee> authors) {
-        this.authors = authors;
-    }
-
     public Employee getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(Employee createdBy) {
+    public void setCreatedBy(final Employee createdBy) {
         this.createdBy = createdBy;
     }
 }
