@@ -1,6 +1,5 @@
 package ru.tsystems.tchallenge.service.kernel.domain.task;
 
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
