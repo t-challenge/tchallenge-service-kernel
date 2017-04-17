@@ -13,6 +13,8 @@ import ru.tsystems.tchallenge.service.kernel.domain.employee.claim.EmployeeClaim
 import ru.tsystems.tchallenge.service.kernel.domain.person.PersonInvoice;
 import ru.tsystems.tchallenge.service.kernel.domain.person.claim.PersonClaimInvoice;
 import ru.tsystems.tchallenge.service.kernel.generic.GenericFacade;
+import ru.tsystems.tchallenge.service.kernel.utility.mail.MailInvoice;
+import ru.tsystems.tchallenge.service.kernel.utility.mail.MailService;
 
 @FacadeService
 public class AccountClaimFacade extends GenericFacade {
@@ -20,12 +22,25 @@ public class AccountClaimFacade extends GenericFacade {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private MailService mailService;
+
     public AccountClaimInfo create(final AccountClaimInvoice invoice) {
-        return info(accountService.create(accountInvoice(invoice)));
+        final AccountClaimInfo info = info(accountService.create(accountInvoice(invoice)));
+        mail(info);
+        return info;
     }
 
     public Object validate(final AccountClaimInvoice invoice) {
         throw new UnsupportedOperationException();
+    }
+
+    private void mail(final AccountClaimInfo info) {
+        final MailInvoice mail = new MailInvoice();
+        mail.setTarget(info.getEmail());
+        mail.setSubject("Account created");
+        mail.setContent("Account created: " + info.getEmail());
+        mailService.send(mail);
     }
 
     private AccountClaimInfo info(final AccountInfo accountInfo) {
