@@ -1,10 +1,10 @@
 package ru.tsystems.tchallenge.service.kernel.domain.task;
 
-import ru.tsystems.tchallenge.service.kernel.generic.page.PageInfo;
+import ru.tsystems.tchallenge.service.kernel.generic.page.SearchInfo;
 
 public interface EmployeeTaskFacade {
 
     EmployeeTaskInfo get(Long id);
 
-    PageInfo<EmployeeTaskInfo> getPage(EmployeeTaskPageInvoice invoice);
+    SearchInfo<EmployeeTaskInfo> getPage(EmployeeTaskPageInvoice invoice);
 }

@@ -1,4 +1,4 @@
-package ru.tsystems.tchallenge.service.kernel.domain.system;
+package ru.tsystems.tchallenge.service.kernel.domain.robot;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,11 +8,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 import ru.tsystems.tchallenge.service.kernel.domain.account.Account;
-import ru.tsystems.tchallenge.service.kernel.domain.system.role.SystemRole;
-import ru.tsystems.tchallenge.service.kernel.generic.entity.SubsequentEntity;
+import ru.tsystems.tchallenge.service.kernel.domain.robot.role.RobotRole;
+import ru.tsystems.tchallenge.service.kernel.generic.entity.SequentialEntity;
 
 @Entity
-public class System extends SubsequentEntity {
+public class Robot extends SequentialEntity {
 
     @OneToOne
     private Account account;
@@ -24,21 +24,13 @@ public class System extends SubsequentEntity {
     private String description;
 
     @ManyToMany
-    private Collection<SystemRole> roles = new ArrayList<>();
-
-    public System(Long id) {
-        super(id);
-    }
-
-    protected System() {
-
-    }
+    private Collection<RobotRole> roles = new ArrayList<>();
 
     public Account getAccount() {
         return account;
     }
 
-    public void setAccount(Account account) {
+    public void setAccount(final Account account) {
         this.account = account;
     }
 
@@ -46,7 +38,7 @@ public class System extends SubsequentEntity {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(final String title) {
         this.title = title;
     }
 
@@ -54,11 +46,15 @@ public class System extends SubsequentEntity {
         return description;
     }
 
-    public void setDescription(String description) {
+    public void setDescription(final String description) {
         this.description = description;
     }
 
-    public Collection<SystemRole> getRoles() {
+    public Collection<RobotRole> getRoles() {
         return roles;
+    }
+
+    public void setRoles(final Collection<RobotRole> roles) {
+        this.roles = roles;
     }
 }

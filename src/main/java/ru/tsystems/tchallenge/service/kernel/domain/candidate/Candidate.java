@@ -5,49 +5,30 @@ import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
 import ru.tsystems.tchallenge.service.kernel.domain.account.Account;
-import ru.tsystems.tchallenge.service.kernel.generic.entity.SubsequentEntity;
+import ru.tsystems.tchallenge.service.kernel.generic.entity.SequentialEntity;
 
 @Entity
-public class Candidate extends SubsequentEntity {
+public class Candidate extends SequentialEntity {
 
     @OneToOne
     private Account account;
 
     @Column
-    private String firstname;
-
-    @Column
-    private String lastname;
-
-    public Candidate(Long id) {
-        super(id);
-    }
-
-    protected Candidate() {
-
-    }
+    private String github;
 
     public Account getAccount() {
         return account;
     }
 
-    public void setAccount(Account account) {
+    public void setAccount(final Account account) {
         this.account = account;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getGithub() {
+        return github;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
-    }
-
-    public String getLastname() {
-        return lastname;
-    }
-
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setGithub(final String github) {
+        this.github = github;
     }
 }

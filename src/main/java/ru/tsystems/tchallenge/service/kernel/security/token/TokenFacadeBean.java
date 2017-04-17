@@ -48,6 +48,6 @@ public class TokenFacadeBean extends GenericFacade implements TokenFacade {
     }
 
     private TokenInfo token() {
-        return authenticated().getToken();
+        return null;
     }
 }

@@ -1,8 +1,8 @@
 package ru.tsystems.tchallenge.service.kernel.domain.sample;
 
-import ru.tsystems.tchallenge.service.kernel.generic.page.PageInvoice;
+import ru.tsystems.tchallenge.service.kernel.generic.page.SearchInvoice;
 
-public final class EmployeeSamplePageInvoice extends PageInvoice {
+public final class EmployeeSamplePageInvoice extends SearchInvoice {
 
     private String title;
     private String status;

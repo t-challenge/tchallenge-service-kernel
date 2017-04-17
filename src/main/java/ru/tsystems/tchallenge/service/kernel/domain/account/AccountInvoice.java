@@ -1,11 +1,23 @@
 package ru.tsystems.tchallenge.service.kernel.domain.account;
 
-public class AccountInvoice {
+import ru.tsystems.tchallenge.service.kernel.domain.candidate.CandidateInvoice;
+import ru.tsystems.tchallenge.service.kernel.domain.employee.EmployeeInvoice;
+import ru.tsystems.tchallenge.service.kernel.domain.person.PersonInvoice;
+import ru.tsystems.tchallenge.service.kernel.domain.robot.RobotInvoice;
+import ru.tsystems.tchallenge.service.kernel.generic.GenericInvoice;
+
+public final class AccountInvoice extends GenericInvoice {
 
     private String email;
     private String login;
-    private String realm;
+    private String loginExisting;
     private String secret;
+    private String realm;
+    private String status;
+    private CandidateInvoice candidate;
+    private EmployeeInvoice employee;
+    private PersonInvoice person;
+    private RobotInvoice robot;
 
     public String getEmail() {
         return email;
@@ -23,12 +35,12 @@ public class AccountInvoice {
         this.login = login;
     }
 
-    public String getRealm() {
-        return realm;
+    public String getLoginExisting() {
+        return loginExisting;
     }
 
-    public void setRealm(final String realm) {
-        this.realm = realm;
+    public void setLoginExisting(final String loginExisting) {
+        this.loginExisting = loginExisting;
     }
 
     public String getSecret() {
@@ -37,5 +49,53 @@ public class AccountInvoice {
 
     public void setSecret(final String secret) {
         this.secret = secret;
+    }
+
+    public String getRealm() {
+        return realm;
+    }
+
+    public void setRealm(final String realm) {
+        this.realm = realm;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(final String status) {
+        this.status = status;
+    }
+
+    public CandidateInvoice getCandidate() {
+        return candidate;
+    }
+
+    public void setCandidate(final CandidateInvoice candidate) {
+        this.candidate = candidate;
+    }
+
+    public EmployeeInvoice getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(final EmployeeInvoice employee) {
+        this.employee = employee;
+    }
+
+    public PersonInvoice getPerson() {
+        return person;
+    }
+
+    public void setPerson(final PersonInvoice person) {
+        this.person = person;
+    }
+
+    public RobotInvoice getRobot() {
+        return robot;
+    }
+
+    public void setRobot(final RobotInvoice robot) {
+        this.robot = robot;
     }
 }

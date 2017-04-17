@@ -8,7 +8,7 @@ import org.springframework.data.domain.PageRequest;
 
 import ru.tsystems.tchallenge.service.kernel.conventions.FacadeService;
 import ru.tsystems.tchallenge.service.kernel.generic.GenericFacade;
-import ru.tsystems.tchallenge.service.kernel.generic.page.PageInfo;
+import ru.tsystems.tchallenge.service.kernel.generic.page.SearchInfo;
 
 @FacadeService
 public class EmployeeTaskFacadeBean extends GenericFacade implements EmployeeTaskFacade {
@@ -25,10 +25,10 @@ public class EmployeeTaskFacadeBean extends GenericFacade implements EmployeeTas
     }
 
     @Override
-    public PageInfo<EmployeeTaskInfo> getPage(final EmployeeTaskPageInvoice invoice) {
+    public SearchInfo<EmployeeTaskInfo> getPage(final EmployeeTaskPageInvoice invoice) {
         final PageRequest pageRequest = new PageRequest(0, 10);
         final Page<Task> page = taskRepository.findPage(pageRequest);
-        final PageInfo<EmployeeTaskInfo> pageInfo = new PageInfo<>();
+        final SearchInfo<EmployeeTaskInfo> pageInfo = new SearchInfo<>();
         pageInfo.setSerial(1);
         pageInfo.setSize(10);
         pageInfo.setTotal(page.getTotalPages());

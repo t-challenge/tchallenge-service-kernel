@@ -7,12 +7,6 @@ import ru.tsystems.tchallenge.service.kernel.domain.account.Account;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountInfo;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountMapper;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountRepository;
-import ru.tsystems.tchallenge.service.kernel.domain.candidate.CandidateInfo;
-import ru.tsystems.tchallenge.service.kernel.domain.candidate.CandidateService;
-import ru.tsystems.tchallenge.service.kernel.domain.employee.EmployeeInfo;
-import ru.tsystems.tchallenge.service.kernel.domain.employee.EmployeeService;
-import ru.tsystems.tchallenge.service.kernel.domain.system.SystemInfo;
-import ru.tsystems.tchallenge.service.kernel.domain.system.SystemService;
 import ru.tsystems.tchallenge.service.kernel.security.credential.SimpleLogonPairInvoice;
 import ru.tsystems.tchallenge.service.kernel.security.token.TokenInfo;
 import ru.tsystems.tchallenge.service.kernel.security.token.TokenInvoice;
@@ -28,15 +22,6 @@ public class AuthenticationServiceBean implements AuthenticationService {
 
     @Autowired
     private AccountMapper accountMapper;
-
-    @Autowired
-    private CandidateService candidateService;
-
-    @Autowired
-    private EmployeeService employeeService;
-
-    @Autowired
-    private SystemService systemService;
 
     @Autowired
     private EncryptionService encryptionService;
@@ -83,11 +68,8 @@ public class AuthenticationServiceBean implements AuthenticationService {
                                                     final TokenInfo token) {
         final String login = account.getLogin();
         final String realm = account.getRealm().getId();
-        final AccountInfo accountInfo = accountMapper.accountInfo(account);
-        final CandidateInfo candidate = realm.equals("CANDIDATE") ? candidateService.getByLogin(login) : null;
-        final EmployeeInfo employee = realm.equals("EMPLOYEE") ? employeeService.getByLogin(login) : null;
-        final SystemInfo system = realm.equals("SYSTEM") ? systemService.getByLogin(login) : null;
-        return new AuthenticationInfo(accountInfo, candidate, employee, system, token);
+        final AccountInfo accountInfo = accountMapper.info(account);
+        return new AuthenticationInfo(accountInfo, token);
     }
 
     private void ensureAccountAvailability(final Account account) {

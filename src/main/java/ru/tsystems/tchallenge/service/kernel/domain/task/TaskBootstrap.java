@@ -6,9 +6,9 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ru.tsystems.tchallenge.service.kernel.conventions.BootstrapComponent;
+import ru.tsystems.tchallenge.service.kernel.domain.account.AccountBootstrap;
+import ru.tsystems.tchallenge.service.kernel.domain.account.AccountRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.employee.Employee;
-import ru.tsystems.tchallenge.service.kernel.domain.employee.EmployeeBootstrap;
-import ru.tsystems.tchallenge.service.kernel.domain.employee.EmployeeRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.task.image.TaskImage;
 import ru.tsystems.tchallenge.service.kernel.domain.task.image.content.TaskImageContent;
 import ru.tsystems.tchallenge.service.kernel.domain.task.image.content.TaskImageContentRepository;
@@ -45,7 +45,7 @@ import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRep
 public class TaskBootstrap extends OrdinalEntityBootstrap<Task> {
 
     @Autowired
-    private EmployeeBootstrap employeeBootstrap;
+    private AccountBootstrap accountBootstrap;
 
     @Autowired
     private TaskCategoryBootstrap categoryBootstrap;
@@ -72,7 +72,7 @@ public class TaskBootstrap extends OrdinalEntityBootstrap<Task> {
     private TaskSnippetStyleBootstrap snippetStyleBootstrap;
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private AccountRepository accountRepository;
 
     @Autowired
     private TaskRepository taskRepository;
@@ -200,15 +200,15 @@ public class TaskBootstrap extends OrdinalEntityBootstrap<Task> {
     }
 
     private Employee petrov() {
-        return employee("ivan.petrov@some-email.com");
+        return employee("ivan.sidorov@some-email.com");
     }
 
     private Employee kuznetcov() {
-        return employee("sergei.kuznetcov@some-email.com");
+        return employee("ivan.sidorov@some-email.com");
     }
 
     private Employee employee(final String login) {
-        return employeeRepository.findByLogin(login);
+        return accountRepository.findByLogin(login).getEmployee();
     }
 
     private Collection<TaskCategory> categories(final String... ids) {

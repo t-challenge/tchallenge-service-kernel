@@ -18,7 +18,7 @@ public class AccountRealmBootstrap extends EnumeratedEntityBootstrap<AccountReal
     protected void collectIds(final Collection<String> ids) {
         ids.add("CANDIDATE");
         ids.add("EMPLOYEE");
-        ids.add("SYSTEM");
+        ids.add("ROBOT");
     }
 
     @Override

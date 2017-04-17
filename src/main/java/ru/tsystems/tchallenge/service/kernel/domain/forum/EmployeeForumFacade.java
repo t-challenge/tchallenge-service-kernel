@@ -1,6 +1,6 @@
 package ru.tsystems.tchallenge.service.kernel.domain.forum;
 
-import ru.tsystems.tchallenge.service.kernel.generic.page.PageInfo;
+import ru.tsystems.tchallenge.service.kernel.generic.page.SearchInfo;
 
 public interface EmployeeForumFacade {
 
@@ -8,7 +8,7 @@ public interface EmployeeForumFacade {
 
     EmployeeForumInfo get(String textcode);
 
-    PageInfo<EmployeeForumInfo> getPage(EmployeeForumPageInvoice invoice);
+    SearchInfo<EmployeeForumInfo> getPage(EmployeeForumPageInvoice invoice);
 
     EmployeeForumInfo update(EmployeeForumUpdateInvoice invoice);
 }

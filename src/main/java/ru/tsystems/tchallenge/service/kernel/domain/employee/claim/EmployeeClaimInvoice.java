@@ -1,10 +1,10 @@
-package ru.tsystems.tchallenge.service.kernel.domain.employee;
+package ru.tsystems.tchallenge.service.kernel.domain.employee.claim;
 
 import java.util.Collection;
 
 import ru.tsystems.tchallenge.service.kernel.generic.GenericInvoice;
 
-public final class EmployeeInvoice extends GenericInvoice {
+public final class EmployeeClaimInvoice extends GenericInvoice {
 
     private Collection<String> roles;
 

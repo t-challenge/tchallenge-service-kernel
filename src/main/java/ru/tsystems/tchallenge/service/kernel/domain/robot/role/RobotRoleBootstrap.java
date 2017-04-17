@@ -1,4 +1,4 @@
-package ru.tsystems.tchallenge.service.kernel.domain.system.role;
+package ru.tsystems.tchallenge.service.kernel.domain.robot.role;
 
 import java.util.Collection;
 
@@ -9,10 +9,10 @@ import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.EnumeratedEntityB
 import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
 
 @BootstrapComponent
-public class SystemRoleBootstrap extends EnumeratedEntityBootstrap<SystemRole> {
+public class RobotRoleBootstrap extends EnumeratedEntityBootstrap<RobotRole> {
 
     @Autowired
-    private SystemRoleRepository repository;
+    private RobotRoleRepository repository;
 
     @Override
     protected void collectIds(final Collection<String> ids) {
@@ -20,12 +20,12 @@ public class SystemRoleBootstrap extends EnumeratedEntityBootstrap<SystemRole> {
     }
 
     @Override
-    protected SystemRole enumerated(final String id) {
-        return new SystemRole(id);
+    protected RobotRole enumerated(final String id) {
+        return new RobotRole(id);
     }
 
     @Override
-    protected GenericEntityRepository<SystemRole, String> getRepository() {
+    protected GenericEntityRepository<RobotRole, String> getRepository() {
         return repository;
     }
 }

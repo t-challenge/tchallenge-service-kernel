@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import ru.tsystems.tchallenge.service.kernel.generic.GenericInfo;
 
-public final class PageInfo<T extends GenericInfo> extends GenericInfo {
+public final class SearchInfo<T extends GenericInfo> extends GenericInfo {
 
     private Collection<T> items;
     private Integer serial;

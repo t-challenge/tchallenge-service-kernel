@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ru.tsystems.tchallenge.service.kernel.generic.GenericController;
-import ru.tsystems.tchallenge.service.kernel.generic.page.PageInfo;
+import ru.tsystems.tchallenge.service.kernel.generic.page.SearchInfo;
 
 @RestController
 @RequestMapping(path = "/data/employees/samples")
@@ -28,7 +28,7 @@ public class EmployeeSampleControllerBean extends GenericController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public PageInfo<EmployeeSampleInfo> getPage(final EmployeeSamplePageInvoice invoice) {
+    public SearchInfo<EmployeeSampleInfo> getPage(final EmployeeSamplePageInvoice invoice) {
         return sampleFacade.getPage(invoice);
     }
 

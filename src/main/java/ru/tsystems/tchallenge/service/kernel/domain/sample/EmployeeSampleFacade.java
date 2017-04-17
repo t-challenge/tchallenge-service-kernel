@@ -1,6 +1,6 @@
 package ru.tsystems.tchallenge.service.kernel.domain.sample;
 
-import ru.tsystems.tchallenge.service.kernel.generic.page.PageInfo;
+import ru.tsystems.tchallenge.service.kernel.generic.page.SearchInfo;
 
 public interface EmployeeSampleFacade {
 
@@ -8,7 +8,7 @@ public interface EmployeeSampleFacade {
 
     EmployeeSampleInfo get(Long id);
 
-    PageInfo<EmployeeSampleInfo> getPage(EmployeeSamplePageInvoice invoice);
+    SearchInfo<EmployeeSampleInfo> getPage(EmployeeSamplePageInvoice invoice);
 
     EmployeeSampleInfo update(EmployeeSampleUpdateInvoice invoice);
 }

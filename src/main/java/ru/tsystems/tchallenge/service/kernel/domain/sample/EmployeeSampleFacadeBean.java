@@ -10,7 +10,7 @@ import ru.tsystems.tchallenge.service.kernel.conventions.FacadeService;
 import ru.tsystems.tchallenge.service.kernel.domain.sample.status.SampleStatus;
 import ru.tsystems.tchallenge.service.kernel.domain.sample.status.SampleStatusRepository;
 import ru.tsystems.tchallenge.service.kernel.generic.GenericFacade;
-import ru.tsystems.tchallenge.service.kernel.generic.page.PageInfo;
+import ru.tsystems.tchallenge.service.kernel.generic.page.SearchInfo;
 
 @FacadeService
 public class EmployeeSampleFacadeBean extends GenericFacade implements EmployeeSampleFacade {
@@ -35,11 +35,11 @@ public class EmployeeSampleFacadeBean extends GenericFacade implements EmployeeS
     }
 
     @Override
-    public PageInfo<EmployeeSampleInfo> getPage(final EmployeeSamplePageInvoice invoice) {
+    public SearchInfo<EmployeeSampleInfo> getPage(final EmployeeSamplePageInvoice invoice) {
         final PageRequest pageRequest = new PageRequest(invoice.getStance() - 1, invoice.getSize());
         final Page<Sample> page = sampleRepository
                 .findPage("%" + invoice.getTitle() + "%", invoice.getStatus(), pageRequest);
-        final PageInfo<EmployeeSampleInfo> pageInfo = new PageInfo<>();
+        final SearchInfo<EmployeeSampleInfo> pageInfo = new SearchInfo<>();
         pageInfo.setItems(page.getContent().stream().map(this::info).collect(Collectors.toList()));
         pageInfo.setTotal(page.getTotalPages());
         pageInfo.setSize(invoice.getSize());
