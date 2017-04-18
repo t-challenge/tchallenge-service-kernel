@@ -50,4 +50,8 @@ public class AccountService extends GenericService {
         }
         return accountMapper.info(accountRepository.save(account));
     }
+
+    public AccountInfo getByLogin(final String login) {
+        return accountMapper.info(accountRepository.findByLogin(login));
+    }
 }

@@ -31,8 +31,7 @@ public class AccountFacade extends GenericFacade {
     }
 
     public AccountInfo getAuthenticated() {
-        // TODO: authorize AUTHENTICATED
-        throw new UnsupportedOperationException();
+        return accountService.getByLogin("ivan.sidorov@some-email.com");
     }
 
     public SearchInfo<AccountInfo> search(final AccountSearchInvoice invoice) {

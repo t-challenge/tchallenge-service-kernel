@@ -2,9 +2,9 @@ package ru.tsystems.tchallenge.service.kernel.domain.account.claim;
 
 import ru.tsystems.tchallenge.service.kernel.validation.ValidationInfo;
 
-public interface AccountClaimFacade {
+public interface AccountClaimValidator {
 
-    AccountClaimInfo create(AccountClaimInvoice invoice);
+    AccountClaimInvoice ensure(AccountClaimInvoice invoice);
 
     ValidationInfo validate(AccountClaimInvoice invoice);
 }

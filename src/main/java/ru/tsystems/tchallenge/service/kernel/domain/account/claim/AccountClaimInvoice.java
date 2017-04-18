@@ -5,7 +5,7 @@ import ru.tsystems.tchallenge.service.kernel.domain.employee.claim.EmployeeClaim
 import ru.tsystems.tchallenge.service.kernel.domain.person.claim.PersonClaimInvoice;
 import ru.tsystems.tchallenge.service.kernel.generic.GenericInvoice;
 
-public class AccountClaimInvoice extends GenericInvoice {
+public final class AccountClaimInvoice extends GenericInvoice {
 
     private String email;
     private String login;

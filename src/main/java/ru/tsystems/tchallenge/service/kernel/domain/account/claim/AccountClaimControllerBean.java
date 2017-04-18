@@ -7,21 +7,26 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ru.tsystems.tchallenge.service.kernel.generic.GenericController;
+import ru.tsystems.tchallenge.service.kernel.validation.ValidationInfo;
 
 @RestController
 @RequestMapping(path = "/data/accounts/claims")
 public class AccountClaimControllerBean extends GenericController {
 
+    private final AccountClaimFacade accountClaimFacade;
+
     @Autowired
-    private AccountClaimFacade claimFacade;
+    public AccountClaimControllerBean(final AccountClaimFacade accountClaimFacade) {
+        this.accountClaimFacade = accountClaimFacade;
+    }
 
     @RequestMapping(method = RequestMethod.POST)
     public AccountClaimInfo create(@RequestBody final AccountClaimInvoice invoice) {
-        return claimFacade.create(invoice);
+        return accountClaimFacade.create(invoice);
     }
 
     @RequestMapping(path = "/validation", method = RequestMethod.POST)
-    public Object validate(@RequestBody final AccountClaimInvoice invoice) {
-        return claimFacade.validate(invoice);
+    public ValidationInfo validate(@RequestBody final AccountClaimInvoice invoice) {
+        return accountClaimFacade.validate(invoice);
     }
 }

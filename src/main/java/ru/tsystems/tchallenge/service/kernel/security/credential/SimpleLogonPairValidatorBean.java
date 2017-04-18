@@ -17,7 +17,7 @@ public class SimpleLogonPairValidatorBean extends GenericValidator implements Si
 
     @Override
     public SimpleLogonPairInvoice ensure(final SimpleLogonPairInvoice pair) {
-        return ensure(pair, this::validate);
+        return pair;// ensure(pair, this::validate);
     }
 
     @Override
