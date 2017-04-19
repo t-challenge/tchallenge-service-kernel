@@ -8,5 +8,7 @@ public interface AccountRepository extends OrdinalEntityRepository<Account> {
 
     Collection<Account> findAll();
 
+    Account findByEmail(String email);
+
     Account findByLogin(String login);
 }

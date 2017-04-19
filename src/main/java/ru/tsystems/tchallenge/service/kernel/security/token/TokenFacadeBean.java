@@ -7,8 +7,11 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.tsystems.tchallenge.service.kernel.generic.GenericFacade;
 import ru.tsystems.tchallenge.service.kernel.security.authentication.AuthenticationInfo;
 import ru.tsystems.tchallenge.service.kernel.security.authentication.AuthenticationService;
+import ru.tsystems.tchallenge.service.kernel.security.credential.EmailCredentialInvoice;
 import ru.tsystems.tchallenge.service.kernel.security.credential.SimpleLogonPairInvoice;
 import ru.tsystems.tchallenge.service.kernel.security.credential.SimpleLogonPairValidator;
+import ru.tsystems.tchallenge.service.kernel.utility.mail.MailInvoice;
+import ru.tsystems.tchallenge.service.kernel.utility.mail.MailService;
 
 @Service
 @Transactional(readOnly = true)
@@ -23,10 +26,23 @@ public class TokenFacadeBean extends GenericFacade implements TokenFacade {
     @Autowired
     private SimpleLogonPairValidator simpleLogonPairValidator;
 
+    @Autowired
+    private MailService mailService;
+
     @Override
     public TokenInfo create(final SimpleLogonPairInvoice credential) {
         ensureCredential(credential);
         return authenticate(credential).getToken();
+    }
+
+    @Override
+    public void createAndMail(final EmailCredentialInvoice credential) {
+        final TokenInfo info = authenticationService.create(credential).getToken();
+        final MailInvoice mailInvoice = new MailInvoice();
+        mailInvoice.setTarget(credential.getEmail());
+        mailInvoice.setSubject("Authorized");
+        mailInvoice.setContent("Token: " + info.getId());
+        mailService.send(mailInvoice);
     }
 
     @Override

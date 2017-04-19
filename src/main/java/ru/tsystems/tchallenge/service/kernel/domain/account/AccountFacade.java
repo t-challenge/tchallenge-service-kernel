@@ -31,7 +31,8 @@ public class AccountFacade extends GenericFacade {
     }
 
     public AccountInfo getAuthenticated() {
-        return accountService.getByLogin("ivan.sidorov@some-email.com");
+        final String login = getSecurityContext().getAuthentication().getAccount().getLogin();
+        return accountService.getByLogin(login);
     }
 
     public SearchInfo<AccountInfo> search(final AccountSearchInvoice invoice) {

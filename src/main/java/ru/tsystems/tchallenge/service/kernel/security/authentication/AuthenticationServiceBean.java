@@ -7,6 +7,7 @@ import ru.tsystems.tchallenge.service.kernel.domain.account.Account;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountInfo;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountMapper;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountRepository;
+import ru.tsystems.tchallenge.service.kernel.security.credential.EmailCredentialInvoice;
 import ru.tsystems.tchallenge.service.kernel.security.credential.SimpleLogonPairInvoice;
 import ru.tsystems.tchallenge.service.kernel.security.token.TokenInfo;
 import ru.tsystems.tchallenge.service.kernel.security.token.TokenInvoice;
@@ -42,6 +43,14 @@ public class AuthenticationServiceBean implements AuthenticationService {
     }
 
     @Override
+    public AuthenticationInfo create(EmailCredentialInvoice credential) {
+        final Account account = accountByEmail(credential.getEmail());
+        ensureAccountAvailability(account);
+        ensureAccountStatus(account);
+        return createAuthentication(account, createToken(account.getLogin()));
+    }
+
+    @Override
     public AuthenticationInfo create(final String tokenId) {
         final TokenInfo token = tokenById(tokenId);
         final Account account = accountByLogin(token.getLogin());
@@ -54,6 +63,10 @@ public class AuthenticationServiceBean implements AuthenticationService {
         final TokenInvoice tokenProperties = new TokenInvoice();
         tokenProperties.setLogin(login);
         return tokenService.create(tokenProperties);
+    }
+
+    private Account accountByEmail(final String email) {
+        return accountRepository.findByEmail(email);
     }
 
     private Account accountByLogin(final String login) {

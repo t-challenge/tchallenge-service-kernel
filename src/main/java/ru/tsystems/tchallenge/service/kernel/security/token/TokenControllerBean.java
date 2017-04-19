@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ru.tsystems.tchallenge.service.kernel.generic.GenericController;
+import ru.tsystems.tchallenge.service.kernel.security.credential.EmailCredentialInvoice;
 import ru.tsystems.tchallenge.service.kernel.security.credential.SimpleLogonPairInvoice;
 
 @RestController
@@ -19,6 +20,11 @@ public class TokenControllerBean extends GenericController {
     @RequestMapping(method = RequestMethod.POST)
     public TokenInfo create(@RequestBody final SimpleLogonPairInvoice credential) {
         return tokenFacade.create(credential);
+    }
+
+    @RequestMapping(path = "/email", method = RequestMethod.POST)
+    public void createAndMail(@RequestBody final EmailCredentialInvoice credential) {
+        tokenFacade.createAndMail(credential);
     }
 
     @RequestMapping(method = RequestMethod.DELETE)

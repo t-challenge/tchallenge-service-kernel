@@ -37,7 +37,7 @@ public class TokenServiceBean implements TokenService {
         if (token == null) {
             accessValidationExceptionEmitter.illegalToken();
         }
-        if (token.getLastUsedAt().plus(deactivation).isAfter(Instant.now())) {
+        if (token.getLastUsedAt().plus(deactivation).isBefore(Instant.now())) {
             tokens.remove(id);
             accessValidationExceptionEmitter.tokenDeactivated();
         }

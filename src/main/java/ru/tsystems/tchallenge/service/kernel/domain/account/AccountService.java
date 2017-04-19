@@ -54,4 +54,14 @@ public class AccountService extends GenericService {
     public AccountInfo getByLogin(final String login) {
         return accountMapper.info(accountRepository.findByLogin(login));
     }
+
+    public AccountInfo update(final AccountInvoice invoice) {
+        final Account account = accountRepository.findByLogin(invoice.getLoginExisting());
+        invoice.getUpdatedProperties().forEach(property -> {
+            if (property.equals("status")) {
+                account.setStatus(statusRepository.findById(invoice.getStatus()));
+            }
+        });
+        return accountMapper.info(accountRepository.save(account));
+    }
 }

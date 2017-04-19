@@ -1,5 +1,7 @@
 package ru.tsystems.tchallenge.service.kernel.domain.account;
 
+import java.util.Collection;
+
 import ru.tsystems.tchallenge.service.kernel.domain.candidate.CandidateInvoice;
 import ru.tsystems.tchallenge.service.kernel.domain.employee.EmployeeInvoice;
 import ru.tsystems.tchallenge.service.kernel.domain.person.PersonInvoice;
@@ -8,6 +10,7 @@ import ru.tsystems.tchallenge.service.kernel.generic.GenericInvoice;
 
 public final class AccountInvoice extends GenericInvoice {
 
+    private Collection<String> updatedProperties;
     private String email;
     private String login;
     private String loginExisting;
@@ -97,5 +100,13 @@ public final class AccountInvoice extends GenericInvoice {
 
     public void setRobot(final RobotInvoice robot) {
         this.robot = robot;
+    }
+
+    public Collection<String> getUpdatedProperties() {
+        return updatedProperties;
+    }
+
+    public void setUpdatedProperties(Collection<String> updatedProperties) {
+        this.updatedProperties = updatedProperties;
     }
 }
