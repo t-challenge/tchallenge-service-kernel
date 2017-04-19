@@ -2,13 +2,16 @@ package ru.tsystems.tchallenge.service.kernel.domain.event;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import ru.tsystems.tchallenge.service.kernel.domain.event.category.EventCategory;
 import ru.tsystems.tchallenge.service.kernel.domain.event.status.EventStatus;
+import ru.tsystems.tchallenge.service.kernel.domain.forum.Forum;
 import ru.tsystems.tchallenge.service.kernel.domain.maturity.Maturity;
 import ru.tsystems.tchallenge.service.kernel.domain.specialization.Specialization;
 import ru.tsystems.tchallenge.service.kernel.generic.entity.SequentialEntity;
@@ -39,6 +42,9 @@ public class Event extends SequentialEntity {
 
     @ManyToMany
     private Collection<Specialization> specializations = new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Forum forum;
 
     public String getTextcode() {
         return textcode;
@@ -94,5 +100,13 @@ public class Event extends SequentialEntity {
 
     public Collection<Specialization> getSpecializations() {
         return specializations;
+    }
+
+    public Forum getForum() {
+        return forum;
+    }
+
+    public void setForum(final Forum forum) {
+        this.forum = forum;
     }
 }

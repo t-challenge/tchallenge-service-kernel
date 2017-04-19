@@ -1,5 +1,6 @@
 package ru.tsystems.tchallenge.service.kernel.domain.forum;
 
-public final class EmployeeForumInfo extends ForumInfo {
+public interface ForumMapper {
 
+    ForumInfo info(Forum forum);
 }

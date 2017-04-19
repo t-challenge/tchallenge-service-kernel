@@ -76,6 +76,7 @@ public class WebConfiguration extends WebMvcConfigurerAdapter {
 
     private ObjectMapper jackson2ObjectMapper() {
         return new Jackson2ObjectMapperBuilder()
+                .failOnEmptyBeans(false)
                 .serializationInclusion(JsonInclude.Include.NON_NULL)
                 .serializationInclusion(JsonInclude.Include.NON_EMPTY)
                 .serializers(new InstantSerializer())

@@ -11,6 +11,7 @@ import ru.tsystems.tchallenge.service.kernel.domain.event.category.EventCategory
 import ru.tsystems.tchallenge.service.kernel.domain.event.status.EventStatus;
 import ru.tsystems.tchallenge.service.kernel.domain.event.status.EventStatusBootstrap;
 import ru.tsystems.tchallenge.service.kernel.domain.event.status.EventStatusRepository;
+import ru.tsystems.tchallenge.service.kernel.domain.forum.Forum;
 import ru.tsystems.tchallenge.service.kernel.domain.maturity.Maturity;
 import ru.tsystems.tchallenge.service.kernel.domain.maturity.MaturityBootstrap;
 import ru.tsystems.tchallenge.service.kernel.domain.maturity.MaturityRepository;
@@ -68,6 +69,7 @@ public class EventBootstrapBean extends OrdinalEntityBootstrap<Event> {
         event.getSpecializations().add(specialization("JAVADEV"));
         event.getSpecializations().add(specialization("TESTER"));
         event.setCategory(category("FORUM"));
+        event.setForum(new Forum());
         return event;
     }
 
@@ -81,6 +83,7 @@ public class EventBootstrapBean extends OrdinalEntityBootstrap<Event> {
         event.getSpecializations().add(specialization("JAVADEV"));
         event.getSpecializations().add(specialization("TESTER"));
         event.setCategory(category("FORUM"));
+        event.setForum(new Forum());
         return event;
     }
 
@@ -93,19 +96,7 @@ public class EventBootstrapBean extends OrdinalEntityBootstrap<Event> {
         event.getMaturities().add(maturity("EXPERT"));
         event.getSpecializations().add(specialization("TESTER"));
         event.setCategory(category("FORUM"));
-        return event;
-    }
-
-    private Event event(final String textcode,
-                        final String title,
-                        final String status) {
-        final Event event = new Event();
-        event.setTextcode(textcode);
-        event.setTitle(title);
-        event.setDescription("some description");
-        event.setGreeting("some greeting");
-        event.setStatus(status(status));
-        event.getMaturities().add(maturity("STUDENT"));
+        event.setForum(new Forum());
         return event;
     }
 
