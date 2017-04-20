@@ -3,6 +3,9 @@ package ru.tsystems.tchallenge.service.kernel.domain.event;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import ru.tsystems.tchallenge.service.kernel.conventions.FacadeService;
 import ru.tsystems.tchallenge.service.kernel.generic.GenericFacade;
@@ -41,9 +44,18 @@ public class EventFacadeBean extends GenericFacade implements EventFacade {
         if (authentication == null) {
             accessValidationExceptionEmitter.unauthorized();
         }
+        return searchInfo(eventRepository.findPage(pageRequest(invoice)));
+    }
+
+    private SearchInfo<EventInfo> searchInfo(final Page<Event> eventPage) {
         final SearchInfo<EventInfo> searchInfo = new SearchInfo<>();
-        searchInfo.setItems(eventRepository.findAll().stream().map(this::info).collect(Collectors.toList()));
+        searchInfo.setItems(eventPage.getContent().stream().map(this::info).collect(Collectors.toList()));
+        searchInfo.setTotal(eventPage.getTotalPages());
         return searchInfo;
+    }
+
+    private Pageable pageRequest(final EventSearchInvoice invoice) {
+        return new PageRequest(invoice.getStance() - 1, invoice.getSize());
     }
 
     private EventInfo info(final Event event) {

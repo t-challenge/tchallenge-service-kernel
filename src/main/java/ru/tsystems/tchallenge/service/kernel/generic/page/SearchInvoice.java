@@ -4,8 +4,8 @@ import ru.tsystems.tchallenge.service.kernel.generic.GenericInvoice;
 
 public abstract class SearchInvoice extends GenericInvoice {
 
-    private Integer size;
-    private Integer stance;
+    private Integer size = 10;
+    private Integer stance = 1;
 
     public Integer getSize() {
         return size;
