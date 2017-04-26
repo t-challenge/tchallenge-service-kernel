@@ -31,6 +31,12 @@ public class ValidationExceptionHandler {
         return unauthorized(exception);
     }
 
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<?> handleValidationException(final ValidationException exception) {
+        securityLog.warn("", exception);
+        return badRequest(exception);
+    }
+
     private ResponseEntity<?> badRequest(final ValidationException exception) {
         return responseEntity(exception, HttpStatus.BAD_REQUEST);
     }

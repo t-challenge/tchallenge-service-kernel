@@ -14,6 +14,7 @@ public final class AccountClaimInvoice extends GenericInvoice {
     private CandidateClaimInvoice candidate;
     private EmployeeClaimInvoice employee;
     private PersonClaimInvoice person;
+    private String flashback;
 
     public String getEmail() {
         return email;
@@ -69,5 +70,13 @@ public final class AccountClaimInvoice extends GenericInvoice {
 
     public void setPerson(final PersonClaimInvoice person) {
         this.person = person;
+    }
+
+    public String getFlashback() {
+        return flashback;
+    }
+
+    public void setFlashback(String flashback) {
+        this.flashback = flashback;
     }
 }

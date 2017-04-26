@@ -3,6 +3,7 @@ package ru.tsystems.tchallenge.service.kernel.security.authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import ru.tsystems.tchallenge.service.kernel.conventions.CommonService;
 import ru.tsystems.tchallenge.service.kernel.domain.account.Account;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountInfo;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountMapper;
@@ -15,7 +16,7 @@ import ru.tsystems.tchallenge.service.kernel.security.token.TokenService;
 import ru.tsystems.tchallenge.service.kernel.utility.encryption.EncryptionService;
 import ru.tsystems.tchallenge.service.kernel.validation.access.AccessValidationExceptionEmitter;
 
-@Service
+@CommonService
 public class AuthenticationServiceBean implements AuthenticationService {
 
     @Autowired
@@ -52,11 +53,44 @@ public class AuthenticationServiceBean implements AuthenticationService {
 
     @Override
     public AuthenticationInfo create(final String tokenId) {
+        if (tokenId.equals("CANDIDATE-HARDCODED-TOKEN")) {
+            return createHardcodedCandidateToken();
+        }
+        if (tokenId.equals("EMPLOYEE-HARDCODED-TOKEN")) {
+            return createHardcodedEmployeeToken();
+        }
+        if (tokenId.equals("EVENT-DASHBOARD-HARDCODED-TOKEN")) {
+            return createHardcodedDashboardToken();
+        }
         final TokenInfo token = tokenById(tokenId);
+        if (token == null) {
+            return null;
+        }
         final Account account = accountByLogin(token.getLogin());
         ensureAccountAvailability(account);
         ensureAccountStatus(account);
         return createAuthentication(account, token);
+    }
+
+    private AuthenticationInfo createHardcodedCandidateToken() {
+        final Account account = accountByLogin("p.smirnov");
+        ensureAccountAvailability(account);
+        ensureAccountStatus(account);
+        return createAuthentication(account, createToken(account.getLogin()));
+    }
+
+    private AuthenticationInfo createHardcodedEmployeeToken() {
+        final Account account = accountByLogin("ivan.sidorov@some-email.com");
+        ensureAccountAvailability(account);
+        ensureAccountStatus(account);
+        return createAuthentication(account, createToken(account.getLogin()));
+    }
+
+    private AuthenticationInfo createHardcodedDashboardToken() {
+        final Account account = accountByLogin("event.dashboard");
+        ensureAccountAvailability(account);
+        ensureAccountStatus(account);
+        return createAuthentication(account, createToken(account.getLogin()));
     }
 
     private TokenInfo createToken(final String login) {

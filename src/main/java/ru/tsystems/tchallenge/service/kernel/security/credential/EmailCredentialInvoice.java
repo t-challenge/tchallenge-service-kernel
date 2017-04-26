@@ -5,6 +5,7 @@ import ru.tsystems.tchallenge.service.kernel.generic.GenericInvoice;
 public final class EmailCredentialInvoice extends GenericInvoice {
 
     private String email;
+    private String flashback;
 
     public String getEmail() {
         return email;
@@ -12,5 +13,13 @@ public final class EmailCredentialInvoice extends GenericInvoice {
 
     public void setEmail(final String email) {
         this.email = email;
+    }
+
+    public String getFlashback() {
+        return flashback;
+    }
+
+    public void setFlashback(String flashback) {
+        this.flashback = flashback;
     }
 }

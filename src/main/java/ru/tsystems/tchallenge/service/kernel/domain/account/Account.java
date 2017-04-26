@@ -89,6 +89,7 @@ public class Account extends SequentialEntity {
     }
 
     public void setCandidate(final Candidate candidate) {
+        candidate.setAccount(this);
         this.candidate = candidate;
     }
 
@@ -97,6 +98,7 @@ public class Account extends SequentialEntity {
     }
 
     public void setEmployee(final Employee employee) {
+        employee.setAccount(this);
         this.employee = employee;
     }
 
@@ -105,6 +107,7 @@ public class Account extends SequentialEntity {
     }
 
     public void setPerson(final Person person) {
+        person.setAccount(this);
         this.person = person;
     }
 
@@ -113,6 +116,7 @@ public class Account extends SequentialEntity {
     }
 
     public void setRobot(final Robot robot) {
+        robot.setAccount(this);
         this.robot = robot;
     }
 }

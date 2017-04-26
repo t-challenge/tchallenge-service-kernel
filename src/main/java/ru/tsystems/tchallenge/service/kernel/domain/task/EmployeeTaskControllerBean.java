@@ -10,7 +10,7 @@ import ru.tsystems.tchallenge.service.kernel.generic.GenericController;
 import ru.tsystems.tchallenge.service.kernel.generic.page.SearchInfo;
 
 @RestController
-@RequestMapping(path = "/data/employees/tasks")
+@RequestMapping(path = "/data/tasks")
 public class EmployeeTaskControllerBean extends GenericController {
 
     @Autowired

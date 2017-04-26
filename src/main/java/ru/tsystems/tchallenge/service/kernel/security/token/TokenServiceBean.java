@@ -35,11 +35,13 @@ public class TokenServiceBean implements TokenService {
     public TokenInfo getById(final String id) {
         final Token token = tokens.get(id);
         if (token == null) {
-            accessValidationExceptionEmitter.illegalToken();
+            return null;
+            // accessValidationExceptionEmitter.illegalToken();
         }
         if (token.getLastUsedAt().plus(deactivation).isBefore(Instant.now())) {
             tokens.remove(id);
-            accessValidationExceptionEmitter.tokenDeactivated();
+            return null;
+            // accessValidationExceptionEmitter.tokenDeactivated();
         }
         return tokenInfo(token);
     }

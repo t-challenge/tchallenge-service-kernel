@@ -44,6 +44,7 @@ public class AccountClaimFacadeBean extends GenericFacade implements AccountClai
         updateInvoice.setUpdatedProperties(Arrays.asList("status"));
         accountService.update(updateInvoice);
         final EmailCredentialInvoice credentialInvoice = new EmailCredentialInvoice();
+        credentialInvoice.setFlashback(invoice.getFlashback());
         credentialInvoice.setEmail(accountInfo.getEmail());
         tokenFacade.createAndMail(credentialInvoice);
         return accountClaimMapper.info(accountInfo);

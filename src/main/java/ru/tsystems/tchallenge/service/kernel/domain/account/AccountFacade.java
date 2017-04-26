@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ru.tsystems.tchallenge.service.kernel.conventions.FacadeService;
 import ru.tsystems.tchallenge.service.kernel.generic.GenericFacade;
 import ru.tsystems.tchallenge.service.kernel.generic.page.SearchInfo;
+import ru.tsystems.tchallenge.service.kernel.security.authentication.AuthenticationInfo;
+import ru.tsystems.tchallenge.service.kernel.validation.access.AccessValidationExceptionEmitter;
 
 @FacadeService
 public class AccountFacade extends GenericFacade {
@@ -20,6 +22,9 @@ public class AccountFacade extends GenericFacade {
     @Autowired
     private AccountService accountService;
 
+    @Autowired
+    private AccessValidationExceptionEmitter accessValidationExceptionEmitter;
+
     public AccountInfo create(final AccountInvoice invoice) {
         // TODO: authorize EMPLOYEE(ADMIN)
         return accountService.create(invoice);
@@ -31,7 +36,11 @@ public class AccountFacade extends GenericFacade {
     }
 
     public AccountInfo getAuthenticated() {
-        final String login = getSecurityContext().getAuthentication().getAccount().getLogin();
+        final AuthenticationInfo authentication = getSecurityContext().getAuthentication();
+        if (authentication == null) {
+            accessValidationExceptionEmitter.unauthorized();
+        }
+        final String login = authentication.getAccount().getLogin();
         return accountService.getByLogin(login);
     }
 

@@ -1,4 +1,4 @@
-package ru.tsystems.tchallenge.service.kernel.domain.sample.status;
+package ru.tsystems.tchallenge.service.kernel.domain.assignment.status;
 
 import java.util.Collection;
 
@@ -9,25 +9,25 @@ import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.EnumeratedEntityB
 import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
 
 @BootstrapComponent
-public class SampleStatusBootstrap extends EnumeratedEntityBootstrap<SampleStatus> {
+public class AssignmentStatusBootstrap extends EnumeratedEntityBootstrap<AssignmentStatus> {
 
     @Autowired
-    private SampleStatusRepository repository;
+    private AssignmentStatusRepository repository;
 
     @Override
     protected void collectIds(final Collection<String> ids) {
         ids.add("CREATED");
-        ids.add("APPROVED");
-        ids.add("BLOCKED");
+        ids.add("SUBMITTED");
+        ids.add("ASSESSED");
     }
 
     @Override
-    protected SampleStatus enumerated(final String id) {
-        return new SampleStatus(id);
+    protected AssignmentStatus enumerated(final String id) {
+        return new AssignmentStatus(id);
     }
 
     @Override
-    protected GenericEntityRepository<SampleStatus, String> getRepository() {
+    protected GenericEntityRepository<AssignmentStatus, String> getRepository() {
         return repository;
     }
 }

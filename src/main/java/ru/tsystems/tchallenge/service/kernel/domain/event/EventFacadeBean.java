@@ -31,19 +31,12 @@ public class EventFacadeBean extends GenericFacade implements EventFacade {
 
     @Override
     public EventInfo get(final String textcode) {
-        final AuthenticationInfo authentication = getSecurityContext().getAuthentication();
-        if (authentication == null) {
-            accessValidationExceptionEmitter.unauthorized();
-        }
         return info(eventRepository.findByTextcode(textcode));
     }
 
     @Override
     public SearchInfo<EventInfo> search(final EventSearchInvoice invoice) {
         final AuthenticationInfo authentication = getSecurityContext().getAuthentication();
-        if (authentication == null) {
-            accessValidationExceptionEmitter.unauthorized();
-        }
         return searchInfo(eventRepository.findPage(pageRequest(invoice)));
     }
 

@@ -50,6 +50,9 @@ public class AccountClaimMapperBean extends GenericMapper implements AccountClai
     }
 
     private PersonInvoice personInvoice(final PersonClaimInvoice invoice) {
+        if (invoice == null) {
+            return null;
+        }
         final PersonInvoice personInvoice = new PersonInvoice();
         personInvoice.setFirstname(invoice.getFirstname());
         personInvoice.setLastname(invoice.getLastname());

@@ -107,6 +107,7 @@ public class Event extends SequentialEntity {
     }
 
     public void setForum(final Forum forum) {
+        forum.setEvent(this);
         this.forum = forum;
     }
 }

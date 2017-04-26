@@ -14,6 +14,6 @@ public class ContractValidationException extends ValidationException {
 
     @Override
     public ValidationExceptionCategory getCategory() {
-        return ValidationExceptionCategory.RESOURCE;
+        return ValidationExceptionCategory.CONTRACT;
     }
 }

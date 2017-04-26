@@ -1,16 +1,19 @@
 package ru.tsystems.tchallenge.service.kernel.domain.account;
 
+import java.util.Arrays;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ru.tsystems.tchallenge.service.kernel.conventions.BootstrapComponent;
 import ru.tsystems.tchallenge.service.kernel.domain.candidate.Candidate;
+import ru.tsystems.tchallenge.service.kernel.domain.employee.Employee;
 import ru.tsystems.tchallenge.service.kernel.domain.employee.role.EmployeeRoleBootstrap;
 import ru.tsystems.tchallenge.service.kernel.domain.employee.role.EmployeeRoleRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.person.Person;
 import ru.tsystems.tchallenge.service.kernel.domain.account.realm.AccountRealmBootstrap;
 import ru.tsystems.tchallenge.service.kernel.domain.account.realm.AccountRealmRepository;
+import ru.tsystems.tchallenge.service.kernel.domain.robot.Robot;
 import ru.tsystems.tchallenge.service.kernel.domain.robot.role.RobotRoleBootstrap;
 import ru.tsystems.tchallenge.service.kernel.domain.robot.role.RobotRoleRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.account.status.AccountStatusBootstrap;
@@ -51,6 +54,8 @@ public class AccountBootstrap extends OrdinalEntityBootstrap<Account> {
     @Override
     protected void collectEntities(Collection<Account> accounts) {
         accounts.add(sidorov());
+        accounts.add(smirnov());
+        accounts.add(eventDashboard());
     }
 
     private Account sidorov() {
@@ -58,10 +63,33 @@ public class AccountBootstrap extends OrdinalEntityBootstrap<Account> {
         account.setEmail("ivan.sidorov@some-email.com");
         account.setLogin("ivan.sidorov@some-email.com");
         account.setSecretHash("hash");
+        account.setRealm(realmRepository.findById("EMPLOYEE"));
+        account.setStatus(statusRepository.findById("APPROVED"));
+        account.setEmployee(employee("TASK_MODERATOR"));
+        account.setPerson(person("Иван", "Сидоров"));
+        return account;
+    }
+
+    private Account smirnov() {
+        final Account account = new Account();
+        account.setEmail("petr.smirnov@some-email.com");
+        account.setLogin("p.smirnov");
+        account.setSecretHash("hash");
         account.setRealm(realmRepository.findById("CANDIDATE"));
         account.setStatus(statusRepository.findById("APPROVED"));
-        account.setCandidate(candidate("ivan.sidorov"));
-        account.setPerson(person("Иван", "Сидоров"));
+        account.setCandidate(new Candidate());
+        account.setPerson(person("Петр", "Смирнов"));
+        return account;
+    }
+
+    private Account eventDashboard() {
+        final Account account = new Account();
+        account.setEmail("event.dashboard@some-email.com");
+        account.setLogin("event.dashboard");
+        account.setSecretHash("hash");
+        account.setRealm(realmRepository.findById("ROBOT"));
+        account.setStatus(statusRepository.findById("APPROVED"));
+        account.setRobot(new Robot());
         return account;
     }
 
@@ -69,6 +97,12 @@ public class AccountBootstrap extends OrdinalEntityBootstrap<Account> {
         final Candidate candidate = new Candidate();
         candidate.setGithub(github);
         return candidate;
+    }
+
+    private Employee employee(final String... roles) {
+        final Employee employee = new Employee();
+        employee.setRoles(employeeRoleRepository.findAllById(Arrays.asList(roles)));
+        return employee;
     }
 
     private Person person(final String firstname, final String lastname) {
