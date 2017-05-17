@@ -4,7 +4,11 @@ import ru.tsystems.tchallenge.service.kernel.generic.page.SearchInfo;
 
 public interface EmployeeTaskFacade {
 
+    EmployeeTaskInfo create(EmployeeTaskInvoiceBlank invoiceBlank);
+
     EmployeeTaskInfo get(Long id);
 
     SearchInfo<EmployeeTaskInfo> getPage(EmployeeTaskPageInvoice invoice);
+
+    EmployeeTaskInfo update(EmployeeTaskInvoiceUpdate invoiceUpdate);
 }

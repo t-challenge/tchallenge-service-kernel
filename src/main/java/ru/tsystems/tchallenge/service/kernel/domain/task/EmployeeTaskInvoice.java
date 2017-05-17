@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import ru.tsystems.tchallenge.service.kernel.domain.task.input.EmployeeTaskInputInvoice;
 import ru.tsystems.tchallenge.service.kernel.domain.task.option.EmployeeTaskOptionInvoice;
+import ru.tsystems.tchallenge.service.kernel.domain.task.snippet.TaskSnippetInvoice;
 import ru.tsystems.tchallenge.service.kernel.generic.GenericInvoice;
 
 public abstract class EmployeeTaskInvoice extends GenericInvoice {
@@ -20,6 +21,7 @@ public abstract class EmployeeTaskInvoice extends GenericInvoice {
     private EmployeeTaskInputInvoice input;
     private Collection<EmployeeTaskOptionInvoice> options;
     private Collection<String> authors;
+    private Collection<TaskSnippetInvoice> snippets;
 
     public String getTitle() {
         return title;
@@ -115,5 +117,13 @@ public abstract class EmployeeTaskInvoice extends GenericInvoice {
 
     public void setAuthors(Collection<String> authors) {
         this.authors = authors;
+    }
+
+    public Collection<TaskSnippetInvoice> getSnippets() {
+        return snippets;
+    }
+
+    public void setSnippets(Collection<TaskSnippetInvoice> snippets) {
+        this.snippets = snippets;
     }
 }

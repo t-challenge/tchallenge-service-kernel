@@ -2,6 +2,7 @@ package ru.tsystems.tchallenge.service.kernel.domain.task;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +16,16 @@ public class EmployeeTaskControllerBean extends GenericController {
 
     @Autowired
     private EmployeeTaskFacade taskFacade;
+
+    @RequestMapping(method = RequestMethod.POST)
+    public EmployeeTaskInfo create(@RequestBody final EmployeeTaskInvoiceBlank invoiceBlank) {
+        return taskFacade.create(invoiceBlank);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT)
+    public EmployeeTaskInfo update(@RequestBody final EmployeeTaskInvoiceUpdate invoiceUpdate) {
+        return taskFacade.update(invoiceUpdate);
+    }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)
     public EmployeeTaskInfo get(@PathVariable("id") final Long id) {
