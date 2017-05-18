@@ -159,6 +159,15 @@ public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade 
         if (account.getEmployee() == null && !account.getLogin().equals(workbook.getCandidate().getAccount().getLogin())) {
             accessValidationExceptionEmitter.unauthorized();
         }
+        final String statusCurrent = workbook.getStatus().getId();
+        final String statusInvoice = invoice.getStatus();
+        if (statusInvoice.equals("CREATED")) {
+            // not possible to set
+        }
+        if ((statusInvoice.equals("SUBMITTED") || statusInvoice.equals("DISCARDED"))
+                && !(statusCurrent.equals("CREATED"))) {
+            // not possible to set
+        }
         workbook.setStatus(statusRepository.findById(invoice.getStatus()));
         if (invoice.getStatus().equals("SUBMITTED")) {
             workbook.setScore(0);
