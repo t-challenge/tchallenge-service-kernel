@@ -1,5 +1,6 @@
 package ru.tsystems.tchallenge.service.kernel.domain.event;
 
+import java.time.Instant;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,6 +69,8 @@ public class EventBootstrapBean extends OrdinalEntityBootstrap<Event> {
         event.getSpecializations().add(specialization("TESTER"));
         event.setCategory(category("FORUM"));
         event.setForum(new Forum());
+        event.setSince(Instant.parse("2016-10-14T09:00:00Z"));
+        event.setUntil(Instant.parse("2016-10-15T17:30:00Z"));
         return event;
     }
 
@@ -81,6 +84,8 @@ public class EventBootstrapBean extends OrdinalEntityBootstrap<Event> {
         event.getSpecializations().add(specialization("TESTER"));
         event.setCategory(category("FORUM"));
         event.setForum(new Forum());
+        event.setSince(Instant.parse("2017-03-31T09:00:00Z"));
+        event.setUntil(Instant.parse("2017-06-01T17:30:00Z"));
         return event;
     }
 
@@ -93,6 +98,8 @@ public class EventBootstrapBean extends OrdinalEntityBootstrap<Event> {
         event.getSpecializations().add(specialization("TESTER"));
         event.setCategory(category("FORUM"));
         event.setForum(new Forum());
+        event.setSince(Instant.parse("2017-06-04T09:00:00Z"));
+        event.setUntil(Instant.parse("2017-06-04T17:30:00Z"));
         return event;
     }
 

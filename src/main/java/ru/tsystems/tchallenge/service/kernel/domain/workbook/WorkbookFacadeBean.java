@@ -98,7 +98,8 @@ public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade 
         if (!event.getStatus().getId().equals("APPROVED")) {
             throw new ContractValidationException(Collections.singleton(new PropertyContractViolationInfo("event", invoice.getEvent(), "event status is not acceptable")));
         }
-        if (event.getSince().isAfter(Instant.now()) || event.getUntil().isBefore(Instant.now())) {
+        if (event.getSince() != null && event.getSince().isAfter(Instant.now())
+                || event.getUntil() != null && event.getUntil().isBefore(Instant.now())) {
             throw new ContractValidationException(Collections.singleton(new PropertyContractViolationInfo("event", invoice.getEvent(), "event time period is not acceptable")));
         }
         workbook.setCandidate(accountRepository.findByLogin(account.getLogin()).getCandidate());
