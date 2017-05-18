@@ -63,9 +63,7 @@ public class EventBootstrapBean extends OrdinalEntityBootstrap<Event> {
         event.setTextcode("joker2016");
         event.setTitle("Джокер 2016");
         event.setStatus(status("APPROVED"));
-        event.getMaturities().add(maturity("JUNIOR"));
-        event.getMaturities().add(maturity("INTERMEDIATE"));
-        event.getMaturities().add(maturity("EXPERT"));
+        event.setMaturity(maturity("EXPERT"));
         event.getSpecializations().add(specialization("JAVADEV"));
         event.getSpecializations().add(specialization("TESTER"));
         event.setCategory(category("FORUM"));
@@ -78,8 +76,7 @@ public class EventBootstrapBean extends OrdinalEntityBootstrap<Event> {
         event.setTextcode("findIt2017");
         event.setTitle("Найти IT 2017");
         event.setStatus(status("APPROVED"));
-        event.getMaturities().add(maturity("STUDENT"));
-        event.getMaturities().add(maturity("JUNIOR"));
+        event.setMaturity(maturity("JUNIOR"));
         event.getSpecializations().add(specialization("JAVADEV"));
         event.getSpecializations().add(specialization("TESTER"));
         event.setCategory(category("FORUM"));
@@ -92,8 +89,7 @@ public class EventBootstrapBean extends OrdinalEntityBootstrap<Event> {
         event.setTextcode("heisenbug2017");
         event.setTitle("Heisen-Bug 2017");
         event.setStatus(status("CREATED"));
-        event.getMaturities().add(maturity("INTERMEDIATE"));
-        event.getMaturities().add(maturity("EXPERT"));
+        event.setMaturity(maturity("EXPERT"));
         event.getSpecializations().add(specialization("TESTER"));
         event.setCategory(category("FORUM"));
         event.setForum(new Forum());

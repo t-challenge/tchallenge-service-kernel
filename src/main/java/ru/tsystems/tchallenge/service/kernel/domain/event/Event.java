@@ -37,8 +37,8 @@ public class Event extends SequentialEntity {
     @ManyToOne
     private EventStatus status;
 
-    @ManyToMany
-    private Collection<Maturity> maturities = new ArrayList<>();
+    @ManyToOne
+    private Maturity maturity;
 
     @ManyToMany
     private Collection<Specialization> specializations = new ArrayList<>();
@@ -94,8 +94,12 @@ public class Event extends SequentialEntity {
         this.status = status;
     }
 
-    public Collection<Maturity> getMaturities() {
-        return maturities;
+    public Maturity getMaturity() {
+        return maturity;
+    }
+
+    public void setMaturity(Maturity maturity) {
+        this.maturity = maturity;
     }
 
     public Collection<Specialization> getSpecializations() {
