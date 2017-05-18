@@ -1,5 +1,6 @@
 package ru.tsystems.tchallenge.service.kernel.domain.event;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -15,6 +16,8 @@ public final class EventInfo extends GenericInfo {
     private final String status;
     private final String maturity;
     private final Collection<String> specializations;
+    private final Instant since;
+    private final Instant until;
     private final ForumInfo forum;
 
     public EventInfo(final String textcode,
@@ -24,6 +27,8 @@ public final class EventInfo extends GenericInfo {
                      final String status,
                      final String maturity,
                      final Collection<String> specializations,
+                     final Instant since,
+                     final Instant until,
                      final ForumInfo forum) {
         this.textcode = textcode;
         this.title = title;
@@ -32,6 +37,8 @@ public final class EventInfo extends GenericInfo {
         this.status = status;
         this.maturity = maturity;
         this.specializations = new ArrayList<>(specializations);
+        this.since = since;
+        this.until = until;
         this.forum = forum;
     }
 
@@ -61,6 +68,14 @@ public final class EventInfo extends GenericInfo {
 
     public Collection<String> getSpecializations() {
         return new ArrayList<>(specializations);
+    }
+
+    public Instant getSince() {
+        return since;
+    }
+
+    public Instant getUntil() {
+        return until;
     }
 
     public ForumInfo getForum() {

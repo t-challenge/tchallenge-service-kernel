@@ -1,5 +1,6 @@
 package ru.tsystems.tchallenge.service.kernel.domain.workbook;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -24,8 +25,10 @@ import ru.tsystems.tchallenge.service.kernel.domain.account.AccountRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.assignment.Assignment;
 import ru.tsystems.tchallenge.service.kernel.domain.assignment.AssignmentInfo;
 import ru.tsystems.tchallenge.service.kernel.domain.assignment.status.AssignmentStatusRepository;
+import ru.tsystems.tchallenge.service.kernel.domain.event.Event;
 import ru.tsystems.tchallenge.service.kernel.domain.event.EventRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.maturity.MaturityRepository;
+import ru.tsystems.tchallenge.service.kernel.domain.specialization.Specialization;
 import ru.tsystems.tchallenge.service.kernel.domain.specialization.SpecializationRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.task.CandidateTaskMapper;
 import ru.tsystems.tchallenge.service.kernel.domain.task.Task;
@@ -38,6 +41,8 @@ import ru.tsystems.tchallenge.service.kernel.security.authentication.Authenticat
 import ru.tsystems.tchallenge.service.kernel.validation.access.AccessValidationExceptionEmitter;
 import ru.tsystems.tchallenge.service.kernel.validation.contract.ContractValidationException;
 import ru.tsystems.tchallenge.service.kernel.validation.contract.PropertyContractViolationInfo;
+import ru.tsystems.tchallenge.service.kernel.validation.resource.ResourceUnavailableViolationInfo;
+import ru.tsystems.tchallenge.service.kernel.validation.resource.ResourceUnknownViolationInfo;
 
 @FacadeService
 public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade {
@@ -80,8 +85,24 @@ public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade 
             accessValidationExceptionEmitter.unauthorized();
         }
         final Workbook workbook = new Workbook();
+        final Event event = eventRepository.findByTextcode(invoice.getEvent());
+        if (event == null) {
+            throw new ContractValidationException(Collections.singleton(new ResourceUnavailableViolationInfo("event", invoice.getEvent())));
+        }
+        if (!event.getMaturity().getId().equals(invoice.getMaturity())) {
+            throw new ContractValidationException(Collections.singleton(new PropertyContractViolationInfo("maturity", invoice.getMaturity(), "no such maturity")));
+        }
+        if (!event.getSpecializations().stream().map(Specialization::getId).collect(Collectors.toList()).contains(invoice.getSpecialization())) {
+            throw new ContractValidationException(Collections.singleton(new PropertyContractViolationInfo("specialization", invoice.getSpecialization(), "no such specialization")));
+        }
+        if (!event.getStatus().getId().equals("APPROVED")) {
+            throw new ContractValidationException(Collections.singleton(new PropertyContractViolationInfo("event", invoice.getEvent(), "event status is not acceptable")));
+        }
+        if (event.getSince().isAfter(Instant.now()) || event.getUntil().isBefore(Instant.now())) {
+            throw new ContractValidationException(Collections.singleton(new PropertyContractViolationInfo("event", invoice.getEvent(), "event time period is not acceptable")));
+        }
         workbook.setCandidate(accountRepository.findByLogin(account.getLogin()).getCandidate());
-        workbook.setEvent(eventRepository.findByTextcode(invoice.getEvent()));
+        workbook.setEvent(event);
         workbook.setSpecialization(specializationRepository.findById(invoice.getSpecialization()));
         workbook.setMaturity(maturityRepository.findById(invoice.getMaturity()));
         workbook.setStatus(statusRepository.findById("CREATED"));

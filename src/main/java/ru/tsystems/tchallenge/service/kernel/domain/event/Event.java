@@ -1,5 +1,6 @@
 package ru.tsystems.tchallenge.service.kernel.domain.event;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.CascadeType;
@@ -39,6 +40,12 @@ public class Event extends SequentialEntity {
 
     @ManyToOne
     private Maturity maturity;
+
+    @Column
+    private Instant since;
+
+    @Column
+    private Instant until;
 
     @ManyToMany
     private Collection<Specialization> specializations = new ArrayList<>();
@@ -113,5 +120,21 @@ public class Event extends SequentialEntity {
     public void setForum(final Forum forum) {
         forum.setEvent(this);
         this.forum = forum;
+    }
+
+    public Instant getSince() {
+        return since;
+    }
+
+    public void setSince(Instant since) {
+        this.since = since;
+    }
+
+    public Instant getUntil() {
+        return until;
+    }
+
+    public void setUntil(Instant until) {
+        this.until = until;
     }
 }
