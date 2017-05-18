@@ -61,6 +61,7 @@ public class EmployeeTaskMapperBean extends GenericMapper implements EmployeeTas
                         .map(Employee::getAccount)
                         .map(Account::getLogin)
                         .collect(Collectors.toList()),
+                task.getMindflow().getId(),
                 task.getCreatedBy().getAccount().getLogin(),
                 task.getCreatedAt(),
                 task.getModifiedAt());

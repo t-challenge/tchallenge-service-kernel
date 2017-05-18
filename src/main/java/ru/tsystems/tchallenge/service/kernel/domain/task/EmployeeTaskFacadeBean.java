@@ -25,6 +25,7 @@ import ru.tsystems.tchallenge.service.kernel.domain.task.image.content.TaskImage
 import ru.tsystems.tchallenge.service.kernel.domain.task.image.format.TaskImageFormat;
 import ru.tsystems.tchallenge.service.kernel.domain.task.image.format.TaskImageFormatRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.task.input.TaskInput;
+import ru.tsystems.tchallenge.service.kernel.domain.task.mindflow.TaskMindflowRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.task.option.TaskOption;
 import ru.tsystems.tchallenge.service.kernel.domain.task.ownership.TaskOwnership;
 import ru.tsystems.tchallenge.service.kernel.domain.task.ownership.TaskOwnershipRepository;
@@ -121,6 +122,9 @@ public class EmployeeTaskFacadeBean extends GenericFacade implements EmployeeTas
     private TaskImageFormatRepository imageFormatRepository;
 
     @Autowired
+    private TaskMindflowRepository mindflowRepository;
+
+    @Autowired
     private TaskSnippetStyleRepository snippetStyleRepository;
 
     @Autowired
@@ -152,6 +156,7 @@ public class EmployeeTaskFacadeBean extends GenericFacade implements EmployeeTas
                 task.getSnippets().add(snippet(s.getStance(), s.getContent(), s.getStyle()));
             });
         }
+        task.setMindflow(mindflowRepository.findById("ANALYSES"));
         return task;
     }
 

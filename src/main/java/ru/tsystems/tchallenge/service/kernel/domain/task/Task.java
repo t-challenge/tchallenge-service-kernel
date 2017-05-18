@@ -13,6 +13,7 @@ import javax.persistence.OneToOne;
 import ru.tsystems.tchallenge.service.kernel.domain.employee.Employee;
 import ru.tsystems.tchallenge.service.kernel.domain.task.image.TaskImage;
 import ru.tsystems.tchallenge.service.kernel.domain.task.input.TaskInput;
+import ru.tsystems.tchallenge.service.kernel.domain.task.mindflow.TaskMindflow;
 import ru.tsystems.tchallenge.service.kernel.domain.task.option.TaskOption;
 import ru.tsystems.tchallenge.service.kernel.domain.task.category.TaskCategory;
 import ru.tsystems.tchallenge.service.kernel.domain.task.difficulty.TaskDifficulty;
@@ -55,6 +56,9 @@ public class Task extends SequentialEntity {
 
     @ManyToOne
     private TaskWorkflow workflow;
+
+    @ManyToOne
+    private TaskMindflow mindflow;
 
     @OneToOne(cascade = CascadeType.ALL)
     private TaskInput input;
@@ -148,6 +152,14 @@ public class Task extends SequentialEntity {
 
     public void setWorkflow(final TaskWorkflow workflow) {
         this.workflow = workflow;
+    }
+
+    public TaskMindflow getMindflow() {
+        return mindflow;
+    }
+
+    public void setMindflow(TaskMindflow mindflow) {
+        this.mindflow = mindflow;
     }
 
     public TaskInput getInput() {

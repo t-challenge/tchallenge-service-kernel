@@ -16,6 +16,9 @@ import ru.tsystems.tchallenge.service.kernel.domain.task.image.format.TaskImageF
 import ru.tsystems.tchallenge.service.kernel.domain.task.image.format.TaskImageFormatBootstrap;
 import ru.tsystems.tchallenge.service.kernel.domain.task.image.format.TaskImageFormatRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.task.input.TaskInput;
+import ru.tsystems.tchallenge.service.kernel.domain.task.mindflow.TaskMindflow;
+import ru.tsystems.tchallenge.service.kernel.domain.task.mindflow.TaskMindflowBootstrap;
+import ru.tsystems.tchallenge.service.kernel.domain.task.mindflow.TaskMindflowRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.task.option.TaskOption;
 import ru.tsystems.tchallenge.service.kernel.domain.task.category.TaskCategory;
 import ru.tsystems.tchallenge.service.kernel.domain.task.category.TaskCategoryBootstrap;
@@ -63,6 +66,9 @@ public class TaskBootstrap extends OrdinalEntityBootstrap<Task> {
     private TaskWorkflowBootstrap workflowBootstrap;
 
     @Autowired
+    private TaskMindflowBootstrap mindflowBootstrap;
+
+    @Autowired
     private TaskOwnershipBootstrap ownershipBootstrap;
 
     @Autowired
@@ -91,6 +97,9 @@ public class TaskBootstrap extends OrdinalEntityBootstrap<Task> {
 
     @Autowired
     private TaskWorkflowRepository workflowRepository;
+
+    @Autowired
+    private TaskMindflowRepository mindflowRepository;
 
     @Autowired
     private TaskOwnershipRepository ownershipRepository;
@@ -153,6 +162,7 @@ public class TaskBootstrap extends OrdinalEntityBootstrap<Task> {
         task.getOptions().add(option("B", "По одному классу в каждом пакете.", 0, ""));
         task.getOptions().add(option("C", "Сколь угодно много классов.", 1, ""));
         task.getOptions().add(option("D", "Сколь угодно много классов, если каждый из них записан в манифесте.", 0, ""));
+        task.setMindflow(mindflow("ANALYSES"));
         return task;
     }
 
@@ -175,6 +185,7 @@ public class TaskBootstrap extends OrdinalEntityBootstrap<Task> {
         task.getImages().add(image(1, "GIF"));
         task.getImages().add(image(2, "JPEG"));
         task.getImages().add(image(3, "PNG"));
+        task.setMindflow(mindflow("ANALYSES"));
         return task;
     }
 
@@ -196,6 +207,7 @@ public class TaskBootstrap extends OrdinalEntityBootstrap<Task> {
         task.getOptions().add(option("B", "Нет.", 0, ""));
         task.getSnippets().add(snippet(1, "JAVA"));
         task.getSnippets().add(snippet(2, "CONSOLE"));
+        task.setMindflow(mindflow("ANALYSES"));
         return task;
     }
 
@@ -225,6 +237,10 @@ public class TaskBootstrap extends OrdinalEntityBootstrap<Task> {
 
     private TaskWorkflow workflow(final String id) {
         return workflowRepository.findById(id);
+    }
+
+    private TaskMindflow mindflow(final String id) {
+        return mindflowRepository.findById(id);
     }
 
     private TaskOwnership ownership(final String id) {

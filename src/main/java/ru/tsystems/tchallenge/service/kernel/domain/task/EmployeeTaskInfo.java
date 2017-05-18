@@ -21,6 +21,7 @@ public final class EmployeeTaskInfo extends TaskInfo {
     private final EmployeeTaskInputInfo input;
     private final Collection<EmployeeTaskOptionInfo> options;
     private final Collection<String> authors;
+    private final String mindflow;
     private final String createdBy;
     private final Instant createdAt;
     private final Instant modifiedAt;
@@ -41,6 +42,7 @@ public final class EmployeeTaskInfo extends TaskInfo {
                             final EmployeeTaskInputInfo input,
                             final Collection<EmployeeTaskOptionInfo> options,
                             final Collection<String> authors,
+                            final String mindflow,
                             final String createdBy,
                             final Instant createdAt,
                             final Instant modifiedAt) {
@@ -55,6 +57,7 @@ public final class EmployeeTaskInfo extends TaskInfo {
         this.input = input;
         this.options = new ArrayList<>(options);
         this.authors = new ArrayList<>(authors);
+        this.mindflow = mindflow;
         this.createdBy = createdBy;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
@@ -98,6 +101,10 @@ public final class EmployeeTaskInfo extends TaskInfo {
 
     public Collection<String> getAuthors() {
         return new ArrayList<>(authors);
+    }
+
+    public String getMindflow() {
+        return mindflow;
     }
 
     public String getCreatedBy() {
