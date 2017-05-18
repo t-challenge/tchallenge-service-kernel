@@ -66,19 +66,19 @@ public class AccountFacade extends GenericFacade {
         if (invoice.getCandidate() != null) {
             if (account.getCandidate() == null) {
                 account.setCandidate(new Candidate());
-                account.getCandidate().setInterested(invoice.getCandidate().getInterested() != null ? invoice.getCandidate().getInterested() != 0 ? 1 : 0 : 0);
-                account.getCandidate().setSelfie(invoice.getCandidate().getSelfie());
-                account.getCandidate().setGithub(invoice.getCandidate().getGithub());
-                account.getCandidate().setCv(invoice.getCandidate().getCv());
             }
+            account.getCandidate().setInterested(invoice.getCandidate().getInterested() != null ? invoice.getCandidate().getInterested() ? 1 : 0 : 0);
+            account.getCandidate().setSelfie(invoice.getCandidate().getSelfie());
+            account.getCandidate().setGithub(invoice.getCandidate().getGithub());
+            account.getCandidate().setCv(invoice.getCandidate().getCv());
         }
         if (invoice.getPerson() != null) {
             if (account.getPerson() == null) {
                 account.setPerson(new Person());
-                account.getPerson().setFirstname(invoice.getPerson().getFirstname());
-                account.getPerson().setLastname(invoice.getPerson().getLastname());
-                account.getPerson().setQuickname(invoice.getPerson().getQuickname());
             }
+            account.getPerson().setFirstname(invoice.getPerson().getFirstname());
+            account.getPerson().setLastname(invoice.getPerson().getLastname());
+            account.getPerson().setQuickname(invoice.getPerson().getQuickname());
         }
         accountRepository.save(account);
         return accountMapper.info(account);

@@ -5,7 +5,7 @@ import ru.tsystems.tchallenge.service.kernel.generic.GenericInvoice;
 public final class CandidateInvoice extends GenericInvoice {
 
     private String github;
-    private Integer interested;
+    private Boolean interested;
     private String cv;
     private String selfie;
 
@@ -17,11 +17,11 @@ public final class CandidateInvoice extends GenericInvoice {
         this.github = github;
     }
 
-    public Integer getInterested() {
+    public Boolean getInterested() {
         return interested;
     }
 
-    public void setInterested(Integer interested) {
+    public void setInterested(Boolean interested) {
         this.interested = interested;
     }
 
