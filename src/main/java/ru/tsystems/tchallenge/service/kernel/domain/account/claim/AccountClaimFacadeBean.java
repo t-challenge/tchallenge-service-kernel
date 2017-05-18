@@ -38,11 +38,13 @@ public class AccountClaimFacadeBean extends GenericFacade implements AccountClai
         accountClaimValidator.ensure(invoice);
         final AccountInvoice accountInvoice = accountClaimMapper.accountInvoice(invoice);
         final AccountInfo accountInfo = accountService.create(accountInvoice);
-        final AccountInvoice updateInvoice = new AccountInvoice();
-        updateInvoice.setLoginExisting(accountInfo.getLogin());
-        updateInvoice.setStatus("APPROVED");
-        updateInvoice.setUpdatedProperties(Arrays.asList("status"));
-        accountService.update(updateInvoice);
+        if (invoice.getRealm().equals("CANDIDATE")) {
+            final AccountInvoice updateInvoice = new AccountInvoice();
+            updateInvoice.setLoginExisting(accountInfo.getLogin());
+            updateInvoice.setStatus("APPROVED");
+            updateInvoice.setUpdatedProperties(Arrays.asList("status"));
+            accountService.update(updateInvoice);
+        }
         final EmailCredentialInvoice credentialInvoice = new EmailCredentialInvoice();
         credentialInvoice.setFlashback(invoice.getFlashback());
         credentialInvoice.setEmail(accountInfo.getEmail());
