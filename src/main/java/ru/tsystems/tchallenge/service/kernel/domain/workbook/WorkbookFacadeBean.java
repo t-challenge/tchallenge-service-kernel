@@ -36,6 +36,8 @@ import ru.tsystems.tchallenge.service.kernel.generic.GenericFacade;
 import ru.tsystems.tchallenge.service.kernel.generic.page.SearchInfo;
 import ru.tsystems.tchallenge.service.kernel.security.authentication.AuthenticationInfo;
 import ru.tsystems.tchallenge.service.kernel.validation.access.AccessValidationExceptionEmitter;
+import ru.tsystems.tchallenge.service.kernel.validation.contract.ContractValidationException;
+import ru.tsystems.tchallenge.service.kernel.validation.contract.PropertyContractViolationInfo;
 
 @FacadeService
 public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade {
@@ -162,11 +164,11 @@ public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade 
         final String statusCurrent = workbook.getStatus().getId();
         final String statusInvoice = invoice.getStatus();
         if (statusInvoice.equals("CREATED")) {
-            // not possible to set
+            throw new ContractValidationException(Collections.singleton(new PropertyContractViolationInfo("status", statusInvoice, "can not set created")));
         }
         if ((statusInvoice.equals("SUBMITTED") || statusInvoice.equals("DISCARDED"))
                 && !(statusCurrent.equals("CREATED"))) {
-            // not possible to set
+            throw new ContractValidationException(Collections.singleton(new PropertyContractViolationInfo("status", statusInvoice, "can not be submitted or discarded")));
         }
         workbook.setStatus(statusRepository.findById(invoice.getStatus()));
         if (invoice.getStatus().equals("SUBMITTED")) {
