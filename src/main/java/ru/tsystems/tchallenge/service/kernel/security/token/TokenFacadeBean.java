@@ -12,10 +12,14 @@ import ru.tsystems.tchallenge.service.kernel.security.credential.SimpleLogonPair
 import ru.tsystems.tchallenge.service.kernel.security.credential.SimpleLogonPairValidator;
 import ru.tsystems.tchallenge.service.kernel.utility.mail.MailInvoice;
 import ru.tsystems.tchallenge.service.kernel.utility.mail.MailService;
+import ru.tsystems.tchallenge.service.kernel.validation.access.AccessValidationExceptionEmitter;
 
 @Service
 @Transactional(readOnly = true)
 public class TokenFacadeBean extends GenericFacade implements TokenFacade {
+
+    @Autowired
+    private AccessValidationExceptionEmitter accessValidationExceptionEmitter;
 
     @Autowired
     private AuthenticationService authenticationService;
@@ -68,6 +72,10 @@ public class TokenFacadeBean extends GenericFacade implements TokenFacade {
     }
 
     private TokenInfo token() {
-        return null;
+        final AuthenticationInfo authentication = this.getSecurityContext().getAuthentication();
+        if (authentication == null) {
+            accessValidationExceptionEmitter.unauthorized();
+        }
+        return authentication.getToken();
     }
 }
