@@ -1,6 +1,5 @@
 package ru.tsystems.tchallenge.service.kernel.domain.task;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import ru.tsystems.tchallenge.service.kernel.domain.task.image.TaskImageInfo;
@@ -9,48 +8,51 @@ import ru.tsystems.tchallenge.service.kernel.generic.GenericInfo;
 
 public abstract class TaskInfo extends GenericInfo {
 
-    private final String title;
-    private final String introduction;
-    private final String question;
-    private final String expectation;
-    private final Collection<TaskImageInfo> images;
-    private final Collection<TaskSnippetInfo> snippets;
+    private String introduction;
+    private String question;
 
-    public TaskInfo(final String title,
-                    final String introduction,
-                    final String question,
-                    final String expectation,
-                    final Collection<TaskImageInfo> images,
-                    final Collection<TaskSnippetInfo> snippets) {
-        this.title = title;
-        this.introduction = introduction;
-        this.question = question;
-        this.expectation = expectation;
-        this.images = new ArrayList<>(images);
-        this.snippets = new ArrayList<>(snippets);
-    }
+    private String expectation;
 
-    public String getTitle() {
-        return title;
-    }
+    private Collection<TaskImageInfo> images;
+    private Collection<TaskSnippetInfo> snippets;
 
     public String getIntroduction() {
         return introduction;
+    }
+
+    public void setIntroduction(String introduction) {
+        this.introduction = introduction;
     }
 
     public String getQuestion() {
         return question;
     }
 
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
     public String getExpectation() {
         return expectation;
     }
 
+    public void setExpectation(String expectation) {
+        this.expectation = expectation;
+    }
+
     public Collection<TaskImageInfo> getImages() {
-        return new ArrayList<>(images);
+        return images;
+    }
+
+    public void setImages(Collection<TaskImageInfo> images) {
+        this.images = images;
     }
 
     public Collection<TaskSnippetInfo> getSnippets() {
-        return new ArrayList<>(snippets);
+        return snippets;
+    }
+
+    public void setSnippets(Collection<TaskSnippetInfo> snippets) {
+        this.snippets = snippets;
     }
 }

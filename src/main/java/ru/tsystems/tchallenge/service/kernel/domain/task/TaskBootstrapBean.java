@@ -45,7 +45,7 @@ import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.OrdinalEntityBoot
 import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
 
 @BootstrapComponent
-public class TaskBootstrap extends OrdinalEntityBootstrap<Task> {
+public class TaskBootstrapBean extends OrdinalEntityBootstrap<Task> {
 
     @Autowired
     private AccountBootstrap accountBootstrap;
@@ -128,7 +128,6 @@ public class TaskBootstrap extends OrdinalEntityBootstrap<Task> {
 
     private Task seattleTask() {
         final Task task = new Task();
-        task.setTitle("Работа В Сиэттле.");
         task.setQuestion("Сколько нужно человек, чтобы вымыть все окна в Сиэттле?");
         task.setStatus(statusRepository.findById("CREATED"));
         task.setComplexity(5);
@@ -136,6 +135,7 @@ public class TaskBootstrap extends OrdinalEntityBootstrap<Task> {
         task.setDifficulty(difficulty("EASY"));
         task.setExpectation(expectation("SMALLINPUT"));
         task.setOwnership(ownership("PUBLIC"));
+        task.setMindflow(mindflow("ANALYSES"));
         task.setWorkflow(workflow("MACHINE"));
         task.setCreatedBy(petrov());
         task.getAuthors().add(petrov());
@@ -146,7 +146,6 @@ public class TaskBootstrap extends OrdinalEntityBootstrap<Task> {
 
     private Task jarTask() {
         final Task task = new Task();
-        task.setTitle("Кто здесь 'Номер Первый'?");
         task.setQuestion("Сколько классов с методом public static void main() может быть помещено в один Jar-файл?");
         task.setStatus(statusRepository.findById("APPROVED"));
         task.setComplexity(5);
@@ -154,6 +153,7 @@ public class TaskBootstrap extends OrdinalEntityBootstrap<Task> {
         task.setDifficulty(difficulty("EASY"));
         task.setExpectation(expectation("SINGLESELECT"));
         task.setOwnership(ownership("PUBLIC"));
+        task.setMindflow(mindflow("ANALYSES"));
         task.setWorkflow(workflow("MACHINE"));
         task.setCreatedBy(petrov());
         task.getAuthors().add(petrov());
@@ -168,7 +168,6 @@ public class TaskBootstrap extends OrdinalEntityBootstrap<Task> {
 
     private Task imageTask() {
         final Task task = new Task();
-        task.setTitle("Задача с рисунками");
         task.setQuestion("В этой задаче использованы рисунки, все верно?");
         task.setStatus(statusRepository.findById("APPROVED"));
         task.setComplexity(5);
@@ -176,6 +175,7 @@ public class TaskBootstrap extends OrdinalEntityBootstrap<Task> {
         task.setDifficulty(difficulty("EASY"));
         task.setExpectation(expectation("SINGLESELECT"));
         task.setOwnership(ownership("PUBLIC"));
+        task.setMindflow(mindflow("ANALYSES"));
         task.setWorkflow(workflow("MACHINE"));
         task.setCreatedBy(petrov());
         task.getAuthors().add(petrov());
@@ -191,7 +191,6 @@ public class TaskBootstrap extends OrdinalEntityBootstrap<Task> {
 
     private Task snippetTask() {
         final Task task = new Task();
-        task.setTitle("Задача с кодом");
         task.setQuestion("В этой задаче использованы отрывки кода, все верно?");
         task.setStatus(statusRepository.findById("APPROVED"));
         task.setComplexity(5);
@@ -199,6 +198,7 @@ public class TaskBootstrap extends OrdinalEntityBootstrap<Task> {
         task.setDifficulty(difficulty("EASY"));
         task.setExpectation(expectation("SINGLESELECT"));
         task.setOwnership(ownership("PUBLIC"));
+        task.setMindflow(mindflow("ANALYSES"));
         task.setWorkflow(workflow("MACHINE"));
         task.setCreatedBy(petrov());
         task.getAuthors().add(petrov());
@@ -234,7 +234,11 @@ public class TaskBootstrap extends OrdinalEntityBootstrap<Task> {
     private TaskExpectation expectation(final String id) {
         return expectationRepository.findById(id);
     }
-
+/*
+    private TaskMindflow mindflow(final String id) {
+        return mindflowRepository.findById(id);
+    }
+*/
     private TaskWorkflow workflow(final String id) {
         return workflowRepository.findById(id);
     }

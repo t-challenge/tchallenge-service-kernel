@@ -7,13 +7,23 @@ import ru.tsystems.tchallenge.service.kernel.generic.GenericMapper;
 public class TaskImageMapperBean extends GenericMapper implements TaskImageMapper {
 
     @Override
-    public TaskImageInfo info(final TaskImage image) {
+    public TaskImage asEntity(TaskImageInvoice invoice) {
+        return null;
+    }
+
+    @Override
+    public TaskImage asEntityMerged(TaskImage entity, TaskImageInvoice invoice) {
+        return null;
+    }
+
+    @Override
+    public TaskImageInfo asInfo(final TaskImage entity) {
         return new TaskImageInfo(
-                image.getContent(),
-                image.getDescription(),
-                image.getFormat().getId(),
-                image.getHeight(),
-                image.getHeight(),
-                image.getStance());
+                entity.getContent(),
+                entity.getDescription(),
+                entity.getFormat().getId(),
+                entity.getHeight(),
+                entity.getHeight(),
+                entity.getStance());
     }
 }

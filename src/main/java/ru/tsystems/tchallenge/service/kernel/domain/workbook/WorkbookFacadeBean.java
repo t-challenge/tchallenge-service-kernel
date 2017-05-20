@@ -26,8 +26,8 @@ import ru.tsystems.tchallenge.service.kernel.domain.event.EventRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.maturity.MaturityRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.specialization.Specialization;
 import ru.tsystems.tchallenge.service.kernel.domain.specialization.SpecializationRepository;
-import ru.tsystems.tchallenge.service.kernel.domain.task.CandidateTaskMapper;
 import ru.tsystems.tchallenge.service.kernel.domain.task.Task;
+import ru.tsystems.tchallenge.service.kernel.domain.task.TaskMapper;
 import ru.tsystems.tchallenge.service.kernel.domain.task.TaskRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.task.option.TaskOption;
 import ru.tsystems.tchallenge.service.kernel.domain.workbook.status.WorkbookStatusRepository;
@@ -237,13 +237,13 @@ public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade 
     }
 
     @Autowired
-    private CandidateTaskMapper candidateTaskMapper;
+    private TaskMapper candidateTaskMapper;
 
     private AssignmentInfo assignmentInfo(final Assignment assignment) {
         final AssignmentInfo info = new AssignmentInfo();
         info.setId(assignment.getId());
         info.setStance(assignment.getStance());
-        info.setTask(candidateTaskMapper.infoClosed(assignment.getTask()));
+        info.setTask(candidateTaskMapper.asInfoRestricted(assignment.getTask()));
         info.setScore(assignment.getScore());
         info.setMaxScore(assignment.getMaxScore());
         info.setScore(assignment.getScore());

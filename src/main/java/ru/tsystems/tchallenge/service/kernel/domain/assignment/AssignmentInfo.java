@@ -1,13 +1,13 @@
 package ru.tsystems.tchallenge.service.kernel.domain.assignment;
 
-import ru.tsystems.tchallenge.service.kernel.domain.task.CandidateTaskInfoClosed;
+import ru.tsystems.tchallenge.service.kernel.domain.task.TaskInfoRestricted;
 import ru.tsystems.tchallenge.service.kernel.generic.GenericInfo;
 
 public final class AssignmentInfo extends GenericInfo {
 
     private String id;
     private Integer stance;
-    private CandidateTaskInfoClosed task;
+    private TaskInfoRestricted task;
     private Integer score;
     private Integer maxScore;
     private String input;
@@ -29,11 +29,11 @@ public final class AssignmentInfo extends GenericInfo {
         this.stance = stance;
     }
 
-    public CandidateTaskInfoClosed getTask() {
+    public TaskInfoRestricted getTask() {
         return task;
     }
 
-    public void setTask(CandidateTaskInfoClosed task) {
+    public void setTask(TaskInfoRestricted task) {
         this.task = task;
     }
 

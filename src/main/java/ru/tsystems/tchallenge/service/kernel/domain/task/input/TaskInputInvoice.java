@@ -2,7 +2,7 @@ package ru.tsystems.tchallenge.service.kernel.domain.task.input;
 
 import ru.tsystems.tchallenge.service.kernel.generic.GenericInvoice;
 
-public final class EmployeeTaskInputInvoice extends GenericInvoice {
+public final class TaskInputInvoice extends GenericInvoice {
 
     private String content;
     private String explanation;

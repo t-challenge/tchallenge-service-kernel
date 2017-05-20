@@ -11,6 +11,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import ru.tsystems.tchallenge.service.kernel.domain.employee.Employee;
+import ru.tsystems.tchallenge.service.kernel.domain.task.family.TaskFamily;
 import ru.tsystems.tchallenge.service.kernel.domain.task.image.TaskImage;
 import ru.tsystems.tchallenge.service.kernel.domain.task.input.TaskInput;
 import ru.tsystems.tchallenge.service.kernel.domain.task.mindflow.TaskMindflow;
@@ -21,14 +22,18 @@ import ru.tsystems.tchallenge.service.kernel.domain.task.expectation.TaskExpecta
 import ru.tsystems.tchallenge.service.kernel.domain.task.ownership.TaskOwnership;
 import ru.tsystems.tchallenge.service.kernel.domain.task.snippet.TaskSnippet;
 import ru.tsystems.tchallenge.service.kernel.domain.task.status.TaskStatus;
+import ru.tsystems.tchallenge.service.kernel.domain.task.tags.TaskTag;
 import ru.tsystems.tchallenge.service.kernel.domain.task.workflow.TaskWorkflow;
 import ru.tsystems.tchallenge.service.kernel.generic.entity.SequentialEntity;
 
 @Entity
 public class Task extends SequentialEntity {
 
-    @Column
-    private String title;
+    @ManyToOne
+    private TaskStatus status;
+
+    @ManyToOne
+    private Employee createdBy;
 
     @Column
     private String introduction;
@@ -36,29 +41,26 @@ public class Task extends SequentialEntity {
     @Column
     private String question;
 
-    @ManyToOne
-    private TaskStatus status;
+    @ManyToMany
+    private Collection<TaskCategory> categories = new ArrayList<>();
 
     @Column
     private Integer complexity;
 
-    @ManyToMany
-    private Collection<TaskCategory> categories = new ArrayList<>();
-
     @ManyToOne
     private TaskDifficulty difficulty;
 
-    @ManyToOne
-    private TaskExpectation expectation;
+    @ManyToMany
+    private Collection<TaskFamily> families = new ArrayList<>();
 
     @ManyToOne
-    private TaskOwnership ownership;
+    private TaskMindflow mindflow;
 
     @ManyToOne
     private TaskWorkflow workflow;
 
     @ManyToOne
-    private TaskMindflow mindflow;
+    private TaskExpectation expectation;
 
     @OneToOne(cascade = CascadeType.ALL)
     private TaskInput input;
@@ -73,24 +75,35 @@ public class Task extends SequentialEntity {
     private Collection<TaskSnippet> snippets = new ArrayList<>();
 
     @ManyToMany
-    private Collection<Employee> authors = new ArrayList<>();
+    private Collection<TaskTag> tags = new ArrayList<>();
 
     @ManyToOne
-    private Employee createdBy;
+    private TaskOwnership ownership;
 
-    public String getTitle() {
-        return title;
+    @ManyToMany
+    private Collection<Employee> authors = new ArrayList<>();
+
+    public TaskStatus getStatus() {
+        return status;
     }
 
-    public void setTitle(final String title) {
-        this.title = title;
+    public void setStatus(TaskStatus status) {
+        this.status = status;
+    }
+
+    public Employee getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(Employee createdBy) {
+        this.createdBy = createdBy;
     }
 
     public String getIntroduction() {
         return introduction;
     }
 
-    public void setIntroduction(final String introduction) {
+    public void setIntroduction(String introduction) {
         this.introduction = introduction;
     }
 
@@ -98,60 +111,40 @@ public class Task extends SequentialEntity {
         return question;
     }
 
-    public void setQuestion(final String question) {
+    public void setQuestion(String question) {
         this.question = question;
-    }
-
-    public TaskStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(final TaskStatus status) {
-        this.status = status;
-    }
-
-    public Integer getComplexity() {
-        return complexity;
-    }
-
-    public void setComplexity(final Integer complexity) {
-        this.complexity = complexity;
     }
 
     public Collection<TaskCategory> getCategories() {
         return categories;
     }
 
+    public void setCategories(Collection<TaskCategory> categories) {
+        this.categories = categories;
+    }
+
+    public Integer getComplexity() {
+        return complexity;
+    }
+
+    public void setComplexity(Integer complexity) {
+        this.complexity = complexity;
+    }
+
     public TaskDifficulty getDifficulty() {
         return difficulty;
     }
 
-    public void setDifficulty(final TaskDifficulty difficulty) {
+    public void setDifficulty(TaskDifficulty difficulty) {
         this.difficulty = difficulty;
     }
 
-    public TaskExpectation getExpectation() {
-        return expectation;
+    public Collection<TaskFamily> getFamilies() {
+        return families;
     }
 
-    public void setExpectation(final TaskExpectation expectation) {
-        this.expectation = expectation;
-    }
-
-    public TaskOwnership getOwnership() {
-        return ownership;
-    }
-
-    public void setOwnership(final TaskOwnership ownership) {
-        this.ownership = ownership;
-    }
-
-    public TaskWorkflow getWorkflow() {
-        return workflow;
-    }
-
-    public void setWorkflow(final TaskWorkflow workflow) {
-        this.workflow = workflow;
+    public void setFamilies(Collection<TaskFamily> families) {
+        this.families = families;
     }
 
     public TaskMindflow getMindflow() {
@@ -162,11 +155,27 @@ public class Task extends SequentialEntity {
         this.mindflow = mindflow;
     }
 
+    public TaskWorkflow getWorkflow() {
+        return workflow;
+    }
+
+    public void setWorkflow(TaskWorkflow workflow) {
+        this.workflow = workflow;
+    }
+
+    public TaskExpectation getExpectation() {
+        return expectation;
+    }
+
+    public void setExpectation(TaskExpectation expectation) {
+        this.expectation = expectation;
+    }
+
     public TaskInput getInput() {
         return input;
     }
 
-    public void setInput(final TaskInput input) {
+    public void setInput(TaskInput input) {
         this.input = input;
     }
 
@@ -174,23 +183,47 @@ public class Task extends SequentialEntity {
         return options;
     }
 
+    public void setOptions(Collection<TaskOption> options) {
+        this.options = options;
+    }
+
     public Collection<TaskImage> getImages() {
         return images;
+    }
+
+    public void setImages(Collection<TaskImage> images) {
+        this.images = images;
     }
 
     public Collection<TaskSnippet> getSnippets() {
         return snippets;
     }
 
+    public void setSnippets(Collection<TaskSnippet> snippets) {
+        this.snippets = snippets;
+    }
+
+    public Collection<TaskTag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Collection<TaskTag> tags) {
+        this.tags = tags;
+    }
+
+    public TaskOwnership getOwnership() {
+        return ownership;
+    }
+
+    public void setOwnership(TaskOwnership ownership) {
+        this.ownership = ownership;
+    }
+
     public Collection<Employee> getAuthors() {
         return authors;
     }
 
-    public Employee getCreatedBy() {
-        return createdBy;
-    }
-
-    public void setCreatedBy(final Employee createdBy) {
-        this.createdBy = createdBy;
+    public void setAuthors(Collection<Employee> authors) {
+        this.authors = authors;
     }
 }

@@ -2,7 +2,7 @@ package ru.tsystems.tchallenge.service.kernel.domain.task.option;
 
 import ru.tsystems.tchallenge.service.kernel.generic.GenericInvoice;
 
-public final class EmployeeTaskOptionInvoice extends GenericInvoice {
+public final class TaskOptionInvoice extends GenericInvoice {
 
     private String content;
     private Boolean correct;

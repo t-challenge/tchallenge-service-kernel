@@ -2,5 +2,9 @@ package ru.tsystems.tchallenge.service.kernel.domain.task.snippet;
 
 public interface TaskSnippetMapper {
 
-    TaskSnippetInfo info(TaskSnippet snippet);
+    TaskSnippet asEntity(TaskSnippetInvoice invoice);
+
+    TaskSnippet asEntityMerged(TaskSnippet entity, TaskSnippetInvoice invoice);
+
+    TaskSnippetInfo asInfo(TaskSnippet snippet);
 }
