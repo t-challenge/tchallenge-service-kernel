@@ -1,9 +1,8 @@
 package ru.tsystems.tchallenge.service.kernel.security.authentication;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import ru.tsystems.tchallenge.service.kernel.conventions.CommonService;
+import ru.tsystems.tchallenge.service.kernel.conventions.components.CommonService;
 import ru.tsystems.tchallenge.service.kernel.domain.account.Account;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountInfo;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountMapper;

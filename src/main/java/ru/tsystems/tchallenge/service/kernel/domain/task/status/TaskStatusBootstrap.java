@@ -4,7 +4,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ru.tsystems.tchallenge.service.kernel.conventions.BootstrapComponent;
+import ru.tsystems.tchallenge.service.kernel.conventions.components.BootstrapComponent;
 import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.EnumeratedEntityBootstrap;
 import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
 

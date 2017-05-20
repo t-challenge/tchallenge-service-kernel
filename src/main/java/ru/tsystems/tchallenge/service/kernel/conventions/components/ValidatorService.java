@@ -1,5 +1,4 @@
-package ru.tsystems.tchallenge.service.kernel.conventions;
-
+package ru.tsystems.tchallenge.service.kernel.conventions.components;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

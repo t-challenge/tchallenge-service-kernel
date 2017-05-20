@@ -1,4 +1,4 @@
-package ru.tsystems.tchallenge.service.kernel.conventions;
+package ru.tsystems.tchallenge.service.kernel.conventions.components;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -16,6 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface CommonService {
+public @interface FacadeService {
 
 }

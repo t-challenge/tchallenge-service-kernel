@@ -2,7 +2,7 @@ package ru.tsystems.tchallenge.service.kernel.domain.robot;
 
 import java.util.stream.Collectors;
 
-import ru.tsystems.tchallenge.service.kernel.conventions.MapperService;
+import ru.tsystems.tchallenge.service.kernel.conventions.components.MapperService;
 import ru.tsystems.tchallenge.service.kernel.domain.robot.role.RobotRole;
 import ru.tsystems.tchallenge.service.kernel.generic.GenericMapper;
 

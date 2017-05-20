@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ru.tsystems.tchallenge.service.kernel.conventions.BootstrapComponent;
+import ru.tsystems.tchallenge.service.kernel.conventions.components.BootstrapComponent;
 import ru.tsystems.tchallenge.service.kernel.domain.event.category.EventCategory;
 import ru.tsystems.tchallenge.service.kernel.domain.event.category.EventCategoryBootstrap;
 import ru.tsystems.tchallenge.service.kernel.domain.event.category.EventCategoryRepository;

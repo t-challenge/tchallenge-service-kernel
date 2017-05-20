@@ -12,14 +12,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import org.hibernate.jpa.criteria.path.MapKeyHelpers;
-import org.hibernate.jpa.internal.metamodel.SingularAttributeImpl;
-
-import ru.tsystems.tchallenge.service.kernel.conventions.FacadeService;
+import ru.tsystems.tchallenge.service.kernel.conventions.components.FacadeService;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountInfo;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.assignment.Assignment;
@@ -42,7 +38,6 @@ import ru.tsystems.tchallenge.service.kernel.validation.access.AccessValidationE
 import ru.tsystems.tchallenge.service.kernel.validation.contract.ContractValidationException;
 import ru.tsystems.tchallenge.service.kernel.validation.contract.PropertyContractViolationInfo;
 import ru.tsystems.tchallenge.service.kernel.validation.resource.ResourceUnavailableViolationInfo;
-import ru.tsystems.tchallenge.service.kernel.validation.resource.ResourceUnknownViolationInfo;
 
 @FacadeService
 public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade {

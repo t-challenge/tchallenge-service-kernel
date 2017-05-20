@@ -4,7 +4,7 @@ import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ru.tsystems.tchallenge.service.kernel.conventions.CommonService;
+import ru.tsystems.tchallenge.service.kernel.conventions.components.CommonService;
 import ru.tsystems.tchallenge.service.kernel.domain.account.realm.AccountRealmRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.account.status.AccountStatusRepository;
 import ru.tsystems.tchallenge.service.kernel.domain.candidate.Candidate;

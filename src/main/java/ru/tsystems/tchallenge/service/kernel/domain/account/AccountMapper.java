@@ -2,7 +2,7 @@ package ru.tsystems.tchallenge.service.kernel.domain.account;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ru.tsystems.tchallenge.service.kernel.conventions.MapperService;
+import ru.tsystems.tchallenge.service.kernel.conventions.components.MapperService;
 import ru.tsystems.tchallenge.service.kernel.domain.candidate.Candidate;
 import ru.tsystems.tchallenge.service.kernel.domain.candidate.CandidateMapper;
 import ru.tsystems.tchallenge.service.kernel.domain.employee.Employee;

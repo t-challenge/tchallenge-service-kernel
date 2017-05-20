@@ -4,7 +4,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ru.tsystems.tchallenge.service.kernel.conventions.MapperService;
+import ru.tsystems.tchallenge.service.kernel.conventions.components.MapperService;
 import ru.tsystems.tchallenge.service.kernel.domain.task.image.TaskImageMapper;
 import ru.tsystems.tchallenge.service.kernel.domain.task.input.CandidateTaskInputMapper;
 import ru.tsystems.tchallenge.service.kernel.domain.task.option.CandidateTaskOptionMapper;

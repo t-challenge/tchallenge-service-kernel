@@ -1,6 +1,5 @@
 package ru.tsystems.tchallenge.service.kernel.domain.task;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -8,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-import ru.tsystems.tchallenge.service.kernel.conventions.FacadeService;
+import ru.tsystems.tchallenge.service.kernel.conventions.components.FacadeService;
 import ru.tsystems.tchallenge.service.kernel.domain.account.Account;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountInfo;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountRepository;

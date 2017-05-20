@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import ru.tsystems.tchallenge.service.kernel.conventions.FacadeService;
+import ru.tsystems.tchallenge.service.kernel.conventions.components.FacadeService;
 import ru.tsystems.tchallenge.service.kernel.generic.GenericFacade;
 import ru.tsystems.tchallenge.service.kernel.generic.page.SearchInfo;
 import ru.tsystems.tchallenge.service.kernel.security.authentication.AuthenticationInfo;

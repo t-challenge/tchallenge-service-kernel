@@ -4,7 +4,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ru.tsystems.tchallenge.service.kernel.conventions.FacadeService;
+import ru.tsystems.tchallenge.service.kernel.conventions.components.FacadeService;
 import ru.tsystems.tchallenge.service.kernel.domain.candidate.Candidate;
 import ru.tsystems.tchallenge.service.kernel.domain.person.Person;
 import ru.tsystems.tchallenge.service.kernel.generic.GenericFacade;

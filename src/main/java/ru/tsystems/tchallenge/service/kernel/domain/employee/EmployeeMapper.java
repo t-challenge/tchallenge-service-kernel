@@ -2,7 +2,7 @@ package ru.tsystems.tchallenge.service.kernel.domain.employee;
 
 import java.util.stream.Collectors;
 
-import ru.tsystems.tchallenge.service.kernel.conventions.MapperService;
+import ru.tsystems.tchallenge.service.kernel.conventions.components.MapperService;
 import ru.tsystems.tchallenge.service.kernel.domain.employee.role.EmployeeRole;
 import ru.tsystems.tchallenge.service.kernel.generic.GenericMapper;
 

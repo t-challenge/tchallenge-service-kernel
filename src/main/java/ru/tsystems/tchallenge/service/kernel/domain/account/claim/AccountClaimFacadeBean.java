@@ -4,14 +4,13 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ru.tsystems.tchallenge.service.kernel.conventions.FacadeService;
+import ru.tsystems.tchallenge.service.kernel.conventions.components.FacadeService;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountInfo;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountInvoice;
 import ru.tsystems.tchallenge.service.kernel.domain.account.AccountService;
 import ru.tsystems.tchallenge.service.kernel.generic.GenericFacade;
 import ru.tsystems.tchallenge.service.kernel.security.credential.EmailCredentialInvoice;
 import ru.tsystems.tchallenge.service.kernel.security.token.TokenFacade;
-import ru.tsystems.tchallenge.service.kernel.security.token.TokenFacadeBean;
 import ru.tsystems.tchallenge.service.kernel.validation.ValidationInfo;
 
 @FacadeService

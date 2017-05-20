@@ -2,7 +2,7 @@ package ru.tsystems.tchallenge.service.kernel.domain.task.image.content;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ru.tsystems.tchallenge.service.kernel.conventions.FacadeService;
+import ru.tsystems.tchallenge.service.kernel.conventions.components.FacadeService;
 import ru.tsystems.tchallenge.service.kernel.generic.GenericFacade;
 
 @FacadeService
