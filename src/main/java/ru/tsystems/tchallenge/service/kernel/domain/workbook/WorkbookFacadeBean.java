@@ -29,6 +29,9 @@ import ru.tsystems.tchallenge.service.kernel.domain.specialization.Specializatio
 import ru.tsystems.tchallenge.service.kernel.domain.task.Task;
 import ru.tsystems.tchallenge.service.kernel.domain.task.TaskMapper;
 import ru.tsystems.tchallenge.service.kernel.domain.task.TaskRepository;
+import ru.tsystems.tchallenge.service.kernel.domain.task.TaskSelectionInfo;
+import ru.tsystems.tchallenge.service.kernel.domain.task.TaskSelectionInvoice;
+import ru.tsystems.tchallenge.service.kernel.domain.task.TaskSelectionService;
 import ru.tsystems.tchallenge.service.kernel.domain.task.option.TaskOption;
 import ru.tsystems.tchallenge.service.kernel.domain.workbook.status.WorkbookStatusRepository;
 import ru.tsystems.tchallenge.service.kernel.generic.GenericFacade;
@@ -69,6 +72,9 @@ public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade 
     @Autowired
     private AssignmentStatusRepository assignmentStatusRepository;
 
+    @Autowired
+    private TaskSelectionService taskSelectionService;
+
     @Override
     public WorkbookInfo create(final WorkbookInvoice invoice) {
         final AuthenticationInfo authentication = this.getSecurityContext().getAuthentication();
@@ -104,12 +110,13 @@ public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade 
         workbook.setStatus(statusRepository.findById("CREATED"));
         workbook.setScore(0);
         workbook.setMaxScore(0);
+        final TaskSelectionInfo taskSelection = taskSelection(event);
         final Collection<Assignment> assignments = new ArrayList<>();
-        taskRepository.findAll().forEach(task -> {
+        taskSelection.getIds().forEach(id -> {
             final Assignment assignment = new Assignment();
             assignment.setMaxScore(100);
             assignment.setScore(0);
-            assignment.setTask(task);
+            assignment.setTask(taskRepository.findById(id));
             assignment.setStance(assignments.size() + 1);
             assignment.setStatus(assignmentStatusRepository.findById("CREATED"));
             assignment.setWorkbook(workbook);
@@ -250,5 +257,12 @@ public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade 
         info.setInput(assignment.getInput());
         info.setStatus(assignment.getStatus().getId());
         return info;
+    }
+
+    private TaskSelectionInfo taskSelection(final Event event) {
+        final TaskSelectionInvoice invoice = new TaskSelectionInvoice();
+        invoice.setAmount(2);
+        invoice.setCategories(Collections.singleton("JAVADEV"));
+        return taskSelectionService.create(invoice);
     }
 }
