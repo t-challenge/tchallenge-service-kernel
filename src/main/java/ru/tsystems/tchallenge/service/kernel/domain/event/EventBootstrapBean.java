@@ -95,13 +95,13 @@ public class EventBootstrapBean extends OrdinalEntityBootstrap<Event> {
         event.setTitle("Гейзенбаг 2017");
         event.setDescription("Для гостей и участников конференции Гейзенбаг 2017");
         event.setGreeting("Добро пожаловать на 3 ежегодную конференцию Гейзенбаг, посвященную всему, что касается тестирования ПО - от создания высокоуровневых планов и спецификаций до деталей технической реализации отдельных тестов");
-        event.setStatus(status("CREATED"));
+        event.setStatus(status("APPROVED"));
         event.setMaturity(maturity("EXPERT"));
         event.getSpecializations().add(specialization("TESTER"));
         event.setCategory(category("FORUM"));
         event.setForum(new Forum());
-        event.setSince(Instant.parse("2017-06-04T09:00:00Z"));
-        event.setUntil(Instant.parse("2017-06-04T17:30:00Z"));
+        event.setSince(Instant.parse("2017-03-31T09:00:00Z"));
+        event.setUntil(Instant.parse("2017-06-01T17:30:00Z"));
         return event;
     }
 
