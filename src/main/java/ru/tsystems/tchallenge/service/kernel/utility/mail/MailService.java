@@ -18,7 +18,7 @@ public class MailService extends GenericService {
         message.setText(invoice.getContent());
         message.setTo(invoice.getTarget());
         message.setSubject(invoice.getSubject());
-        message.setFrom("asInfoComplete@t-challenge.ru");
+        message.setFrom("info@t-challenge.ru");
         try {
             mailSender.send(message);
         } catch (Exception e) {
