@@ -9,6 +9,15 @@ public final class WorkbookInvoice extends GenericInvoice {
     private String maturity;
     private String specialization;
     private String status;
+    private String flashback;
+
+    public String getFlashback() {
+        return flashback;
+    }
+
+    public void setFlashback(String flashback) {
+        this.flashback = flashback;
+    }
 
     public Long getId() {
         return id;

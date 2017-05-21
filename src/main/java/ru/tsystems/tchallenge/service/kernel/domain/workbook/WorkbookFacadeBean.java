@@ -37,6 +37,8 @@ import ru.tsystems.tchallenge.service.kernel.domain.workbook.status.WorkbookStat
 import ru.tsystems.tchallenge.service.kernel.generic.GenericFacade;
 import ru.tsystems.tchallenge.service.kernel.generic.page.SearchInfo;
 import ru.tsystems.tchallenge.service.kernel.security.authentication.AuthenticationInfo;
+import ru.tsystems.tchallenge.service.kernel.utility.mail.MailInvoice;
+import ru.tsystems.tchallenge.service.kernel.utility.mail.MailService;
 import ru.tsystems.tchallenge.service.kernel.validation.access.AccessValidationExceptionEmitter;
 import ru.tsystems.tchallenge.service.kernel.validation.contract.ContractValidationException;
 import ru.tsystems.tchallenge.service.kernel.validation.contract.PropertyContractViolationInfo;
@@ -90,9 +92,6 @@ public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade 
         if (event == null) {
             throw new ContractValidationException(Collections.singleton(new ResourceUnavailableViolationInfo("event", invoice.getEvent())));
         }
-        if (!event.getMaturity().getId().equals(invoice.getMaturity())) {
-            throw new ContractValidationException(Collections.singleton(new PropertyContractViolationInfo("maturity", invoice.getMaturity(), "no such maturity")));
-        }
         if (!event.getSpecializations().stream().map(Specialization::getId).collect(Collectors.toList()).contains(invoice.getSpecialization())) {
             throw new ContractValidationException(Collections.singleton(new PropertyContractViolationInfo("specialization", invoice.getSpecialization(), "no such specialization")));
         }
@@ -125,8 +124,16 @@ public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade 
         });
         workbook.setAssignments(assignments);
         workbookRepository.save(workbook);
+        final MailInvoice mailInvoice = new MailInvoice();
+        mailInvoice.setTarget(account.getEmail());
+        mailInvoice.setSubject(String.format("Рабочая тетрадь #%s - %s", workbook.getId(), event.getTitle()));
+        mailInvoice.setContent(String.format("Создана постоянная ссылка на рабочую тетрадь: " + invoice.getFlashback(), workbook.getId()));
+        mailService.send(mailInvoice);
         return info(workbook);
     }
+
+    @Autowired
+    private MailService mailService;
 
     @Override
     public WorkbookInfo get(final Long id) {
