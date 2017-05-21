@@ -92,7 +92,9 @@ public class EventBootstrapBean extends OrdinalEntityBootstrap<Event> {
     private Event heisenbug2017() {
         final Event event = new Event();
         event.setTextcode("heisenbug2017");
-        event.setTitle("Heisen-Bug 2017");
+        event.setTitle("Гейзенбаг 2017");
+        event.setDescription("Для гостей и участников конференции Гейзенбаг 2017");
+        event.setGreeting("Добро пожаловать на 3 ежегодную конференцию Гейзенбаг, посвященную всему, что касается тестирования ПО - от создания высокоуровневых планов и спецификаций до деталей технической реализации отдельных тестов");
         event.setStatus(status("CREATED"));
         event.setMaturity(maturity("EXPERT"));
         event.getSpecializations().add(specialization("TESTER"));
