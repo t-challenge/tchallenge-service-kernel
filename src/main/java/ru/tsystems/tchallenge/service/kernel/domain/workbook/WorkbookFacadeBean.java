@@ -268,8 +268,8 @@ public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade 
 
     private TaskSelectionInfo taskSelection(final Event event) {
         final TaskSelectionInvoice invoice = new TaskSelectionInvoice();
-        invoice.setAmount(2);
-        invoice.setCategories(Collections.singleton("JAVADEV"));
+        invoice.setAmount(5);
+        invoice.setCategories(Collections.singleton("COMMON"));
         return taskSelectionService.create(invoice);
     }
 }

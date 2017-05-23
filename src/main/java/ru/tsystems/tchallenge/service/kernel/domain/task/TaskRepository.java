@@ -37,6 +37,14 @@ public interface TaskRepository extends OrdinalEntityRepository<Task> {
             "AND t.status.id NOT IN ('DELETED')")
     Task findById(@Param("id") Long id);
 
+    @Query("SELECT DISTINCT t FROM Task AS t " +
+            "JOIN t.categories AS cat " +
+            "WHERE cat.id IN :categories " +
+            "AND t.difficulty.id IN :difficulties " +
+            "AND t.status.id NOT IN ('DELETED')")
+    Collection<Task> findSelection(@Param("categories") Collection<String> categories,
+                                   @Param("difficulties") Collection<String> difficulties);
+
     // TODO: remove this method
     Collection<Task> findAll();
 }

@@ -149,7 +149,7 @@ public class TaskBootstrapBean extends OrdinalEntityBootstrap<Task> {
         task.setQuestion("Сколько классов с методом public static void main() может быть помещено в один Jar-файл?");
         task.setStatus(statusRepository.findById("APPROVED"));
         task.setComplexity(5);
-        task.getCategories().addAll(categories("JAVA"));
+        task.getCategories().addAll(categories("JAVA", "COMMON"));
         task.setDifficulty(difficulty("EASY"));
         task.setExpectation(expectation("SINGLESELECT"));
         task.setOwnership(ownership("PUBLIC"));
