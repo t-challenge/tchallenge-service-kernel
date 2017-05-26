@@ -95,6 +95,7 @@ public class EventBootstrapBean extends OrdinalEntityBootstrap<Event> {
         event.setTitle("Гейзенбаг 2017");
         event.setDescription("Для гостей и участников конференции Гейзенбаг 2017");
         event.setGreeting("Добро пожаловать на 3 ежегодную конференцию Гейзенбаг, посвященную всему, что касается тестирования ПО - от создания высокоуровневых планов и спецификаций до деталей технической реализации отдельных тестов");
+        event.setNotification("Приглашаем Вас посетить мастер-класс 'Тщательный подход к техникам тест-дизайна' на стенде T-Systems в 15:00.");
         event.setStatus(status("APPROVED"));
         event.setMaturity(maturity("EXPERT"));
         event.getSpecializations().add(specialization("TESTER"));

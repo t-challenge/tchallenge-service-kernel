@@ -48,6 +48,9 @@ import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRep
 public class TaskBootstrapBean extends OrdinalEntityBootstrap<Task> {
 
     @Autowired
+    private TaskHeisenbugProviderBean heisenbugTaskProvider;
+
+    @Autowired
     private AccountBootstrap accountBootstrap;
 
     @Autowired
@@ -115,195 +118,11 @@ public class TaskBootstrapBean extends OrdinalEntityBootstrap<Task> {
 
     @Override
     protected void collectEntities(final Collection<Task> tasks) {
-        tasks.add(seattleTask());
-        tasks.add(jarTask());
-        tasks.add(imageTask());
-        tasks.add(snippetTask());
+        tasks.addAll(heisenbugTaskProvider.getTasks());
     }
 
     @Override
     protected GenericEntityRepository<Task, Long> getRepository() {
         return taskRepository;
-    }
-
-    private Task seattleTask() {
-        final Task task = new Task();
-        task.setQuestion("Сколько нужно человек, чтобы вымыть все окна в Сиэттле?");
-        task.setStatus(statusRepository.findById("CREATED"));
-        task.setComplexity(5);
-        task.getCategories().addAll(categories("COMMON"));
-        task.setDifficulty(difficulty("EASY"));
-        task.setExpectation(expectation("SMALLINPUT"));
-        task.setOwnership(ownership("PUBLIC"));
-        task.setMindflow(mindflow("ANALYSES"));
-        task.setWorkflow(workflow("MACHINE"));
-        task.setCreatedBy(petrov());
-        task.getAuthors().add(petrov());
-        task.getAuthors().add(kuznetcov());
-        task.setInput(input("4", "Просто так"));
-        return task;
-    }
-
-    private Task jarTask() {
-        final Task task = new Task();
-        task.setQuestion("Сколько классов с методом public static void main() может быть помещено в один Jar-файл?");
-        task.setStatus(statusRepository.findById("APPROVED"));
-        task.setComplexity(5);
-        task.getCategories().addAll(categories("JAVA", "COMMON"));
-        task.setDifficulty(difficulty("EASY"));
-        task.setExpectation(expectation("SINGLESELECT"));
-        task.setOwnership(ownership("PUBLIC"));
-        task.setMindflow(mindflow("ANALYSES"));
-        task.setWorkflow(workflow("MACHINE"));
-        task.setCreatedBy(petrov());
-        task.getAuthors().add(petrov());
-        task.getAuthors().add(kuznetcov());
-        task.getOptions().add(option("A", "Только один класс.", 0, ""));
-        task.getOptions().add(option("B", "По одному классу в каждом пакете.", 0, ""));
-        task.getOptions().add(option("C", "Сколь угодно много классов.", 1, ""));
-        task.getOptions().add(option("D", "Сколь угодно много классов, если каждый из них записан в манифесте.", 0, ""));
-        task.setMindflow(mindflow("ANALYSES"));
-        return task;
-    }
-
-    private Task imageTask() {
-        final Task task = new Task();
-        task.setQuestion("В этой задаче использованы рисунки, все верно?");
-        task.setStatus(statusRepository.findById("APPROVED"));
-        task.setComplexity(5);
-        task.getCategories().addAll(categories("COMMON"));
-        task.setDifficulty(difficulty("EASY"));
-        task.setExpectation(expectation("SINGLESELECT"));
-        task.setOwnership(ownership("PUBLIC"));
-        task.setMindflow(mindflow("ANALYSES"));
-        task.setWorkflow(workflow("MACHINE"));
-        task.setCreatedBy(petrov());
-        task.getAuthors().add(petrov());
-        task.getAuthors().add(kuznetcov());
-        task.getOptions().add(option("A", "Да.", 1, ""));
-        task.getOptions().add(option("B", "Нет.", 0, ""));
-        task.getImages().add(image(1, "GIF"));
-        task.getImages().add(image(2, "JPEG"));
-        task.getImages().add(image(3, "PNG"));
-        task.setMindflow(mindflow("ANALYSES"));
-        return task;
-    }
-
-    private Task snippetTask() {
-        final Task task = new Task();
-        task.setQuestion("В этой задаче использованы отрывки кода, все верно?");
-        task.setStatus(statusRepository.findById("APPROVED"));
-        task.setComplexity(5);
-        task.getCategories().addAll(categories("COMMON"));
-        task.setDifficulty(difficulty("EASY"));
-        task.setExpectation(expectation("SINGLESELECT"));
-        task.setOwnership(ownership("PUBLIC"));
-        task.setMindflow(mindflow("ANALYSES"));
-        task.setWorkflow(workflow("MACHINE"));
-        task.setCreatedBy(petrov());
-        task.getAuthors().add(petrov());
-        task.getAuthors().add(kuznetcov());
-        task.getOptions().add(option("A", "Да.", 1, ""));
-        task.getOptions().add(option("B", "Нет.", 0, ""));
-        task.getSnippets().add(snippet(1, "JAVA"));
-        task.getSnippets().add(snippet(2, "CONSOLE"));
-        task.setMindflow(mindflow("ANALYSES"));
-        return task;
-    }
-
-    private Employee petrov() {
-        return employee("ivan.sidorov@some-email.com");
-    }
-
-    private Employee kuznetcov() {
-        return employee("ivan.sidorov@some-email.com");
-    }
-
-    private Employee employee(final String login) {
-        return accountRepository.findByLogin(login).getEmployee();
-    }
-
-    private Collection<TaskCategory> categories(final String... ids) {
-        return categoryRepository.findAllById(Arrays.asList(ids));
-    }
-
-    private TaskDifficulty difficulty(final String id) {
-        return difficultyRepository.findById(id);
-    }
-
-    private TaskExpectation expectation(final String id) {
-        return expectationRepository.findById(id);
-    }
-/*
-    private TaskMindflow mindflow(final String id) {
-        return mindflowRepository.findById(id);
-    }
-*/
-    private TaskWorkflow workflow(final String id) {
-        return workflowRepository.findById(id);
-    }
-
-    private TaskMindflow mindflow(final String id) {
-        return mindflowRepository.findById(id);
-    }
-
-    private TaskOwnership ownership(final String id) {
-        return ownershipRepository.findById(id);
-    }
-
-    private TaskInput input(final String content,
-                            final String explanation) {
-        final TaskInput input = new TaskInput();
-        input.setContent(content);
-        input.setExplanation(explanation);
-        return input;
-    }
-
-    private TaskOption option(final String textcode,
-                              final String content,
-                              final Integer correct,
-                              final String explanation) {
-        final TaskOption option = new TaskOption();
-        option.setTextcode(textcode);
-        option.setContent(content);
-        option.setCorrect(correct);
-        option.setExplanation(explanation);
-        return option;
-    }
-
-    private TaskImage image(final Integer stance,
-                            final String format) {
-        final TaskImage image = new TaskImage();
-        image.setContent(imageContent("some binary data"));
-        image.setDescription("some description");
-        image.setFormat(imageFormat(format));
-        image.setStance(stance);
-        image.setHeight(100);
-        image.setWidth(100);
-        return image;
-    }
-
-    private TaskSnippet snippet(final Integer stance,
-                                final String style) {
-        final TaskSnippet snippet = new TaskSnippet();
-        snippet.setContent("some code snippet here");
-        snippet.setStyle(snippetStyle(style));
-        snippet.setStance(stance);
-        return snippet;
-    }
-
-    private TaskImageFormat imageFormat(final String id) {
-        return imageFormatRepository.findById(id);
-    }
-
-    private TaskSnippetStyle snippetStyle(final String id) {
-        return snippetStyleRepository.findById(id);
-    }
-
-    private String imageContent(final String binarySample) {
-        final TaskImageContent content = new TaskImageContent();
-        content.setBinaryData(binarySample.getBytes());
-        imageContentRepository.save(content);
-        return content.getId();
     }
 }

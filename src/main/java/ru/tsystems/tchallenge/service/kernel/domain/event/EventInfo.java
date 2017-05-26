@@ -13,6 +13,7 @@ public final class EventInfo extends GenericInfo {
     private final String title;
     private final String description;
     private final String greeting;
+    private final String notification;
     private final String status;
     private final String maturity;
     private final Collection<String> specializations;
@@ -24,6 +25,7 @@ public final class EventInfo extends GenericInfo {
                      final String title,
                      final String description,
                      final String greeting,
+                     final String notification,
                      final String status,
                      final String maturity,
                      final Collection<String> specializations,
@@ -34,6 +36,7 @@ public final class EventInfo extends GenericInfo {
         this.title = title;
         this.description = description;
         this.greeting = greeting;
+        this.notification = notification;
         this.status = status;
         this.maturity = maturity;
         this.specializations = new ArrayList<>(specializations);
@@ -56,6 +59,10 @@ public final class EventInfo extends GenericInfo {
 
     public String getGreeting() {
         return greeting;
+    }
+
+    public String getNotification() {
+        return notification;
     }
 
     public String getStatus() {

@@ -26,6 +26,7 @@ public class EventMapperBean extends GenericMapper implements EventMapper {
                 event.getTitle(),
                 event.getDescription(),
                 event.getGreeting(),
+                event.getNotification(),
                 event.getStatus().getId(),
                 event.getMaturity().getId(),
                 event.getSpecializations().stream().map(Specialization::getId).collect(Collectors.toList()),

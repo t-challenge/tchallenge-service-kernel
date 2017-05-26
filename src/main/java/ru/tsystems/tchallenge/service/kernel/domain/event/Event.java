@@ -32,6 +32,9 @@ public class Event extends SequentialEntity {
     @Column
     private String greeting;
 
+    @Column
+    private String notification;
+
     @ManyToOne
     private EventCategory category;
 
@@ -136,5 +139,13 @@ public class Event extends SequentialEntity {
 
     public void setUntil(Instant until) {
         this.until = until;
+    }
+
+    public String getNotification() {
+        return notification;
+    }
+
+    public void setNotification(String notification) {
+        this.notification = notification;
     }
 }

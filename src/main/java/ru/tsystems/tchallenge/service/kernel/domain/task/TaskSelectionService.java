@@ -3,6 +3,7 @@ package ru.tsystems.tchallenge.service.kernel.domain.task;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,10 @@ public class TaskSelectionService {
                 .map(Task::getId)
                 .collect(Collectors.toList());
 
-        final Collection<Long> mediumIds = taskRepository
+        final List<Long> mediumIds = taskRepository
                 .findSelection(invoice.getCategories(), Collections.singleton("MEDIUM"))
                 .stream()
-                .limit(mediumAmount)
+                .limit(10)
                 .map(Task::getId)
                 .collect(Collectors.toList());
 
@@ -43,9 +44,10 @@ public class TaskSelectionService {
 
         final TaskSelectionInfo result = new TaskSelectionInfo();
         result.setIds(new ArrayList<>());
-        result.getIds().addAll(easyIds);
-        result.getIds().addAll(mediumIds);
-        result.getIds().addAll(hardIds);
+        Collections.shuffle(mediumIds);
+//        result.getIds().addAll(easyIds);
+        result.getIds().addAll(mediumIds.subList(0, 5));
+//        result.getIds().addAll(hardIds);
         return result;
     }
 }
