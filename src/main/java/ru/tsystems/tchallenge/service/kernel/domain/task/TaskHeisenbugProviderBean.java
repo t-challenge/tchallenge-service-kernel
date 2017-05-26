@@ -207,7 +207,7 @@ public class TaskHeisenbugProviderBean {
         result.getOptions().add(option("A", "Определить, когда нужно заканчивать тестирование", 0, ""));
         result.getOptions().add(option("B", "Определить окончание уровня тестирования", 0, ""));
         result.getOptions().add(option("C", "Определить, когда набор тестов достиг определенной цели", 0, ""));
-        result.getOptions().add(option("D", "", 1, "Все вышеперечисленное"));
+        result.getOptions().add(option("D", "Все вышеперечисленное", 1, ""));
         return result;
     }
 
