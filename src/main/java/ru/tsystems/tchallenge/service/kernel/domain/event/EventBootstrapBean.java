@@ -94,7 +94,7 @@ public class EventBootstrapBean extends OrdinalEntityBootstrap<Event> {
         event.setTextcode("heisenbug2017");
         event.setTitle("Гейзенбаг 2017");
         event.setDescription("Для гостей и участников конференции Гейзенбаг 2017");
-        event.setGreeting("Добро пожаловать на 3 ежегодную конференцию Гейзенбаг, посвященную всему, что касается тестирования ПО - от создания высокоуровневых планов и спецификаций до деталей технической реализации отдельных тестов");
+        event.setGreeting("Примите участие в T-Challenge от T-Systems чтобы получить приз");
         event.setNotification("Приглашаем Вас посетить мастер-класс 'Тщательный подход к техникам тест-дизайна' на стенде T-Systems в 15:00.");
         event.setStatus(status("APPROVED"));
         event.setMaturity(maturity("EXPERT"));
@@ -102,7 +102,7 @@ public class EventBootstrapBean extends OrdinalEntityBootstrap<Event> {
         event.setCategory(category("FORUM"));
         event.setForum(new Forum());
         event.setSince(Instant.parse("2017-03-31T09:00:00Z"));
-        event.setUntil(Instant.parse("2017-06-01T17:30:00Z"));
+        event.setUntil(Instant.parse("2017-06-05T17:30:00Z"));
         return event;
     }
 

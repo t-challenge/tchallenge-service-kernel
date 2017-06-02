@@ -126,8 +126,10 @@ public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade 
         workbookRepository.save(workbook);
         final MailInvoice mailInvoice = new MailInvoice();
         mailInvoice.setTarget(account.getEmail());
-        mailInvoice.setSubject(String.format("Рабочая тетрадь #%s - %s", workbook.getId(), event.getTitle()));
-        mailInvoice.setContent(String.format("Создана постоянная ссылка на рабочую тетрадь: " + invoice.getFlashback(), workbook.getId()));
+        mailInvoice.setSubject(String.format("Создана Ваша рабочая тетрадь T-Challenge"));
+        final String url = String.format(invoice.getFlashback(), workbook.getId());
+        mailInvoice.setContent("<html><head><meta charset=\"UTF-8\"></head><body><h3>Создана Ваша рабочая тетрадь T-Challenge</h3>" +
+                "<a href=\"" + url + "\">Воспользуйтесь этой ссылкой, чтобы пройти тест</a></body></html>");
         mailService.send(mailInvoice);
         return info(workbook);
     }

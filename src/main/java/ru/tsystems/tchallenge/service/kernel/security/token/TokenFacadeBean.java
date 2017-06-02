@@ -45,11 +45,11 @@ public class TokenFacadeBean extends GenericFacade implements TokenFacade {
         final TokenInfo info = authenticationService.create(credential).getToken();
         final MailInvoice mailInvoice = new MailInvoice();
         mailInvoice.setTarget(credential.getEmail());
-        mailInvoice.setSubject("Вход в ваш аккаунт T-Challenge");
+        mailInvoice.setSubject("Примите участие в T-Challenge");
         final String delimiter = credential.getFlashback().contains("?") ? "&" : "?";
         final String url = credential.getFlashback() + delimiter + "token=" + info.getId();
-        final String flashback = credential.getFlashback() != null ? credential.getFlashback() : "no";
-        mailInvoice.setContent(String.format("Вход в Ваш аккаунт выполнен - воспользуйтесь это ссылкой для перехода в приложение: %s. Если Вы не выполняли этих действий, пожалуйста, обратитесь в службу поддержки.", url));
+        mailInvoice.setContent("<html><head><meta charset=\"UTF-8\"></head><body><h3>Вход в Ваш аккаунт:</h3>" +
+                "<a href=\"" + url + "\">Воспользуйтесь этой ссылкой для перехода в приложение.</a></body></html>");
         mailService.send(mailInvoice);
     }
 
