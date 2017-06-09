@@ -110,7 +110,7 @@ public class EventBootstrapBean extends OrdinalEntityBootstrap<Event> {
     private Event javaschool21() {
         final Event event = new Event();
         event.setTextcode("javaschool21");
-        event.setTitle("T-Systems Java School 21");
+        event.setTitle("Java School 21");
         event.setDescription("Для поступающих в Java-школу от компании T-Systems");
         event.setGreeting("Пройдите тест и получите приглашение на финальное отборочное собеседование с Вашими будущими преподавателями и кураторами");
         event.setStatus(status("APPROVED"));
