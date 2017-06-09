@@ -133,7 +133,7 @@ public class TaskHeisenbugProviderBean {
         result.setQuestion("Аббревиатура PDCA (в рамках процесса разработки ПО) расшифровывается как:");
         result.setStatus(statusRepository.findById("APPROVED"));
         result.setComplexity(5);
-        result.getCategories().addAll(categories("TEST"));
+        result.getCategories().addAll(categories("JAVA", "TEST"));
         result.setDifficulty(difficulty("MEDIUM"));
         result.setExpectation(expectation("SINGLESELECT"));
         result.setOwnership(ownership("PUBLIC"));
@@ -154,7 +154,7 @@ public class TaskHeisenbugProviderBean {
         result.setQuestion("Имеется поле ввода возраста. По требованию допустимые значения от 18 до 71 включительно. Какие значения необходимо проверить, применив технику анализа граничных значений?");
         result.setStatus(statusRepository.findById("APPROVED"));
         result.setComplexity(5);
-        result.getCategories().addAll(categories("TEST"));
+        result.getCategories().addAll(categories("JAVA", "TEST"));
         result.setDifficulty(difficulty("MEDIUM"));
         result.setExpectation(expectation("SINGLESELECT"));
         result.setOwnership(ownership("PUBLIC"));
@@ -175,7 +175,7 @@ public class TaskHeisenbugProviderBean {
         result.setQuestion("Что относится к нефункциональному тестированию?");
         result.setStatus(statusRepository.findById("APPROVED"));
         result.setComplexity(5);
-        result.getCategories().addAll(categories("TEST"));
+        result.getCategories().addAll(categories("JAVA", "TEST"));
         result.setDifficulty(difficulty("MEDIUM"));
         result.setExpectation(expectation("SINGLESELECT"));
         result.setOwnership(ownership("PUBLIC"));
@@ -195,7 +195,7 @@ public class TaskHeisenbugProviderBean {
         result.setQuestion("Какова цель критерия выхода?");
         result.setStatus(statusRepository.findById("APPROVED"));
         result.setComplexity(5);
-        result.getCategories().addAll(categories("TEST"));
+        result.getCategories().addAll(categories("JAVA", "TEST"));
         result.setDifficulty(difficulty("MEDIUM"));
         result.setExpectation(expectation("SINGLESELECT"));
         result.setOwnership(ownership("PUBLIC"));
@@ -216,7 +216,7 @@ public class TaskHeisenbugProviderBean {
         result.setQuestion("Какой инструмент используется для тестирования веб-сервисов?");
         result.setStatus(statusRepository.findById("APPROVED"));
         result.setComplexity(5);
-        result.getCategories().addAll(categories("TEST"));
+        result.getCategories().addAll(categories("JAVA", "TEST"));
         result.setDifficulty(difficulty("MEDIUM"));
         result.setExpectation(expectation("SINGLESELECT"));
         result.setOwnership(ownership("PUBLIC"));
@@ -237,7 +237,7 @@ public class TaskHeisenbugProviderBean {
         result.setQuestion("Что не относится к проектным рискам:");
         result.setStatus(statusRepository.findById("APPROVED"));
         result.setComplexity(5);
-        result.getCategories().addAll(categories("TEST"));
+        result.getCategories().addAll(categories("JAVA", "TEST"));
         result.setDifficulty(difficulty("MEDIUM"));
         result.setExpectation(expectation("SINGLESELECT"));
         result.setOwnership(ownership("PUBLIC"));
@@ -258,7 +258,7 @@ public class TaskHeisenbugProviderBean {
         result.setQuestion("Каким образом могут быть определены классы эквивалентности:");
         result.setStatus(statusRepository.findById("APPROVED"));
         result.setComplexity(5);
-        result.getCategories().addAll(categories("TEST"));
+        result.getCategories().addAll(categories("JAVA", "TEST"));
         result.setDifficulty(difficulty("MEDIUM"));
         result.setExpectation(expectation("SINGLESELECT"));
         result.setOwnership(ownership("PUBLIC"));
@@ -279,7 +279,7 @@ public class TaskHeisenbugProviderBean {
         result.setQuestion("К итеративно-инкрементным моделям разработки программного обеспечения относится (относятся):");
         result.setStatus(statusRepository.findById("APPROVED"));
         result.setComplexity(5);
-        result.getCategories().addAll(categories("TEST"));
+        result.getCategories().addAll(categories("JAVA", "TEST"));
         result.setDifficulty(difficulty("MEDIUM"));
         result.setExpectation(expectation("SINGLESELECT"));
         result.setOwnership(ownership("PUBLIC"));
@@ -300,7 +300,7 @@ public class TaskHeisenbugProviderBean {
         result.setQuestion("Какая из следующих активностей относится к этапу анализа и проектирования тестовых сценариев:");
         result.setStatus(statusRepository.findById("APPROVED"));
         result.setComplexity(5);
-        result.getCategories().addAll(categories("TEST"));
+        result.getCategories().addAll(categories("JAVA", "TEST"));
         result.setDifficulty(difficulty("MEDIUM"));
         result.setExpectation(expectation("SINGLESELECT"));
         result.setOwnership(ownership("PUBLIC"));
@@ -321,7 +321,7 @@ public class TaskHeisenbugProviderBean {
         result.setQuestion("Принцип тестирования 'парадокс пестицида' означает следующее:");
         result.setStatus(statusRepository.findById("APPROVED"));
         result.setComplexity(5);
-        result.getCategories().addAll(categories("TEST"));
+        result.getCategories().addAll(categories("JAVA", "TEST"));
         result.setDifficulty(difficulty("MEDIUM"));
         result.setExpectation(expectation("SINGLESELECT"));
         result.setOwnership(ownership("PUBLIC"));

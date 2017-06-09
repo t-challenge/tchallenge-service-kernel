@@ -57,6 +57,7 @@ public class EventBootstrapBean extends OrdinalEntityBootstrap<Event> {
         events.add(joker2016());
         events.add(findIt2017());
         events.add(heisenbug2017());
+        events.add(javaschool21());
     }
 
     private Event joker2016() {
@@ -103,6 +104,22 @@ public class EventBootstrapBean extends OrdinalEntityBootstrap<Event> {
         event.setForum(new Forum());
         event.setSince(Instant.parse("2017-03-31T09:00:00Z"));
         event.setUntil(Instant.parse("2017-06-05T17:30:00Z"));
+        return event;
+    }
+
+    private Event javaschool21() {
+        final Event event = new Event();
+        event.setTextcode("javaschool21");
+        event.setTitle("T-Systems Java School 21");
+        event.setDescription("Для поступающих в Java-школу от компании T-Systems");
+        event.setGreeting("Пройдите тест и получите приглашение на финальное отборочное собеседование с Вашими будущими преподавателями и кураторами");
+        event.setStatus(status("APPROVED"));
+        event.setMaturity(maturity("EXPERT"));
+        event.getSpecializations().add(specialization("JAVADEV"));
+        event.setCategory(category("FORUM"));
+        event.setForum(new Forum());
+        event.setSince(Instant.parse("2017-06-09T00:00:00Z"));
+        event.setUntil(Instant.parse("2017-07-01T00:00:00Z"));
         return event;
     }
 
