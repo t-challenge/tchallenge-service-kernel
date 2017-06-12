@@ -16,8 +16,16 @@ public class EmployeeRoleBootstrap extends EnumeratedEntityBootstrap<EmployeeRol
 
     @Override
     protected void collectIds(final Collection<String> ids) {
-        ids.add("TASK_MODERATOR");
-        ids.add("EVENT_MODERATOR");
+        ids.add("CANDMOD");
+        ids.add("CANDVIEW");
+        ids.add("EVENTMOD");
+        ids.add("EVENTVIEW");
+        ids.add("TASKMOD");
+        ids.add("TASKVIEW");
+        ids.add("WBKMOD");
+        ids.add("WBKVIEW");
+        ids.add("USERMOD");
+        ids.add("ADMIN");
     }
 
     @Override
