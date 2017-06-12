@@ -20,6 +20,7 @@ import ru.tsystems.tchallenge.service.kernel.domain.account.status.AccountStatus
 import ru.tsystems.tchallenge.service.kernel.domain.account.status.AccountStatusRepository;
 import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.OrdinalEntityBootstrap;
 import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
+import ru.tsystems.tchallenge.service.kernel.utility.encryption.EncryptionService;
 
 @BootstrapComponent
 public class AccountBootstrap extends OrdinalEntityBootstrap<Account> {
@@ -51,6 +52,9 @@ public class AccountBootstrap extends OrdinalEntityBootstrap<Account> {
     @Autowired
     private RobotRoleRepository robotRoleRepository;
 
+    @Autowired
+    private EncryptionService encryptionService;
+
     @Override
     protected void collectEntities(Collection<Account> accounts) {
         accounts.add(sidorov());
@@ -62,10 +66,10 @@ public class AccountBootstrap extends OrdinalEntityBootstrap<Account> {
         final Account account = new Account();
         account.setEmail("ivan.sidorov@some-email.com");
         account.setLogin("ivan.sidorov@some-email.com");
-        account.setSecretHash("hash");
+        account.setSecretHash(encryptionService.accountSecretHash("test"));
         account.setRealm(realmRepository.findById("EMPLOYEE"));
         account.setStatus(statusRepository.findById("APPROVED"));
-        account.setEmployee(employee("TASK_MODERATOR"));
+        account.setEmployee(employee("EVENTMOD", "TASKMOD", "ADMIN"));
         account.setPerson(person("Иван", "Сидоров"));
         return account;
     }
