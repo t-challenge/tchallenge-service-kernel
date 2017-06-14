@@ -5,28 +5,33 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ru.tsystems.tchallenge.service.kernel.conventions.components.BootstrapComponent;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedEntityMapper;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedInvoice;
 import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.EnumeratedEntityBootstrap;
-import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
+import ru.tsystems.tchallenge.service.kernel.generic.repository.EnumeratedEntityRepository;
 
 @BootstrapComponent
 public class TaskFamilyBootstrapBean extends EnumeratedEntityBootstrap<TaskFamily> {
 
     @Autowired
-    private TaskFamilyRepository repository;
+    private EnumeratedEntityMapper<TaskFamily> mapper;
+
+    @Autowired
+    private EnumeratedEntityRepository<TaskFamily> repository;
 
     @Override
-    protected void collectIds(final Collection<String> ids) {
-        ids.add("MOOR-LAW");
-        ids.add("CYPHER-LAW");
+    protected void collectInvoices(Collection<EnumeratedInvoice> invoices) {
+        invoices.add(enumerated("MOOR-LAW", "Moor law"));
+        invoices.add(enumerated("CYPHER-LAW", "Cypher law"));
     }
 
     @Override
-    protected TaskFamily enumerated(final String id) {
-        return new TaskFamily(id);
+    protected EnumeratedEntityMapper<TaskFamily> getMapper() {
+        return mapper;
     }
 
     @Override
-    protected GenericEntityRepository<TaskFamily, String> getRepository() {
+    protected EnumeratedEntityRepository<TaskFamily> getRepository() {
         return repository;
     }
 }

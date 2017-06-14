@@ -5,31 +5,38 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ru.tsystems.tchallenge.service.kernel.conventions.components.BootstrapComponent;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedEntityMapper;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedInvoice;
 import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.EnumeratedEntityBootstrap;
-import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
+import ru.tsystems.tchallenge.service.kernel.generic.repository.EnumeratedEntityRepository;
 
 @BootstrapComponent
 public class TaskSnippetStyleBootstrap extends EnumeratedEntityBootstrap<TaskSnippetStyle> {
 
     @Autowired
-    private TaskSnippetStyleRepository repository;
+    private EnumeratedEntityMapper<TaskSnippetStyle> mapper;
+
+    @Autowired
+    private EnumeratedEntityRepository<TaskSnippetStyle> repository;
 
     @Override
-    protected void collectIds(final Collection<String> ids) {
-        ids.add("CONSOLE");
-        ids.add("JAVA");
-        ids.add("JAVASCRIPT");
-        ids.add("HTML");
-        ids.add("CSS");
+    protected void collectInvoices(Collection<EnumeratedInvoice> invoices) {
+        invoices.add(enumerated("GENERIC", "Базовый стиль"));
+        invoices.add(enumerated("CONSOLE", "Вывод консоли"));
+        invoices.add(enumerated("JAVA", "Java код"));
+        invoices.add(enumerated("JAVASCRIPT", "JavaScript/ECMA скрипт"));
+        invoices.add(enumerated("HTML", "HTML документ"));
+        invoices.add(enumerated("CSS", "Каскадные таблицы стилей CSS"));
+        invoices.add(enumerated("SQL", "SQL запрос"));
     }
 
     @Override
-    protected TaskSnippetStyle enumerated(final String id) {
-        return new TaskSnippetStyle(id);
+    protected EnumeratedEntityMapper<TaskSnippetStyle> getMapper() {
+        return mapper;
     }
 
     @Override
-    protected GenericEntityRepository<TaskSnippetStyle, String> getRepository() {
+    protected EnumeratedEntityRepository<TaskSnippetStyle> getRepository() {
         return repository;
     }
 }

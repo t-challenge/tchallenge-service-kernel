@@ -5,29 +5,34 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ru.tsystems.tchallenge.service.kernel.conventions.components.BootstrapComponent;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedEntityMapper;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedInvoice;
 import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.EnumeratedEntityBootstrap;
-import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
+import ru.tsystems.tchallenge.service.kernel.generic.repository.EnumeratedEntityRepository;
 
 @BootstrapComponent
 public class TaskImageFormatBootstrap extends EnumeratedEntityBootstrap<TaskImageFormat> {
 
     @Autowired
-    private TaskImageFormatRepository repository;
+    private EnumeratedEntityMapper<TaskImageFormat> mapper;
+
+    @Autowired
+    private EnumeratedEntityRepository<TaskImageFormat> repository;
 
     @Override
-    protected void collectIds(final Collection<String> ids) {
-        ids.add("GIF");
-        ids.add("JPEG");
-        ids.add("PNG");
+    protected void collectInvoices(Collection<EnumeratedInvoice> invoices) {
+        invoices.add(enumerated("GIF", "Векторный рисунок (GIF)"));
+        invoices.add(enumerated("JPEG", "Растровая графика (JPEG)"));
+        invoices.add(enumerated("PNG", "Растровая графика (PNG)"));
     }
 
     @Override
-    protected TaskImageFormat enumerated(final String id) {
-        return new TaskImageFormat(id);
+    protected EnumeratedEntityMapper<TaskImageFormat> getMapper() {
+        return mapper;
     }
 
     @Override
-    protected GenericEntityRepository<TaskImageFormat, String> getRepository() {
+    protected EnumeratedEntityRepository<TaskImageFormat> getRepository() {
         return repository;
     }
 }

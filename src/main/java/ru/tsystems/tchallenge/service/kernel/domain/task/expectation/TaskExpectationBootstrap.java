@@ -5,30 +5,35 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ru.tsystems.tchallenge.service.kernel.conventions.components.BootstrapComponent;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedEntityMapper;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedInvoice;
 import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.EnumeratedEntityBootstrap;
-import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
+import ru.tsystems.tchallenge.service.kernel.generic.repository.EnumeratedEntityRepository;
 
 @BootstrapComponent
 public class TaskExpectationBootstrap extends EnumeratedEntityBootstrap<TaskExpectation> {
 
     @Autowired
-    private TaskExpectationRepository repository;
+    private EnumeratedEntityMapper<TaskExpectation> mapper;
+
+    @Autowired
+    private EnumeratedEntityRepository<TaskExpectation> repository;
 
     @Override
-    protected void collectIds(final Collection<String> ids) {
-        ids.add("SINGLESELECT");
-        ids.add("MULTISELECT");
-        ids.add("SMALLINPUT");
-        ids.add("LARGEINPUT");
+    protected void collectInvoices(Collection<EnumeratedInvoice> invoices) {
+        invoices.add(enumerated("SINGLESELECT", "Одиночный выбор"));
+        invoices.add(enumerated("MULTISELECT", "Множественный выбор"));
+        invoices.add(enumerated("SMALLINPUT", "Открытый ответ (короткий)"));
+        invoices.add(enumerated("LARGEINPUT", "Открытый ответ (обширный)"));
     }
 
     @Override
-    protected TaskExpectation enumerated(final String id) {
-        return new TaskExpectation(id);
+    protected EnumeratedEntityMapper<TaskExpectation> getMapper() {
+        return mapper;
     }
 
     @Override
-    protected GenericEntityRepository<TaskExpectation, String> getRepository() {
+    protected EnumeratedEntityRepository<TaskExpectation> getRepository() {
         return repository;
     }
 }

@@ -5,29 +5,34 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ru.tsystems.tchallenge.service.kernel.conventions.components.BootstrapComponent;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedEntityMapper;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedInvoice;
 import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.EnumeratedEntityBootstrap;
-import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
+import ru.tsystems.tchallenge.service.kernel.generic.repository.EnumeratedEntityRepository;
 
 @BootstrapComponent
 public class AccountRealmBootstrap extends EnumeratedEntityBootstrap<AccountRealm> {
 
     @Autowired
-    private AccountRealmRepository repository;
+    private EnumeratedEntityMapper<AccountRealm> mapper;
+
+    @Autowired
+    private EnumeratedEntityRepository<AccountRealm> repository;
 
     @Override
-    protected void collectIds(final Collection<String> ids) {
-        ids.add("CANDIDATE");
-        ids.add("EMPLOYEE");
-        ids.add("ROBOT");
+    protected void collectInvoices(Collection<EnumeratedInvoice> invoices) {
+        invoices.add(enumerated("CANDIDATE", "Внешний кандидат"));
+        invoices.add(enumerated("EMPLOYEE", "Сотрудник компании"));
+        invoices.add(enumerated("ROBOT", "Сервис или сторонее приложение"));
     }
 
     @Override
-    protected AccountRealm enumerated(final String id) {
-        return new AccountRealm(id);
+    protected EnumeratedEntityMapper<AccountRealm> getMapper() {
+        return mapper;
     }
 
     @Override
-    protected GenericEntityRepository<AccountRealm, String> getRepository() {
+    protected EnumeratedEntityRepository<AccountRealm> getRepository() {
         return repository;
     }
 }

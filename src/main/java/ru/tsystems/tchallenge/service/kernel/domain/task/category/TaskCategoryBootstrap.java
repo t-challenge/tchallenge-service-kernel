@@ -5,36 +5,41 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ru.tsystems.tchallenge.service.kernel.conventions.components.BootstrapComponent;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedEntityMapper;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedInvoice;
 import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.EnumeratedEntityBootstrap;
-import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
+import ru.tsystems.tchallenge.service.kernel.generic.repository.EnumeratedEntityRepository;
 
 @BootstrapComponent
 public class TaskCategoryBootstrap extends EnumeratedEntityBootstrap<TaskCategory> {
 
     @Autowired
-    private TaskCategoryRepository repository;
+    private EnumeratedEntityMapper<TaskCategory> mapper;
+
+    @Autowired
+    private EnumeratedEntityRepository<TaskCategory> repository;
 
     @Override
-    protected void collectIds(final Collection<String> ids) {
-        ids.add("COMMON");
-        ids.add("JAVA");
-        ids.add("JAVASCRIPT");
-        ids.add("SQL");
-        ids.add("TEST");
-        ids.add("HTML");
-        ids.add("CSS");
-        ids.add("OOD");
-        ids.add("THREADS");
-        ids.add("ALGORITHMS");
+    protected void collectInvoices(Collection<EnumeratedInvoice> invoices) {
+        invoices.add(enumerated("COMMON", "Общая логика"));
+        invoices.add(enumerated("JAVA", "Java"));
+        invoices.add(enumerated("JAVASCRIPT", "JavaScript"));
+        invoices.add(enumerated("SQL", "SQL и базы данных"));
+        invoices.add(enumerated("TEST", "Тестирование программного обеспечения"));
+        invoices.add(enumerated("HTML", "Веб-верстка (HTML)"));
+        invoices.add(enumerated("CSS", "Каскадные таблицы стилей CSS"));
+        invoices.add(enumerated("OOD", "Объектно-ориентированное программирование"));
+        invoices.add(enumerated("THREADS", "Многопоточное программирование"));
+        invoices.add(enumerated("ALGORITHMS", "Алгоритмы"));
     }
 
     @Override
-    protected TaskCategory enumerated(final String id) {
-        return new TaskCategory(id);
+    protected EnumeratedEntityMapper<TaskCategory> getMapper() {
+        return mapper;
     }
 
     @Override
-    protected GenericEntityRepository<TaskCategory, String> getRepository() {
+    protected EnumeratedEntityRepository<TaskCategory> getRepository() {
         return repository;
     }
 }

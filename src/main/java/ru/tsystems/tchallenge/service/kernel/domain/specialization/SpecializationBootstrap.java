@@ -5,28 +5,33 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ru.tsystems.tchallenge.service.kernel.conventions.components.BootstrapComponent;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedEntityMapper;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedInvoice;
 import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.EnumeratedEntityBootstrap;
-import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
+import ru.tsystems.tchallenge.service.kernel.generic.repository.EnumeratedEntityRepository;
 
 @BootstrapComponent
 public class SpecializationBootstrap extends EnumeratedEntityBootstrap<Specialization> {
 
     @Autowired
-    private SpecializationRepository repository;
+    private EnumeratedEntityMapper<Specialization> mapper;
+
+    @Autowired
+    private EnumeratedEntityRepository<Specialization> repository;
 
     @Override
-    protected void collectIds(final Collection<String> specializations) {
-        specializations.add("JAVADEV");
-        specializations.add("TESTER");
+    protected void collectInvoices(Collection<EnumeratedInvoice> invoices) {
+        invoices.add(enumerated("JAVADEV", "Разработчик на Java"));
+        invoices.add(enumerated("TESTER", "Инженер по тестированию"));
     }
 
     @Override
-    protected Specialization enumerated(final String id) {
-        return new Specialization(id);
+    protected EnumeratedEntityMapper<Specialization> getMapper() {
+        return mapper;
     }
 
     @Override
-    protected GenericEntityRepository<Specialization, String> getRepository() {
+    protected EnumeratedEntityRepository<Specialization> getRepository() {
         return repository;
     }
 }

@@ -5,27 +5,32 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ru.tsystems.tchallenge.service.kernel.conventions.components.BootstrapComponent;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedEntityMapper;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedInvoice;
 import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.EnumeratedEntityBootstrap;
-import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
+import ru.tsystems.tchallenge.service.kernel.generic.repository.EnumeratedEntityRepository;
 
 @BootstrapComponent
 public class RobotRoleBootstrap extends EnumeratedEntityBootstrap<RobotRole> {
 
     @Autowired
-    private RobotRoleRepository repository;
+    private EnumeratedEntityMapper<RobotRole> mapper;
+
+    @Autowired
+    private EnumeratedEntityRepository<RobotRole> repository;
 
     @Override
-    protected void collectIds(final Collection<String> ids) {
-        ids.add("CANDIDATE_VIEWER");
+    protected void collectInvoices(Collection<EnumeratedInvoice> invoices) {
+        invoices.add(enumerated("CANDVIEW", "Просмотрщик кандидатов"));
     }
 
     @Override
-    protected RobotRole enumerated(final String id) {
-        return new RobotRole(id);
+    protected EnumeratedEntityMapper<RobotRole> getMapper() {
+        return mapper;
     }
 
     @Override
-    protected GenericEntityRepository<RobotRole, String> getRepository() {
+    protected EnumeratedEntityRepository<RobotRole> getRepository() {
         return repository;
     }
 }

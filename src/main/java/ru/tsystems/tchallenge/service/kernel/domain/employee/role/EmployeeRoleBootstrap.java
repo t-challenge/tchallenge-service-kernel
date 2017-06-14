@@ -5,36 +5,40 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ru.tsystems.tchallenge.service.kernel.conventions.components.BootstrapComponent;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedEntityMapper;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedInvoice;
 import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.EnumeratedEntityBootstrap;
-import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
+import ru.tsystems.tchallenge.service.kernel.generic.repository.EnumeratedEntityRepository;
 
 @BootstrapComponent
 public class EmployeeRoleBootstrap extends EnumeratedEntityBootstrap<EmployeeRole> {
 
     @Autowired
-    private EmployeeRoleRepository repository;
+    private EnumeratedEntityMapper<EmployeeRole> mapper;
+
+    @Autowired
+    private EnumeratedEntityRepository<EmployeeRole> repository;
 
     @Override
-    protected void collectIds(final Collection<String> ids) {
-        ids.add("CANDMOD");
-        ids.add("CANDVIEW");
-        ids.add("EVENTMOD");
-        ids.add("EVENTVIEW");
-        ids.add("TASKMOD");
-        ids.add("TASKVIEW");
-        ids.add("WBKMOD");
-        ids.add("WBKVIEW");
-        ids.add("USERMOD");
-        ids.add("ADMIN");
+    protected void collectInvoices(Collection<EnumeratedInvoice> invoices) {
+        invoices.add(enumerated("ADMIN", "Администратор"));
+        invoices.add(enumerated("USERMOD", "Модератор учетных записей"));
+        invoices.add(enumerated("TASKVIEW", "Просмотрщик задач"));
+        invoices.add(enumerated("TASKMOD", "Модератор задач"));
+        invoices.add(enumerated("EVENTVIEW", "Просмотрщик событий"));
+        invoices.add(enumerated("EVENTMOD", "Модератор событий"));
+        invoices.add(enumerated("CANDVIEW", "Просмотрщик кандидатов"));
+        invoices.add(enumerated("CANDMOD", "Модератор кандидатов"));
+        invoices.add(enumerated("WBKVIEW", "Просмотрщик тетрадей"));
     }
 
     @Override
-    protected EmployeeRole enumerated(final String id) {
-        return new EmployeeRole(id);
+    protected EnumeratedEntityMapper<EmployeeRole> getMapper() {
+        return mapper;
     }
 
     @Override
-    protected GenericEntityRepository<EmployeeRole, String> getRepository() {
+    protected EnumeratedEntityRepository<EmployeeRole> getRepository() {
         return repository;
     }
 }

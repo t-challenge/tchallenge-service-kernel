@@ -5,28 +5,33 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ru.tsystems.tchallenge.service.kernel.conventions.components.BootstrapComponent;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedEntityMapper;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedInvoice;
 import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.EnumeratedEntityBootstrap;
-import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
+import ru.tsystems.tchallenge.service.kernel.generic.repository.EnumeratedEntityRepository;
 
 @BootstrapComponent
 public class TaskTagBootstrapBean extends EnumeratedEntityBootstrap<TaskTag> {
 
     @Autowired
-    private TaskTagRepository repository;
+    private EnumeratedEntityMapper<TaskTag> mapper;
+
+    @Autowired
+    private EnumeratedEntityRepository<TaskTag> repository;
 
     @Override
-    protected void collectIds(final Collection<String> ids) {
-        ids.add("TAG1");
-        ids.add("TAG2");
+    protected void collectInvoices(Collection<EnumeratedInvoice> invoices) {
+        invoices.add(enumerated("TAG1", "тестовая метка 1"));
+        invoices.add(enumerated("TAG2", "тестовая метка 2"));
     }
 
     @Override
-    protected TaskTag enumerated(final String id) {
-        return new TaskTag(id);
+    protected EnumeratedEntityMapper<TaskTag> getMapper() {
+        return mapper;
     }
 
     @Override
-    protected GenericEntityRepository<TaskTag, String> getRepository() {
+    protected EnumeratedEntityRepository<TaskTag> getRepository() {
         return repository;
     }
 }

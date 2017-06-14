@@ -4,8 +4,6 @@ import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import ru.tsystems.tchallenge.service.kernel.conventions.JpaConstructor;
-
 @MappedSuperclass
 public abstract class EnumeratedEntity extends GenericEntity<String> {
 
@@ -13,17 +11,45 @@ public abstract class EnumeratedEntity extends GenericEntity<String> {
     @Column
     private String id;
 
-    public EnumeratedEntity(final String id) {
-        this.id = id;
-    }
+    @Column
+    private String title;
 
-    @JpaConstructor
-    protected EnumeratedEntity() {
+    @Column
+    private String description;
 
-    }
+    @Column
+    private Integer stance;
 
     @Override
     public String getId() {
         return id;
+    }
+
+    public void setId(final String id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(final String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(final String description) {
+        this.description = description;
+    }
+
+    public Integer getStance() {
+        return stance;
+    }
+
+    public void setStance(final Integer stance) {
+        this.stance = stance;
     }
 }

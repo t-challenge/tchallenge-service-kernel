@@ -5,30 +5,35 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ru.tsystems.tchallenge.service.kernel.conventions.components.BootstrapComponent;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedEntityMapper;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedInvoice;
 import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.EnumeratedEntityBootstrap;
-import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
+import ru.tsystems.tchallenge.service.kernel.generic.repository.EnumeratedEntityRepository;
 
 @BootstrapComponent
 public class AccountStatusBootstrap extends EnumeratedEntityBootstrap<AccountStatus> {
 
     @Autowired
-    private AccountStatusRepository repository;
+    private EnumeratedEntityMapper<AccountStatus> mapper;
+
+    @Autowired
+    private EnumeratedEntityRepository<AccountStatus> repository;
 
     @Override
-    protected void collectIds(final Collection<String> ids) {
-        ids.add("CREATED");
-        ids.add("APPROVED");
-        ids.add("SUSPENDED");
-        ids.add("BLOCKED");
+    protected void collectInvoices(Collection<EnumeratedInvoice> invoices) {
+        invoices.add(enumerated("CREATED", "Создан"));
+        invoices.add(enumerated("APPROVED", "Подтвержден"));
+        invoices.add(enumerated("SUSPENDED", "Приостановлен"));
+        invoices.add(enumerated("DELETED", "Удален"));
     }
 
     @Override
-    protected AccountStatus enumerated(final String id) {
-        return new AccountStatus(id);
+    protected EnumeratedEntityMapper<AccountStatus> getMapper() {
+        return mapper;
     }
 
     @Override
-    protected GenericEntityRepository<AccountStatus, String> getRepository() {
+    protected EnumeratedEntityRepository<AccountStatus> getRepository() {
         return repository;
     }
 }

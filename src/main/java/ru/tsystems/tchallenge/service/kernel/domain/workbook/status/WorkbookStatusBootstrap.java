@@ -5,31 +5,36 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ru.tsystems.tchallenge.service.kernel.conventions.components.BootstrapComponent;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedEntityMapper;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedInvoice;
 import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.EnumeratedEntityBootstrap;
-import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
+import ru.tsystems.tchallenge.service.kernel.generic.repository.EnumeratedEntityRepository;
 
 @BootstrapComponent
 public class WorkbookStatusBootstrap extends EnumeratedEntityBootstrap<WorkbookStatus> {
 
     @Autowired
-    private WorkbookStatusRepository repository;
+    private EnumeratedEntityMapper<WorkbookStatus> mapper;
+
+    @Autowired
+    private EnumeratedEntityRepository<WorkbookStatus> repository;
 
     @Override
-    protected void collectIds(final Collection<String> ids) {
-        ids.add("CREATED");
-        ids.add("SUBMITTED");
-        ids.add("ASSESSED");
-        ids.add("DISCARDED");
-        ids.add("DELETED");
+    protected void collectInvoices(Collection<EnumeratedInvoice> invoices) {
+        invoices.add(enumerated("CREATED", "Создана"));
+        invoices.add(enumerated("SUBMITTED", "Отправлена на проверку"));
+        invoices.add(enumerated("ASSESSED", "Проверена"));
+        invoices.add(enumerated("DISCARDED", "Отменена"));
+        invoices.add(enumerated("DELETED", "Удалена"));
     }
 
     @Override
-    protected WorkbookStatus enumerated(final String id) {
-        return new WorkbookStatus(id);
+    protected EnumeratedEntityMapper<WorkbookStatus> getMapper() {
+        return mapper;
     }
 
     @Override
-    protected GenericEntityRepository<WorkbookStatus, String> getRepository() {
+    protected EnumeratedEntityRepository<WorkbookStatus> getRepository() {
         return repository;
     }
 }

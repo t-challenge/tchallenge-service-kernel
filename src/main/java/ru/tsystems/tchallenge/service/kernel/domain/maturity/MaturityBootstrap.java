@@ -5,31 +5,36 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ru.tsystems.tchallenge.service.kernel.conventions.components.BootstrapComponent;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedEntityMapper;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedInvoice;
 import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.EnumeratedEntityBootstrap;
-import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
+import ru.tsystems.tchallenge.service.kernel.generic.repository.EnumeratedEntityRepository;
 
 @BootstrapComponent
 public class MaturityBootstrap extends EnumeratedEntityBootstrap<Maturity> {
 
     @Autowired
-    private MaturityRepository repository;
+    private EnumeratedEntityMapper<Maturity> mapper;
+
+    @Autowired
+    private EnumeratedEntityRepository<Maturity> repository;
 
     @Override
-    protected void collectIds(final Collection<String> maturities) {
-        maturities.add("STUDENT");
-        maturities.add("JUNIOR");
-        maturities.add("INTERMEDIATE");
-        maturities.add("SENIOR");
-        maturities.add("EXPERT");
+    protected void collectInvoices(Collection<EnumeratedInvoice> invoices) {
+        invoices.add(enumerated("STUDENT", "Студенты, начало карьеры"));
+        invoices.add(enumerated("JUNIOR", "Младшие специалисты"));
+        invoices.add(enumerated("INTERMEDIATE", "Специалисты"));
+        invoices.add(enumerated("SENIOR", "Старшие специалисты"));
+        invoices.add(enumerated("EXPERT", "Экспертный уровень"));
     }
 
     @Override
-    protected Maturity enumerated(final String id) {
-        return new Maturity(id);
+    protected EnumeratedEntityMapper<Maturity> getMapper() {
+        return mapper;
     }
 
     @Override
-    protected GenericEntityRepository<Maturity, String> getRepository() {
+    protected EnumeratedEntityRepository<Maturity> getRepository() {
         return repository;
     }
 }

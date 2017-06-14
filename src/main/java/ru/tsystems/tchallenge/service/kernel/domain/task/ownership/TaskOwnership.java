@@ -8,12 +8,4 @@ import ru.tsystems.tchallenge.service.kernel.generic.entity.EnumeratedEntity;
 @Entity
 public class TaskOwnership extends EnumeratedEntity {
 
-    public TaskOwnership(final String id) {
-        super(id);
-    }
-
-    @JpaConstructor
-    protected TaskOwnership() {
-
-    }
 }

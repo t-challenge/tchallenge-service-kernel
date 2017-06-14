@@ -5,29 +5,34 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ru.tsystems.tchallenge.service.kernel.conventions.components.BootstrapComponent;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedEntityMapper;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedInvoice;
 import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.EnumeratedEntityBootstrap;
-import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
+import ru.tsystems.tchallenge.service.kernel.generic.repository.EnumeratedEntityRepository;
 
 @BootstrapComponent
 public class TaskMindflowBootstrap extends EnumeratedEntityBootstrap<TaskMindflow> {
 
     @Autowired
-    private TaskMindflowRepository repository;
+    private EnumeratedEntityMapper<TaskMindflow> mapper;
+
+    @Autowired
+    private EnumeratedEntityRepository<TaskMindflow> repository;
 
     @Override
-    protected void collectIds(final Collection<String> ids) {
-        ids.add("BRAINHECK");
-        ids.add("FOUNDATIONS");
-        ids.add("ANALYSES");
+    protected void collectInvoices(Collection<EnumeratedInvoice> invoices) {
+        invoices.add(enumerated("FOUNDATIONS", "Термины и определения"));
+        invoices.add(enumerated("ANALYSES", "Анализ"));
+        invoices.add(enumerated("BRAINHECK", "Головоломка"));
     }
 
     @Override
-    protected TaskMindflow enumerated(final String id) {
-        return new TaskMindflow(id);
+    protected EnumeratedEntityMapper<TaskMindflow> getMapper() {
+        return mapper;
     }
 
     @Override
-    protected GenericEntityRepository<TaskMindflow, String> getRepository() {
+    protected EnumeratedEntityRepository<TaskMindflow> getRepository() {
         return repository;
     }
 }

@@ -5,29 +5,34 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import ru.tsystems.tchallenge.service.kernel.conventions.components.BootstrapComponent;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedEntityMapper;
+import ru.tsystems.tchallenge.service.kernel.generic.EnumeratedInvoice;
 import ru.tsystems.tchallenge.service.kernel.generic.bootstrap.EnumeratedEntityBootstrap;
-import ru.tsystems.tchallenge.service.kernel.generic.repository.GenericEntityRepository;
+import ru.tsystems.tchallenge.service.kernel.generic.repository.EnumeratedEntityRepository;
 
 @BootstrapComponent
 public class TaskWorkflowBootstrap extends EnumeratedEntityBootstrap<TaskWorkflow> {
 
     @Autowired
-    private TaskWorkflowRepository repository;
+    private EnumeratedEntityMapper<TaskWorkflow> mapper;
+
+    @Autowired
+    private EnumeratedEntityRepository<TaskWorkflow> repository;
 
     @Override
-    protected void collectIds(final Collection<String> ids) {
-        ids.add("EXPERT");
-        ids.add("MACHINE");
-        ids.add("MIXED");
+    protected void collectInvoices(Collection<EnumeratedInvoice> invoices) {
+        invoices.add(enumerated("MACHINE", "Проверяется автоматически"));
+        invoices.add(enumerated("EXPERT", "Требуется оценка эксперта"));
+        invoices.add(enumerated("MIXED", "Смешанный тип проверки"));
     }
 
     @Override
-    protected TaskWorkflow enumerated(final String id) {
-        return new TaskWorkflow(id);
+    protected EnumeratedEntityMapper<TaskWorkflow> getMapper() {
+        return mapper;
     }
 
     @Override
-    protected GenericEntityRepository<TaskWorkflow, String> getRepository() {
+    protected EnumeratedEntityRepository<TaskWorkflow> getRepository() {
         return repository;
     }
 }
