@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/data/tasks/images/contents")
+@RequestMapping(path = "/tasks/images/content")
 public class TaskImageControllerBean {
 
     @Autowired
