@@ -12,10 +12,11 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'war'
 
-group 'ru.tsystems.tchallenge.service.kernel'
+group 'ru.tchallenge.service.kernel'
 version '1.0.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
@@ -29,11 +30,6 @@ repositories {
 bootRun {
 
     systemProperties = System.properties
-}
-
-war {
-
-    archiveName 'tchallenge-service-kernel.war'
 }
 
 dependencies {
