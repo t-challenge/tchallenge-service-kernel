@@ -10,7 +10,7 @@ import ru.tchallenge.service.kernel.generic.GenericController;
 import ru.tchallenge.service.kernel.generic.page.SearchInfo;
 
 @RestController
-@RequestMapping(path = "/data/events")
+@RequestMapping(path = "/events")
 public class EventControllerBean extends GenericController {
 
     private final EventFacade eventFacade;

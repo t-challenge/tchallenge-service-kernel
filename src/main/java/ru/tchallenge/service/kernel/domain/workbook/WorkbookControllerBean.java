@@ -11,7 +11,7 @@ import ru.tchallenge.service.kernel.generic.GenericController;
 import ru.tchallenge.service.kernel.generic.page.SearchInfo;
 
 @RestController
-@RequestMapping(path = "/data/workbooks")
+@RequestMapping(path = "/workbooks")
 public class WorkbookControllerBean extends GenericController {
 
     private final WorkbookFacade workbookFacade;

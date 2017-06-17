@@ -11,7 +11,7 @@ import ru.tchallenge.service.kernel.security.credential.EmailCredentialInvoice;
 import ru.tchallenge.service.kernel.security.credential.SimpleLogonPairInvoice;
 
 @RestController
-@RequestMapping(path = "/security/tokens")
+@RequestMapping(path = "/tokens")
 public class TokenControllerBean extends GenericController {
 
     @Autowired

@@ -10,7 +10,7 @@ import ru.tchallenge.service.kernel.generic.GenericController;
 import ru.tchallenge.service.kernel.validation.ValidationInfo;
 
 @RestController
-@RequestMapping(path = "/data/accounts/claims")
+@RequestMapping(path = "/accounts/claims")
 public class AccountClaimControllerBean extends GenericController {
 
     private final AccountClaimFacade accountClaimFacade;

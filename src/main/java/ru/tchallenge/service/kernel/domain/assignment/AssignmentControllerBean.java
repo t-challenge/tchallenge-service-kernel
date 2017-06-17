@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.tchallenge.service.kernel.generic.GenericController;
 
 @RestController
-@RequestMapping(path = "/data/assignments")
+@RequestMapping(path = "/assignments")
 public class AssignmentControllerBean extends GenericController {
 
     @Autowired

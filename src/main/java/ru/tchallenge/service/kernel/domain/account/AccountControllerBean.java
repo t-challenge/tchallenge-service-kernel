@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.tchallenge.service.kernel.generic.page.SearchInfo;
 
 @RestController
-@RequestMapping(path = "/data/accounts")
+@RequestMapping(path = "/accounts")
 public class AccountControllerBean {
 
     @Autowired
