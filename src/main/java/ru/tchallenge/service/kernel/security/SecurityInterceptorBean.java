@@ -25,9 +25,10 @@ public class SecurityInterceptorBean extends HandlerInterceptorAdapter {
     public boolean preHandle(final HttpServletRequest request,
                              final HttpServletResponse response,
                              final Object object) throws Exception {
-        final String token = request.getHeader(authTokenHeader);
-        if (token != null) {
-            securityContextConfigurer.setAuthentication(authenticate(token));
+        final String tokenId = request.getHeader(authTokenHeader);
+        if (tokenId != null) {
+            final AuthenticationInfo authentication = authenticate(tokenId);
+            securityContextConfigurer.setAuthentication(authentication);
         }
         return true;
     }
