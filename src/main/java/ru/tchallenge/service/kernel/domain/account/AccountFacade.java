@@ -4,7 +4,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ru.tchallenge.service.kernel.conventions.components.FacadeService;
+import ru.tchallenge.service.kernel.conventions.components.FacadeServiceComponent;
 import ru.tchallenge.service.kernel.domain.candidate.Candidate;
 import ru.tchallenge.service.kernel.domain.person.Person;
 import ru.tchallenge.service.kernel.generic.GenericFacade;
@@ -12,7 +12,7 @@ import ru.tchallenge.service.kernel.generic.page.SearchInfo;
 import ru.tchallenge.service.kernel.security.authentication.AuthenticationInfo;
 import ru.tchallenge.service.kernel.validation.access.AccessValidationExceptionEmitter;
 
-@FacadeService
+@FacadeServiceComponent
 public class AccountFacade extends GenericFacade {
 
     @Autowired

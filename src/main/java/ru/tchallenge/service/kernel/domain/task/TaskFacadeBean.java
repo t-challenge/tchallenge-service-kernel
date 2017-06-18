@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 
-import ru.tchallenge.service.kernel.conventions.components.FacadeService;
+import ru.tchallenge.service.kernel.conventions.components.FacadeServiceComponent;
 import ru.tchallenge.service.kernel.domain.account.Account;
 import ru.tchallenge.service.kernel.domain.account.AccountInfo;
 import ru.tchallenge.service.kernel.domain.account.AccountRepository;
@@ -27,7 +27,7 @@ import ru.tchallenge.service.kernel.generic.page.SearchInfo;
 import ru.tchallenge.service.kernel.security.authentication.AuthenticationInfo;
 import ru.tchallenge.service.kernel.validation.access.AccessValidationExceptionEmitter;
 
-@FacadeService
+@FacadeServiceComponent
 public class TaskFacadeBean extends GenericFacade implements TaskFacade {
 
     @Autowired

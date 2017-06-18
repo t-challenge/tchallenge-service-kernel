@@ -8,9 +8,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ru.tchallenge.service.kernel.conventions.components.CommonService;
+import ru.tchallenge.service.kernel.conventions.components.ServiceComponent;
 
-@CommonService
+@ServiceComponent
 public class TaskSelectionService {
 
     @Autowired

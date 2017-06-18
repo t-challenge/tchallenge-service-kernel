@@ -1,6 +1,6 @@
 package ru.tchallenge.service.kernel.domain.account.claim;
 
-import ru.tchallenge.service.kernel.conventions.components.MapperService;
+import ru.tchallenge.service.kernel.conventions.components.MapperServiceComponent;
 import ru.tchallenge.service.kernel.domain.account.AccountInfo;
 import ru.tchallenge.service.kernel.domain.account.AccountInvoice;
 import ru.tchallenge.service.kernel.domain.candidate.CandidateInvoice;
@@ -11,7 +11,7 @@ import ru.tchallenge.service.kernel.domain.person.PersonInvoice;
 import ru.tchallenge.service.kernel.domain.person.claim.PersonClaimInvoice;
 import ru.tchallenge.service.kernel.generic.GenericMapper;
 
-@MapperService
+@MapperServiceComponent
 public class AccountClaimMapperBean extends GenericMapper implements AccountClaimMapper {
 
     @Override

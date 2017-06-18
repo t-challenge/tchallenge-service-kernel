@@ -4,12 +4,12 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ru.tchallenge.service.kernel.conventions.components.MapperService;
+import ru.tchallenge.service.kernel.conventions.components.MapperServiceComponent;
 import ru.tchallenge.service.kernel.domain.forum.ForumMapper;
 import ru.tchallenge.service.kernel.domain.specialization.Specialization;
 import ru.tchallenge.service.kernel.generic.GenericMapper;
 
-@MapperService
+@MapperServiceComponent
 public class EventMapperBean extends GenericMapper implements EventMapper {
 
     private final ForumMapper forumMapper;

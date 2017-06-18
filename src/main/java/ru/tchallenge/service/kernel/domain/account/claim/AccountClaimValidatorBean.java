@@ -1,10 +1,10 @@
 package ru.tchallenge.service.kernel.domain.account.claim;
 
-import ru.tchallenge.service.kernel.conventions.components.ValidatorService;
+import ru.tchallenge.service.kernel.conventions.components.ValidatorServiceComponent;
 import ru.tchallenge.service.kernel.generic.GenericValidator;
 import ru.tchallenge.service.kernel.validation.ValidationInfo;
 
-@ValidatorService
+@ValidatorServiceComponent
 public class AccountClaimValidatorBean extends GenericValidator implements AccountClaimValidator {
 
     @Override

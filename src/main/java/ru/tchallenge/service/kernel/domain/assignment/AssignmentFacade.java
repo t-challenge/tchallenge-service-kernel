@@ -4,7 +4,7 @@ import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ru.tchallenge.service.kernel.conventions.components.FacadeService;
+import ru.tchallenge.service.kernel.conventions.components.FacadeServiceComponent;
 import ru.tchallenge.service.kernel.domain.account.AccountInfo;
 import ru.tchallenge.service.kernel.domain.account.AccountRepository;
 import ru.tchallenge.service.kernel.domain.assignment.status.AssignmentStatusRepository;
@@ -14,7 +14,7 @@ import ru.tchallenge.service.kernel.validation.access.AccessValidationExceptionE
 import ru.tchallenge.service.kernel.validation.contract.ContractValidationException;
 import ru.tchallenge.service.kernel.validation.contract.PropertyContractViolationInfo;
 
-@FacadeService
+@FacadeServiceComponent
 public class AssignmentFacade extends GenericFacade {
 
     @Autowired

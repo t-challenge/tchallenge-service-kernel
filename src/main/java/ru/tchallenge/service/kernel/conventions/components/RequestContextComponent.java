@@ -7,15 +7,16 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
+import org.springframework.stereotype.Component;
 
-@Service
-@Transactional
+@Component
 @Documented
 @Inherited
 @Retention(RetentionPolicy.RUNTIME)
+@Scope(scopeName = "request", proxyMode = ScopedProxyMode.INTERFACES)
 @Target(ElementType.TYPE)
-public @interface CommonService {
+public @interface RequestContextComponent {
 
 }

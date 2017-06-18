@@ -7,10 +7,10 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
-import ru.tchallenge.service.kernel.conventions.components.CommonService;
+import ru.tchallenge.service.kernel.conventions.components.ServiceComponent;
 import ru.tchallenge.service.kernel.generic.GenericService;
 
-@CommonService
+@ServiceComponent
 public class MailService extends GenericService {
 
     @Autowired

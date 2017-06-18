@@ -1,9 +1,9 @@
 package ru.tchallenge.service.kernel.domain.task.input;
 
-import ru.tchallenge.service.kernel.conventions.components.MapperService;
+import ru.tchallenge.service.kernel.conventions.components.MapperServiceComponent;
 import ru.tchallenge.service.kernel.generic.GenericMapper;
 
-@MapperService
+@MapperServiceComponent
 public class TaskInputMapperBean extends GenericMapper implements TaskInputMapper {
 
     @Override

@@ -2,7 +2,7 @@ package ru.tchallenge.service.kernel.domain.account;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ru.tchallenge.service.kernel.conventions.components.MapperService;
+import ru.tchallenge.service.kernel.conventions.components.MapperServiceComponent;
 import ru.tchallenge.service.kernel.domain.candidate.Candidate;
 import ru.tchallenge.service.kernel.domain.candidate.CandidateMapper;
 import ru.tchallenge.service.kernel.domain.employee.Employee;
@@ -13,7 +13,7 @@ import ru.tchallenge.service.kernel.domain.robot.Robot;
 import ru.tchallenge.service.kernel.domain.robot.RobotMapper;
 import ru.tchallenge.service.kernel.generic.GenericMapper;
 
-@MapperService
+@MapperServiceComponent
 public class AccountMapper extends GenericMapper {
 
     @Autowired

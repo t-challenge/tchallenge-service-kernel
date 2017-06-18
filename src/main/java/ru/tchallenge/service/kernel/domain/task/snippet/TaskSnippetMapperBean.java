@@ -2,11 +2,11 @@ package ru.tchallenge.service.kernel.domain.task.snippet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ru.tchallenge.service.kernel.conventions.components.MapperService;
+import ru.tchallenge.service.kernel.conventions.components.MapperServiceComponent;
 import ru.tchallenge.service.kernel.domain.task.snippet.style.TaskSnippetStyleRepository;
 import ru.tchallenge.service.kernel.generic.GenericMapper;
 
-@MapperService
+@MapperServiceComponent
 public class TaskSnippetMapperBean extends GenericMapper implements TaskSnippetMapper {
 
     @Autowired

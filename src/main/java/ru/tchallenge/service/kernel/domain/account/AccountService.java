@@ -4,7 +4,7 @@ import java.util.Collections;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ru.tchallenge.service.kernel.conventions.components.CommonService;
+import ru.tchallenge.service.kernel.conventions.components.ServiceComponent;
 import ru.tchallenge.service.kernel.domain.account.realm.AccountRealmRepository;
 import ru.tchallenge.service.kernel.domain.account.status.AccountStatusRepository;
 import ru.tchallenge.service.kernel.domain.candidate.Candidate;
@@ -14,7 +14,7 @@ import ru.tchallenge.service.kernel.utility.encryption.EncryptionService;
 import ru.tchallenge.service.kernel.validation.contract.ContractValidationException;
 import ru.tchallenge.service.kernel.validation.contract.PropertyContractViolationInfo;
 
-@CommonService
+@ServiceComponent
 public class AccountService extends GenericService {
 
     @Autowired

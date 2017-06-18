@@ -1,14 +1,10 @@
 package ru.tchallenge.service.kernel.security;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.stereotype.Component;
-
+import ru.tchallenge.service.kernel.conventions.components.RequestContextComponent;
 import ru.tchallenge.service.kernel.generic.GenericContext;
 import ru.tchallenge.service.kernel.security.authentication.AuthenticationInfo;
 
-@Component
-@Scope(scopeName = "request", proxyMode = ScopedProxyMode.INTERFACES)
+@RequestContextComponent
 public class SecurityContextConfigurerBean extends GenericContext implements SecurityContextConfigurer {
 
     private AuthenticationInfo authentication;

@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ru.tchallenge.service.kernel.conventions.components.FacadeService;
+import ru.tchallenge.service.kernel.conventions.components.FacadeServiceComponent;
 import ru.tchallenge.service.kernel.domain.account.AccountInfo;
 import ru.tchallenge.service.kernel.domain.account.AccountInvoice;
 import ru.tchallenge.service.kernel.domain.account.AccountService;
@@ -13,7 +13,7 @@ import ru.tchallenge.service.kernel.security.credential.EmailCredentialInvoice;
 import ru.tchallenge.service.kernel.security.token.TokenFacade;
 import ru.tchallenge.service.kernel.validation.ValidationInfo;
 
-@FacadeService
+@FacadeServiceComponent
 public class AccountClaimFacadeBean extends GenericFacade implements AccountClaimFacade {
 
     private final AccountService accountService;

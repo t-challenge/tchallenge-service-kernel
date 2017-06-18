@@ -2,7 +2,7 @@ package ru.tchallenge.service.kernel.security.authentication;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ru.tchallenge.service.kernel.conventions.components.CommonService;
+import ru.tchallenge.service.kernel.conventions.components.ServiceComponent;
 import ru.tchallenge.service.kernel.domain.account.Account;
 import ru.tchallenge.service.kernel.domain.account.AccountInfo;
 import ru.tchallenge.service.kernel.domain.account.AccountMapper;
@@ -15,7 +15,7 @@ import ru.tchallenge.service.kernel.security.token.TokenService;
 import ru.tchallenge.service.kernel.utility.encryption.EncryptionService;
 import ru.tchallenge.service.kernel.validation.access.AccessValidationExceptionEmitter;
 
-@CommonService
+@ServiceComponent
 public class AuthenticationServiceBean implements AuthenticationService {
 
     @Autowired

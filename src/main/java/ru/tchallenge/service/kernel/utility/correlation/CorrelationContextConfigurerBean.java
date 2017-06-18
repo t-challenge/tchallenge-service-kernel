@@ -1,10 +1,9 @@
 package ru.tchallenge.service.kernel.utility.correlation;
 
-import org.springframework.stereotype.Component;
-
+import ru.tchallenge.service.kernel.conventions.components.RequestContextComponent;
 import ru.tchallenge.service.kernel.generic.GenericContext;
 
-@Component
+@RequestContextComponent
 public class CorrelationContextConfigurerBean extends GenericContext implements CorrelationContextConfigurer {
 
     private CorrelationInfo correlation;

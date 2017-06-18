@@ -2,7 +2,7 @@ package ru.tchallenge.service.kernel.domain.task;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ru.tchallenge.service.kernel.conventions.components.ValidatorService;
+import ru.tchallenge.service.kernel.conventions.components.ValidatorServiceComponent;
 import ru.tchallenge.service.kernel.domain.account.AccountRepository;
 import ru.tchallenge.service.kernel.domain.task.category.TaskCategoryRepository;
 import ru.tchallenge.service.kernel.domain.task.difficulty.TaskDifficultyRepository;
@@ -15,7 +15,7 @@ import ru.tchallenge.service.kernel.domain.task.tags.TaskTagRepository;
 import ru.tchallenge.service.kernel.domain.task.workflow.TaskWorkflowRepository;
 import ru.tchallenge.service.kernel.generic.GenericValidator;
 
-@ValidatorService
+@ValidatorServiceComponent
 public class TaskValidatorBean extends GenericValidator implements TaskValidator {
 
     @Autowired

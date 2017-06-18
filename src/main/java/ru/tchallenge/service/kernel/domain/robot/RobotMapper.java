@@ -2,11 +2,11 @@ package ru.tchallenge.service.kernel.domain.robot;
 
 import java.util.stream.Collectors;
 
-import ru.tchallenge.service.kernel.conventions.components.MapperService;
+import ru.tchallenge.service.kernel.conventions.components.MapperServiceComponent;
 import ru.tchallenge.service.kernel.domain.robot.role.RobotRole;
 import ru.tchallenge.service.kernel.generic.GenericMapper;
 
-@MapperService
+@MapperServiceComponent
 public class RobotMapper extends GenericMapper {
 
     public RobotInfo info(final Robot robot) {

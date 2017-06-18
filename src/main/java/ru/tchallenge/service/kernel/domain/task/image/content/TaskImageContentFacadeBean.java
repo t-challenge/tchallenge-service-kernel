@@ -2,10 +2,10 @@ package ru.tchallenge.service.kernel.domain.task.image.content;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ru.tchallenge.service.kernel.conventions.components.FacadeService;
+import ru.tchallenge.service.kernel.conventions.components.FacadeServiceComponent;
 import ru.tchallenge.service.kernel.generic.GenericFacade;
 
-@FacadeService
+@FacadeServiceComponent
 public class TaskImageContentFacadeBean extends GenericFacade implements TaskImageContentFacade {
 
     @Autowired

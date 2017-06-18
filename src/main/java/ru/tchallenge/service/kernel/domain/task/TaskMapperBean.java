@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ru.tchallenge.service.kernel.conventions.components.MapperService;
+import ru.tchallenge.service.kernel.conventions.components.MapperServiceComponent;
 import ru.tchallenge.service.kernel.domain.account.AccountRepository;
 import ru.tchallenge.service.kernel.domain.task.category.TaskCategoryRepository;
 import ru.tchallenge.service.kernel.domain.task.difficulty.TaskDifficultyRepository;
@@ -24,7 +24,7 @@ import ru.tchallenge.service.kernel.domain.task.workflow.TaskWorkflowRepository;
 import ru.tchallenge.service.kernel.generic.GenericMapper;
 import ru.tchallenge.service.kernel.generic.entity.EnumeratedEntity;
 
-@MapperService
+@MapperServiceComponent
 public class TaskMapperBean extends GenericMapper implements TaskMapper {
 
     @Autowired

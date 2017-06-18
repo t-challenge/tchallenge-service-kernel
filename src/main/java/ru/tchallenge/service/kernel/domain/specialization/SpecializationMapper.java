@@ -1,9 +1,9 @@
 package ru.tchallenge.service.kernel.domain.specialization;
 
-import ru.tchallenge.service.kernel.conventions.components.MapperService;
+import ru.tchallenge.service.kernel.conventions.components.MapperServiceComponent;
 import ru.tchallenge.service.kernel.generic.EnumeratedEntityMapper;
 
-@MapperService
+@MapperServiceComponent
 public class SpecializationMapper extends EnumeratedEntityMapper<Specialization> {
 
     @Override

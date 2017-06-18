@@ -1,9 +1,9 @@
 package ru.tchallenge.service.kernel.domain.assignment;
 
-import ru.tchallenge.service.kernel.conventions.components.MapperService;
+import ru.tchallenge.service.kernel.conventions.components.MapperServiceComponent;
 import ru.tchallenge.service.kernel.generic.GenericMapper;
 
-@MapperService
+@MapperServiceComponent
 public class AssignmentMapper extends GenericMapper{
 
 }

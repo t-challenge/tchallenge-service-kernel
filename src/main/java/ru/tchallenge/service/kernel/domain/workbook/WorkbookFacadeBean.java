@@ -15,7 +15,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import ru.tchallenge.service.kernel.conventions.components.FacadeService;
+import ru.tchallenge.service.kernel.conventions.components.FacadeServiceComponent;
 import ru.tchallenge.service.kernel.domain.account.AccountInfo;
 import ru.tchallenge.service.kernel.domain.account.AccountRepository;
 import ru.tchallenge.service.kernel.domain.assignment.Assignment;
@@ -44,7 +44,7 @@ import ru.tchallenge.service.kernel.validation.contract.ContractValidationExcept
 import ru.tchallenge.service.kernel.validation.contract.PropertyContractViolationInfo;
 import ru.tchallenge.service.kernel.validation.resource.ResourceUnavailableViolationInfo;
 
-@FacadeService
+@FacadeServiceComponent
 public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade {
 
     @Autowired
