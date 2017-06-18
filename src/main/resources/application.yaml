@@ -18,8 +18,10 @@ server:
 spring:
 
   mail:
-    host: 'localhost'
-    port: '25'
+    host: ${mail-host:localhost}
+    port: ${mail-port:25}
+    username: ${mail-username:}
+    password: ${mail-password:}
 
   main:
     banner-mode: 'off'
