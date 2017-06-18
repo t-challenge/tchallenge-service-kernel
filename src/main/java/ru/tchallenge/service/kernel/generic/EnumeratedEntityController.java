@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import ru.tchallenge.service.kernel.generic.entity.EnumeratedEntity;
 
-public abstract class EnumeratedEntityController<T extends EnumeratedEntity> extends GenericController {
+public abstract class EnumeratedEntityController<T extends EnumeratedEntity> extends GenericControllerBean {
 
     @RequestMapping(method = RequestMethod.GET)
     public Collection<EnumeratedInfo> getAll() {
