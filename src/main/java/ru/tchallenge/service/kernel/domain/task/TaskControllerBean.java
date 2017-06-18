@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ru.tchallenge.service.kernel.generic.GenericController;
+import ru.tchallenge.service.kernel.generic.GenericControllerBean;
 import ru.tchallenge.service.kernel.generic.page.SearchInfo;
 
 @RestController
 @RequestMapping(path = "/tasks")
-public class TaskControllerBean extends GenericController {
+public class TaskControllerBean extends GenericControllerBean {
 
     @Autowired
     private TaskFacade taskFacade;

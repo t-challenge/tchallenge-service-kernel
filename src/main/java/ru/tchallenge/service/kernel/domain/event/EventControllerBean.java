@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ru.tchallenge.service.kernel.generic.GenericController;
+import ru.tchallenge.service.kernel.generic.GenericControllerBean;
 import ru.tchallenge.service.kernel.generic.page.SearchInfo;
 
 @RestController
 @RequestMapping(path = "/events")
-public class EventControllerBean extends GenericController {
+public class EventControllerBean extends GenericControllerBean {
 
     private final EventFacade eventFacade;
 

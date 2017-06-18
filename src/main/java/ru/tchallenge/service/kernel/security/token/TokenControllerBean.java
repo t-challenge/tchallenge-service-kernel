@@ -6,13 +6,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ru.tchallenge.service.kernel.generic.GenericController;
+import ru.tchallenge.service.kernel.generic.GenericControllerBean;
 import ru.tchallenge.service.kernel.security.credential.EmailCredentialInvoice;
 import ru.tchallenge.service.kernel.security.credential.SimpleLogonPairInvoice;
 
 @RestController
 @RequestMapping(path = "/tokens")
-public class TokenControllerBean extends GenericController {
+public class TokenControllerBean extends GenericControllerBean {
 
     @Autowired
     private TokenFacade tokenFacade;

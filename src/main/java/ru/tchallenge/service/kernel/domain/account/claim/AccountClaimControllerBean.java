@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ru.tchallenge.service.kernel.generic.GenericController;
+import ru.tchallenge.service.kernel.generic.GenericControllerBean;
 import ru.tchallenge.service.kernel.validation.ValidationInfo;
 
 @RestController
 @RequestMapping(path = "/accounts/claims")
-public class AccountClaimControllerBean extends GenericController {
+public class AccountClaimControllerBean extends GenericControllerBean {
 
     private final AccountClaimFacade accountClaimFacade;
 

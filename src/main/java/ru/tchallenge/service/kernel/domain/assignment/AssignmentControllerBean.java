@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import ru.tchallenge.service.kernel.generic.GenericController;
+import ru.tchallenge.service.kernel.generic.GenericControllerBean;
 
 @RestController
 @RequestMapping(path = "/assignments")
-public class AssignmentControllerBean extends GenericController {
+public class AssignmentControllerBean extends GenericControllerBean {
 
     @Autowired
     private AssignmentFacade assignmentFacade;
