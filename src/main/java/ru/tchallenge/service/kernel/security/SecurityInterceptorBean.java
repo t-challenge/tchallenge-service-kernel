@@ -7,13 +7,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import ru.tchallenge.service.kernel.conventions.components.RequestInterceptorComponent;
 import ru.tchallenge.service.kernel.security.authentication.AuthenticationInfo;
 import ru.tchallenge.service.kernel.security.authentication.AuthenticationService;
 
-@Service
+@RequestInterceptorComponent
 public class SecurityInterceptorBean extends HandlerInterceptorAdapter {
 
     @Autowired
