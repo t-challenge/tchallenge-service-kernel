@@ -31,3 +31,10 @@ spring:
 
   resources:
     add-mappings: 'false'
+
+tchallenge:
+
+  security:
+
+    token:
+      header: 'tchallenge-security-token-id'
