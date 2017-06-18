@@ -1,14 +1,12 @@
 package ru.tchallenge.service.kernel.domain.assignment.status;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
+import ru.tchallenge.service.kernel.conventions.components.EndpointComponent;
 import ru.tchallenge.service.kernel.generic.EnumeratedEntityController;
 import ru.tchallenge.service.kernel.generic.EnumeratedEntityFacade;
 
-@RestController
-@RequestMapping(path = "/assignments/statuses")
+@EndpointComponent("/assignments/statuses")
 public class AssignmentStatusController extends EnumeratedEntityController<AssignmentStatus> {
 
     @Autowired

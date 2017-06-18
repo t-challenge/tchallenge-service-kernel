@@ -1,14 +1,12 @@
 package ru.tchallenge.service.kernel.domain.robot.role;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
+import ru.tchallenge.service.kernel.conventions.components.EndpointComponent;
 import ru.tchallenge.service.kernel.generic.EnumeratedEntityController;
 import ru.tchallenge.service.kernel.generic.EnumeratedEntityFacade;
 
-@RestController
-@RequestMapping(path = "/robots/roles")
+@EndpointComponent("/robots/roles")
 public class RobotRoleController extends EnumeratedEntityController<RobotRole> {
 
     @Autowired

@@ -4,15 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
+import ru.tchallenge.service.kernel.conventions.components.EndpointComponent;
 import ru.tchallenge.service.kernel.generic.GenericControllerBean;
 import ru.tchallenge.service.kernel.security.credential.SimpleLogonPairInvoice;
 import ru.tchallenge.service.kernel.security.credential.SimpleLogonPairValidator;
 import ru.tchallenge.service.kernel.security.token.TokenFacade;
 
-@RestController
-@RequestMapping(path = "/authentication")
+@EndpointComponent("/authentication")
 public class AuthenticationControllerBean extends GenericControllerBean {
 
     @Autowired
