@@ -36,18 +36,11 @@ tchallenge:
 
   security:
 
+    rescue:
+
+      deactivation: 10
+
     token:
 
+      deactivation: 180
       header: 'tchallenge-security-token-id'
-
-      predefined:
-
-        enabled: true
-
-        candidate:
-          enabled: true
-          id: 'hardcoded-token-candidate'
-
-        employee:
-          enabled: true
-          id: 'hardcoded-token-employee'
