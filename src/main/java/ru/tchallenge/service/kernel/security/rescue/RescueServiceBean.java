@@ -33,7 +33,7 @@ public class RescueServiceBean extends GenericService implements RescueService {
     }
 
     @Override
-    public RescueInfo get(final String id) {
+    public RescueInfo getAndRemove(final String id) {
         final Rescue rescue = rescues.get(id);
         if (rescue == null) {
             // TODO: throw specific exception
@@ -43,12 +43,8 @@ public class RescueServiceBean extends GenericService implements RescueService {
             // TODO: throw specific exception
             throw new RuntimeException("rescue was expired");
         }
-        return info(rescue);
-    }
-
-    @Override
-    public void remove(final String id) {
         rescues.remove(id);
+        return info(rescue);
     }
 
     private RescueInfo info(final Rescue rescue) {

@@ -4,7 +4,5 @@ public interface RescueService {
 
     RescueInfo create(RescueInvoice invoice);
 
-    RescueInfo get(String id);
-
-    void remove(String id);
+    RescueInfo getAndRemove(String id);
 }
