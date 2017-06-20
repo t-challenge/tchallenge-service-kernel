@@ -36,11 +36,12 @@ tchallenge:
 
   security:
 
-    rescue:
+    permanentKey:
+      header: 'tchallenge-security-permkey'
 
+    rescue:
       deactivation: 10
 
     token:
-
       deactivation: 180
-      header: 'tchallenge-security-token-id'
+      header: 'tchallenge-security-token'
