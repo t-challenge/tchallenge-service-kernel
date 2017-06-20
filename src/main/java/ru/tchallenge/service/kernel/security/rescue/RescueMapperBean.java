@@ -7,7 +7,7 @@ import ru.tchallenge.service.kernel.generic.GenericMapper;
 public class RescueMapperBean extends GenericMapper implements RescueMapper {
 
     @Override
-    public RescueInfo rescueInfo(final Rescue rescue) {
+    public RescueInfo asInfo(final Rescue rescue) {
         return new RescueInfo(
                 rescue.getId(),
                 rescue.getEmail(),

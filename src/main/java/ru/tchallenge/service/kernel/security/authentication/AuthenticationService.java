@@ -1,13 +1,12 @@
 package ru.tchallenge.service.kernel.security.authentication;
 
-import ru.tchallenge.service.kernel.security.credential.EmailCredentialInvoice;
-import ru.tchallenge.service.kernel.security.credential.SimpleLogonPairInvoice;
-
 public interface AuthenticationService {
 
-    AuthenticationInfo create(SimpleLogonPairInvoice credential);
+    AuthenticationInfo createByLoginPasswordPair(String login, String password);
 
-    AuthenticationInfo create(EmailCredentialInvoice credential);
+    AuthenticationInfo createByPermanentKeyId(String permanentKeyId);
 
-    AuthenticationInfo create(String tokenId);
+    AuthenticationInfo createByRescueId(String rescueId);
+
+    AuthenticationInfo createByTokenId(String tokenId);
 }

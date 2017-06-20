@@ -31,7 +31,7 @@ public abstract class EnumeratedEntityFacade<T extends EnumeratedEntity> extends
     protected abstract EnumeratedEntityRepository<T> getRepository();
 
     private AccountInfo authenticated() {
-        final AuthenticationInfo authentication = getSecurityContext().getAuthentication();
+        final AuthenticationInfo authentication = getAuthenticationContext().getAuthentication();
         if (authentication == null) {
             accessValidationExceptionEmitter.unauthorized();
         }

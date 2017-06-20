@@ -135,7 +135,7 @@ public class TaskFacadeBean extends GenericFacade implements TaskFacade {
     }
 
     private AccountInfo authenticatedEmployee(final String... roles) {
-        final AuthenticationInfo authentication = this.getSecurityContext().getAuthentication();
+        final AuthenticationInfo authentication = this.getAuthenticationContext().getAuthentication();
         if (authentication == null) {
             accessValidationExceptionEmitter.unauthorized();
         }

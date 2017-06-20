@@ -36,7 +36,7 @@ public class EventFacadeBean extends GenericFacade implements EventFacade {
 
     @Override
     public SearchInfo<EventInfo> search(final EventSearchInvoice invoice) {
-        final AuthenticationInfo authentication = getSecurityContext().getAuthentication();
+        final AuthenticationInfo authentication = getAuthenticationContext().getAuthentication();
         return searchInfo(eventRepository.findPage(pageRequest(invoice)));
     }
 

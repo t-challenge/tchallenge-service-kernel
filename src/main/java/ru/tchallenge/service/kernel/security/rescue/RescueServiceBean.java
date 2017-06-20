@@ -48,7 +48,7 @@ public class RescueServiceBean extends GenericService implements RescueService {
     }
 
     private RescueInfo info(final Rescue rescue) {
-        return rescueMapper.rescueInfo(rescue);
+        return rescueMapper.asInfo(rescue);
     }
 
     private void sendRescueViaEmail(final Rescue rescue) {

@@ -2,5 +2,5 @@ package ru.tchallenge.service.kernel.security.rescue;
 
 public interface RescueMapper {
 
-    RescueInfo rescueInfo(Rescue rescue);
+    RescueInfo asInfo(Rescue rescue);
 }

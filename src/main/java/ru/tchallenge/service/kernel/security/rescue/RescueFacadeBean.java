@@ -13,7 +13,7 @@ public class RescueFacadeBean extends GenericFacade implements RescueFacade {
 
     @Override
     public void create(final RescueInvoice invoice) {
-        if (invoice == null || invoice.getEmail() == null) {
+        if (invoice == null || invoice.getEmail() == null || invoice.getUrl() == null) {
             // TODO: throw specific exception
             throw new RuntimeException("invoice is corrupted");
         }

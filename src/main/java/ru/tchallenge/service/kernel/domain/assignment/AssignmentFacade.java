@@ -30,7 +30,7 @@ public class AssignmentFacade extends GenericFacade {
     private AccessValidationExceptionEmitter accessValidationExceptionEmitter;
 
     public void update(final AssignmentInvoice invoice) {
-        final AuthenticationInfo authentication = this.getSecurityContext().getAuthentication();
+        final AuthenticationInfo authentication = this.getAuthenticationContext().getAuthentication();
         if (authentication == null) {
             accessValidationExceptionEmitter.unauthorized();
         }

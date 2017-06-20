@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface TokenService {
 
-    TokenInfo create(TokenInvoice invoice);
+    TokenInfo createByLogin(String login);
 
     TokenInfo getById(String id);
 

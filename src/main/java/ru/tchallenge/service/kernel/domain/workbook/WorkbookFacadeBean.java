@@ -79,7 +79,7 @@ public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade 
 
     @Override
     public WorkbookInfo create(final WorkbookInvoice invoice) {
-        final AuthenticationInfo authentication = this.getSecurityContext().getAuthentication();
+        final AuthenticationInfo authentication = this.getAuthenticationContext().getAuthentication();
         if (authentication == null) {
             accessValidationExceptionEmitter.unauthorized();
         }
@@ -139,7 +139,7 @@ public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade 
 
     @Override
     public WorkbookInfo get(final Long id) {
-        final AuthenticationInfo authentication = this.getSecurityContext().getAuthentication();
+        final AuthenticationInfo authentication = this.getAuthenticationContext().getAuthentication();
         if (authentication == null) {
             accessValidationExceptionEmitter.unauthorized();
         }
@@ -153,7 +153,7 @@ public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade 
 
     @RequestMapping(method = RequestMethod.GET)
     public SearchInfo<WorkbookInfo> getPage(final WorkbookPageInvoice invoice) {
-        final AuthenticationInfo authentication = getSecurityContext().getAuthentication();
+        final AuthenticationInfo authentication = getAuthenticationContext().getAuthentication();
         if (authentication == null) {
             accessValidationExceptionEmitter.unauthorized();
         }
@@ -185,7 +185,7 @@ public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade 
 
     @Override
     public WorkbookInfo update(final WorkbookInvoice invoice) {
-        final AuthenticationInfo authentication = this.getSecurityContext().getAuthentication();
+        final AuthenticationInfo authentication = this.getAuthenticationContext().getAuthentication();
         if (authentication == null) {
             accessValidationExceptionEmitter.unauthorized();
         }

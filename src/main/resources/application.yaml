@@ -37,4 +37,17 @@ tchallenge:
   security:
 
     token:
+
       header: 'tchallenge-security-token-id'
+
+      predefined:
+
+        enabled: true
+
+        candidate:
+          enabled: true
+          id: 'hardcoded-token-candidate'
+
+        employee:
+          enabled: true
+          id: 'hardcoded-token-employee'

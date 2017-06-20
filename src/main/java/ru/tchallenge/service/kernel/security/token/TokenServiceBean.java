@@ -6,13 +6,11 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import ru.tchallenge.service.kernel.conventions.components.ServiceComponent;
 import ru.tchallenge.service.kernel.validation.access.AccessValidationExceptionEmitter;
 
-@Service
-@Transactional(readOnly = true)
+@ServiceComponent
 public class TokenServiceBean implements TokenService {
 
     private final Duration deactivation = Duration.ofMinutes(30);
@@ -25,8 +23,8 @@ public class TokenServiceBean implements TokenService {
     private AccessValidationExceptionEmitter accessValidationExceptionEmitter;
 
     @Override
-    public TokenInfo create(final TokenInvoice invoice) {
-        final Token token = new Token(invoice.getLogin());
+    public TokenInfo createByLogin(final String login) {
+        final Token token = new Token(login);
         tokens.put(token.getId(), token);
         return tokenInfo(token);
     }
@@ -35,14 +33,13 @@ public class TokenServiceBean implements TokenService {
     public TokenInfo getById(final String id) {
         final Token token = tokens.get(id);
         if (token == null) {
-            return null;
-            // accessValidationExceptionEmitter.illegalToken();
+            accessValidationExceptionEmitter.illegalToken();
         }
         if (token.getLastUsedAt().plus(deactivation).isBefore(Instant.now())) {
             tokens.remove(id);
-            return null;
-            // accessValidationExceptionEmitter.tokenDeactivated();
+            accessValidationExceptionEmitter.tokenDeactivated();
         }
+        token.updateLastUsedAt();
         return tokenInfo(token);
     }
 
@@ -61,6 +58,6 @@ public class TokenServiceBean implements TokenService {
     }
 
     private TokenInfo tokenInfo(final Token token) {
-        return tokenMapper.tokenInfo(token);
+        return tokenMapper.asInfo(token);
     }
 }

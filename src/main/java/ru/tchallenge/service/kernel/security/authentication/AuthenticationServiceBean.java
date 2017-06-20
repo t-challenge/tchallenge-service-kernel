@@ -7,16 +7,16 @@ import ru.tchallenge.service.kernel.domain.account.Account;
 import ru.tchallenge.service.kernel.domain.account.AccountInfo;
 import ru.tchallenge.service.kernel.domain.account.AccountMapper;
 import ru.tchallenge.service.kernel.domain.account.AccountRepository;
-import ru.tchallenge.service.kernel.security.credential.EmailCredentialInvoice;
-import ru.tchallenge.service.kernel.security.credential.SimpleLogonPairInvoice;
+import ru.tchallenge.service.kernel.generic.GenericService;
+import ru.tchallenge.service.kernel.security.rescue.RescueInfo;
+import ru.tchallenge.service.kernel.security.rescue.RescueService;
 import ru.tchallenge.service.kernel.security.token.TokenInfo;
-import ru.tchallenge.service.kernel.security.token.TokenInvoice;
 import ru.tchallenge.service.kernel.security.token.TokenService;
 import ru.tchallenge.service.kernel.utility.encryption.EncryptionService;
 import ru.tchallenge.service.kernel.validation.access.AccessValidationExceptionEmitter;
 
 @ServiceComponent
-public class AuthenticationServiceBean implements AuthenticationService {
+public class AuthenticationServiceBean extends GenericService implements AuthenticationService {
 
     @Autowired
     private AccountRepository accountRepository;
@@ -28,94 +28,73 @@ public class AuthenticationServiceBean implements AuthenticationService {
     private EncryptionService encryptionService;
 
     @Autowired
+    private RescueService rescueService;
+
+    @Autowired
     private TokenService tokenService;
 
     @Autowired
     private AccessValidationExceptionEmitter accessValidationExceptionEmitter;
 
     @Override
-    public AuthenticationInfo create(final SimpleLogonPairInvoice credential) {
-        final Account account = accountByLogin(credential.getLogin());
-        ensureAccountAvailability(account);
-        ensureAccountLegality(account, credential.getSecret());
-        ensureAccountStatus(account);
-        return createAuthentication(account, createToken(credential.getLogin()));
+    public AuthenticationInfo createByLoginPasswordPair(final String login,
+                                                        final String password) {
+        final Account account = accountByLogin(login);
+        ensureAccountLegality(account, password);
+        final AccountInfo accountInfo = accountInfo(account);
+        final TokenInfo tokenInfo = tokenService.createByLogin(account.getLogin());
+        return authentication(accountInfo, tokenInfo);
     }
 
     @Override
-    public AuthenticationInfo create(EmailCredentialInvoice credential) {
-        final Account account = accountByEmail(credential.getEmail());
-        ensureAccountAvailability(account);
-        ensureAccountStatus(account);
-        return createAuthentication(account, createToken(account.getLogin()));
+    public AuthenticationInfo createByPermanentKeyId(final String permanentKeyId) {
+        final Account account = accountByPermanentKeyId(permanentKeyId);
+        final AccountInfo accountInfo = accountInfo(account);
+        return authentication(accountInfo);
     }
 
     @Override
-    public AuthenticationInfo create(final String tokenId) {
-        if (tokenId.equals("CANDIDATE-HARDCODED-TOKEN")) {
-            return createHardcodedCandidateToken();
-        }
-        if (tokenId.equals("EMPLOYEE-HARDCODED-TOKEN")) {
-            return createHardcodedEmployeeToken();
-        }
-        if (tokenId.equals("EVENT-DASHBOARD-HARDCODED-TOKEN")) {
-            return createHardcodedDashboardToken();
-        }
-        final TokenInfo token = tokenById(tokenId);
-        if (token == null) {
-            return null;
-        }
-        final Account account = accountByLogin(token.getLogin());
-        ensureAccountAvailability(account);
-        ensureAccountStatus(account);
-        return createAuthentication(account, token);
+    public AuthenticationInfo createByRescueId(final String rescueId) {
+        final RescueInfo rescueInfo = rescueService.getAndRemove(rescueId);
+        final Account account = accountByEmail(rescueInfo.getEmail());
+        final AccountInfo accountInfo = accountInfo(account);
+        final TokenInfo tokenInfo = tokenService.createByLogin(account.getLogin());
+        return authentication(accountInfo, tokenInfo);
     }
 
-    private AuthenticationInfo createHardcodedCandidateToken() {
-        final Account account = accountByLogin("p.smirnov");
-        ensureAccountAvailability(account);
-        ensureAccountStatus(account);
-        return createAuthentication(account, createToken(account.getLogin()));
+    @Override
+    public AuthenticationInfo createByTokenId(final String tokenId) {
+        final TokenInfo tokenInfo = tokenById(tokenId);
+        final Account account = accountByLogin(tokenInfo.getLogin());
+        final AccountInfo accountInfo = accountInfo(account);
+        return authentication(accountInfo, tokenInfo);
     }
 
-    private AuthenticationInfo createHardcodedEmployeeToken() {
-        final Account account = accountByLogin("ivan.sidorov@some-email.com");
-        ensureAccountAvailability(account);
-        ensureAccountStatus(account);
-        return createAuthentication(account, createToken(account.getLogin()));
+    private AuthenticationInfo authentication(final AccountInfo account) {
+        return new AuthenticationInfo(account, null);
     }
 
-    private AuthenticationInfo createHardcodedDashboardToken() {
-        final Account account = accountByLogin("event.dashboard");
-        ensureAccountAvailability(account);
-        ensureAccountStatus(account);
-        return createAuthentication(account, createToken(account.getLogin()));
-    }
-
-    private TokenInfo createToken(final String login) {
-        final TokenInvoice tokenProperties = new TokenInvoice();
-        tokenProperties.setLogin(login);
-        return tokenService.create(tokenProperties);
+    private AuthenticationInfo authentication(final AccountInfo account, final TokenInfo token) {
+        return new AuthenticationInfo(account, token);
     }
 
     private Account accountByEmail(final String email) {
-        return accountRepository.findByEmail(email);
+        final Account account = accountRepository.findByLogin(email);
+        ensureAccountAvailability(account);
+        ensureAccountStatus(account);
+        return account;
     }
 
     private Account accountByLogin(final String login) {
-        return accountRepository.findByLogin(login);
+        final Account account = accountRepository.findByLogin(login);
+        ensureAccountAvailability(account);
+        ensureAccountStatus(account);
+        return account;
     }
 
-    private TokenInfo tokenById(final String id) {
-        return tokenService.getById(id);
-    }
-
-    private AuthenticationInfo createAuthentication(final Account account,
-                                                    final TokenInfo token) {
-        final String login = account.getLogin();
-        final String realm = account.getRealm().getId();
-        final AccountInfo accountInfo = accountMapper.info(account);
-        return new AuthenticationInfo(accountInfo, token);
+    private Account accountByPermanentKeyId(final String permanentKeyId) {
+        // TODO: implement this method
+        throw new UnsupportedOperationException();
     }
 
     private void ensureAccountAvailability(final Account account) {
@@ -142,5 +121,13 @@ public class AuthenticationServiceBean implements AuthenticationService {
         if (status.equals("BLOCKED")) {
             accessValidationExceptionEmitter.accountBlocked(status);
         }
+    }
+
+    private AccountInfo accountInfo(final Account account) {
+        return accountMapper.info(account);
+    }
+
+    private TokenInfo tokenById(final String id) {
+        return tokenService.getById(id);
     }
 }

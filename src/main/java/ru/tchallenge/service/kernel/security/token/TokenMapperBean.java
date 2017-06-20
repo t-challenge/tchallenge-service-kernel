@@ -8,7 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class TokenMapperBean implements TokenMapper {
 
     @Override
-    public TokenInfo tokenInfo(final Token token) {
-        return new TokenInfo(token.getId(), token.getLogin(), token.getCreatedAt());
+    public TokenInfo asInfo(final Token token) {
+        return new TokenInfo(
+                token.getId(),
+                token.getLogin(),
+                token.getCreatedAt());
     }
 }

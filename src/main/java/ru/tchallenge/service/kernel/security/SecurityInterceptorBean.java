@@ -12,6 +12,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import ru.tchallenge.service.kernel.conventions.components.RequestInterceptorComponent;
 import ru.tchallenge.service.kernel.security.authentication.AuthenticationInfo;
 import ru.tchallenge.service.kernel.security.authentication.AuthenticationService;
+import ru.tchallenge.service.kernel.security.authentication.AuthenticationContextConfigurer;
 
 @RequestInterceptorComponent
 public class SecurityInterceptorBean extends HandlerInterceptorAdapter {
@@ -20,7 +21,7 @@ public class SecurityInterceptorBean extends HandlerInterceptorAdapter {
     private AuthenticationService authenticationService;
 
     @Autowired
-    private SecurityContextConfigurer securityContextConfigurer;
+    private AuthenticationContextConfigurer authenticationContextConfigurer;
 
     @Value("${tchallenge.security.token.header}")
     private String securityTokenHeader;
@@ -32,13 +33,13 @@ public class SecurityInterceptorBean extends HandlerInterceptorAdapter {
         final Optional<String> tokenId = parseTokenId(request);
         if (tokenId.isPresent()) {
             final AuthenticationInfo authentication = authenticate(tokenId.get());
-            securityContextConfigurer.setAuthentication(authentication);
+            authenticationContextConfigurer.setAuthentication(authentication);
         }
         return true;
     }
 
     private AuthenticationInfo authenticate(final String tokenId) {
-        return authenticationService.create(tokenId);
+        return authenticationService.createByTokenId(tokenId);
     }
 
     private Optional<String> parseTokenId(final HttpServletRequest request) {

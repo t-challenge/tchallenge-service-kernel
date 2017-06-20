@@ -38,7 +38,7 @@ public class AccountFacade extends GenericFacade {
     }
 
     public AccountInfo getAuthenticated() {
-        final AuthenticationInfo authentication = getSecurityContext().getAuthentication();
+        final AuthenticationInfo authentication = getAuthenticationContext().getAuthentication();
         if (authentication == null) {
             accessValidationExceptionEmitter.unauthorized();
         }
@@ -54,7 +54,7 @@ public class AccountFacade extends GenericFacade {
     }
 
     public AccountInfo update(final AccountInvoice invoice) {
-        final AuthenticationInfo authentication = this.getSecurityContext().getAuthentication();
+        final AuthenticationInfo authentication = this.getAuthenticationContext().getAuthentication();
         if (authentication == null) {
             accessValidationExceptionEmitter.unauthorized();
         }

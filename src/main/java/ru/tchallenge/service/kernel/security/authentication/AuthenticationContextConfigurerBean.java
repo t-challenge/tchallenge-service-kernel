@@ -1,11 +1,10 @@
-package ru.tchallenge.service.kernel.security;
+package ru.tchallenge.service.kernel.security.authentication;
 
 import ru.tchallenge.service.kernel.conventions.components.RequestContextComponent;
 import ru.tchallenge.service.kernel.generic.GenericContext;
-import ru.tchallenge.service.kernel.security.authentication.AuthenticationInfo;
 
 @RequestContextComponent
-public class SecurityContextConfigurerBean extends GenericContext implements SecurityContextConfigurer {
+public class AuthenticationContextConfigurerBean extends GenericContext implements AuthenticationContextConfigurer {
 
     private AuthenticationInfo authentication;
 
