@@ -13,8 +13,8 @@ import org.apache.commons.logging.LogFactory;
 
 import ru.tchallenge.service.kernel.utility.correlation.CorrelationContext;
 import ru.tchallenge.service.kernel.validation.ValidationException;
+import ru.tchallenge.service.kernel.validation.ValidationExceptionCategory;
 import ru.tchallenge.service.kernel.validation.ViolationInfo;
-import ru.tchallenge.service.kernel.validation.access.AccessValidationException;
 
 @ControllerAdvice
 public class ValidationExceptionHandler {
@@ -25,16 +25,15 @@ public class ValidationExceptionHandler {
     @Autowired
     private CorrelationContext correlationContext;
 
-    @ExceptionHandler(AccessValidationException.class)
-    public ResponseEntity<?> handleAccessException(final ValidationException exception) {
-        securityLog.warn("", exception);
-        return unauthorized(exception);
-    }
-
     @ExceptionHandler(ValidationException.class)
     public ResponseEntity<?> handleValidationException(final ValidationException exception) {
-        securityLog.warn("", exception);
-        return badRequest(exception);
+        if (exception.getCategory() == ValidationExceptionCategory.ACCESS) {
+            securityLog.warn("", exception);
+            return unauthorized(exception);
+        } else {
+            commonLog.warn("", exception);
+            return badRequest(exception);
+        }
     }
 
     private ResponseEntity<?> badRequest(final ValidationException exception) {

@@ -1,5 +1,6 @@
 package ru.tchallenge.service.kernel.security.rescue;
 
+import java.time.Duration;
 import java.time.Instant;
 
 import ru.tchallenge.service.kernel.utility.Generators;
@@ -33,5 +34,9 @@ public final class Rescue {
 
     public Instant getCreatedAt() {
         return createdAt;
+    }
+
+    public boolean isDeactivated(final Duration deactivation) {
+        return createdAt.plus(deactivation).isBefore(Instant.now());
     }
 }

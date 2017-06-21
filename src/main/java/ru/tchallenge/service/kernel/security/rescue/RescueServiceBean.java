@@ -1,7 +1,6 @@
 package ru.tchallenge.service.kernel.security.rescue;
 
 import java.time.Duration;
-import java.time.Instant;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -10,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import ru.tchallenge.service.kernel.conventions.components.ServiceComponent;
 import ru.tchallenge.service.kernel.generic.GenericService;
 import ru.tchallenge.service.kernel.utility.mail.MailService;
+import ru.tchallenge.service.kernel.validation.access.AccessValidationExceptionProvider;
 
 @ServiceComponent
 public class RescueServiceBean extends GenericService implements RescueService {
@@ -18,36 +18,36 @@ public class RescueServiceBean extends GenericService implements RescueService {
     private final Map<String, Rescue> rescues = new ConcurrentHashMap<>();
 
     @Autowired
+    private AccessValidationExceptionProvider accessValidationExceptionProvider;
+
+    @Autowired
     private RescueMapper rescueMapper;
 
     @Autowired
     private MailService mailService;
 
     @Override
-    public RescueInfo create(final RescueInvoice invoice) {
+    public void create(final RescueInvoice invoice) {
         final Rescue rescue = new Rescue(
                 invoice.getEmail(),
                 invoice.getUrl());
+        rescues.put(rescue.getId(), rescue);
         sendRescueViaEmail(rescue);
-        return info(rescue);
     }
 
     @Override
     public RescueInfo getAndRemove(final String id) {
-        final Rescue rescue = rescues.get(id);
+        final Rescue rescue = rescues.remove(id);
         if (rescue == null) {
-            // TODO: throw specific exception
-            throw new RuntimeException("rescue was not found");
+            throw accessValidationExceptionProvider.unknownRescue(id);
         }
-        if (rescue.getCreatedAt().plus(deactivation).isBefore(Instant.now())) {
-            // TODO: throw specific exception
-            throw new RuntimeException("rescue was expired");
+        if (rescue.isDeactivated(deactivation)) {
+            throw accessValidationExceptionProvider.rescueExpired(id);
         }
-        rescues.remove(id);
-        return info(rescue);
+        return asInfo(rescue);
     }
 
-    private RescueInfo info(final Rescue rescue) {
+    private RescueInfo asInfo(final Rescue rescue) {
         return rescueMapper.asInfo(rescue);
     }
 

@@ -39,10 +39,13 @@ import ru.tchallenge.service.kernel.generic.page.SearchInfo;
 import ru.tchallenge.service.kernel.security.authentication.AuthenticationInfo;
 import ru.tchallenge.service.kernel.utility.mail.MailInvoice;
 import ru.tchallenge.service.kernel.utility.mail.MailService;
-import ru.tchallenge.service.kernel.validation.access.AccessValidationExceptionEmitter;
-import ru.tchallenge.service.kernel.validation.contract.ContractValidationException;
+import ru.tchallenge.service.kernel.validation.access.AccessValidationExceptionProvider;
+import ru.tchallenge.service.kernel.validation.contract.ContractValidationExceptionProvider;
+import ru.tchallenge.service.kernel.validation.contract.ContractViolationInfo;
 import ru.tchallenge.service.kernel.validation.contract.PropertyContractViolationInfo;
 import ru.tchallenge.service.kernel.validation.resource.ResourceUnavailableViolationInfo;
+import ru.tchallenge.service.kernel.validation.resource.ResourceValidationExceptionProvider;
+import ru.tchallenge.service.kernel.validation.resource.ResourceViolationInfo;
 
 @FacadeServiceComponent
 public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade {
@@ -69,7 +72,7 @@ public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade 
     private WorkbookStatusRepository statusRepository;
 
     @Autowired
-    private AccessValidationExceptionEmitter accessValidationExceptionEmitter;
+    private AccessValidationExceptionProvider accessValidationExceptionProvider;
 
     @Autowired
     private AssignmentStatusRepository assignmentStatusRepository;
@@ -77,30 +80,40 @@ public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade 
     @Autowired
     private TaskSelectionService taskSelectionService;
 
+    @Autowired
+    private ContractValidationExceptionProvider contractValidationExceptionProvider;
+
+    @Autowired
+    private ResourceValidationExceptionProvider resourceValidationExceptionProvider;
+
     @Override
     public WorkbookInfo create(final WorkbookInvoice invoice) {
         final AuthenticationInfo authentication = this.getAuthenticationContext().getAuthentication();
         if (authentication == null) {
-            accessValidationExceptionEmitter.unauthorized();
+            accessValidationExceptionProvider.unauthorized();
         }
         final AccountInfo account = authentication.getAccount();
         if (account.getCandidate() == null) {
-            accessValidationExceptionEmitter.unauthorized();
+            accessValidationExceptionProvider.unauthorized();
         }
         final Workbook workbook = new Workbook();
         final Event event = eventRepository.findByTextcode(invoice.getEvent());
         if (event == null) {
-            throw new ContractValidationException(Collections.singleton(new ResourceUnavailableViolationInfo("event", invoice.getEvent())));
+            ResourceViolationInfo violation = new ResourceUnavailableViolationInfo("event", invoice.getEvent());
+            throw resourceValidationExceptionProvider.exception(violation);
         }
         if (!event.getSpecializations().stream().map(Specialization::getId).collect(Collectors.toList()).contains(invoice.getSpecialization())) {
-            throw new ContractValidationException(Collections.singleton(new PropertyContractViolationInfo("specialization", invoice.getSpecialization(), "no such specialization")));
+            ContractViolationInfo violation = new PropertyContractViolationInfo("specialization", invoice.getSpecialization(), "no such specialization");
+            throw contractValidationExceptionProvider.exception(violation);
         }
         if (!event.getStatus().getId().equals("APPROVED")) {
-            throw new ContractValidationException(Collections.singleton(new PropertyContractViolationInfo("event", invoice.getEvent(), "event status is not acceptable")));
+            ContractViolationInfo violation = new PropertyContractViolationInfo("event", invoice.getEvent(), "event status is not acceptable");
+            throw contractValidationExceptionProvider.exception(violation);
         }
         if (event.getSince() != null && event.getSince().isAfter(Instant.now())
                 || event.getUntil() != null && event.getUntil().isBefore(Instant.now())) {
-            throw new ContractValidationException(Collections.singleton(new PropertyContractViolationInfo("event", invoice.getEvent(), "event time period is not acceptable")));
+            ContractViolationInfo violation = new PropertyContractViolationInfo("event", invoice.getEvent(), "event time period is not acceptable");
+            throw contractValidationExceptionProvider.exception(violation);
         }
         workbook.setCandidate(accountRepository.findByLogin(account.getLogin()).getCandidate());
         workbook.setEvent(event);
@@ -141,12 +154,12 @@ public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade 
     public WorkbookInfo get(final Long id) {
         final AuthenticationInfo authentication = this.getAuthenticationContext().getAuthentication();
         if (authentication == null) {
-            accessValidationExceptionEmitter.unauthorized();
+            accessValidationExceptionProvider.unauthorized();
         }
         final Workbook workbook = workbookRepository.findById(id);
         final AccountInfo account = authentication.getAccount();
         if (account.getEmployee() == null && !account.getLogin().equals(workbook.getCandidate().getAccount().getLogin())) {
-            accessValidationExceptionEmitter.unauthorized();
+            accessValidationExceptionProvider.unauthorized();
         }
         return info(workbook);
     }
@@ -155,7 +168,7 @@ public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade 
     public SearchInfo<WorkbookInfo> getPage(final WorkbookPageInvoice invoice) {
         final AuthenticationInfo authentication = getAuthenticationContext().getAuthentication();
         if (authentication == null) {
-            accessValidationExceptionEmitter.unauthorized();
+            accessValidationExceptionProvider.unauthorized();
         }
         final String login = authentication.getAccount().getLogin();
         final Page<Workbook> page;
@@ -187,21 +200,23 @@ public class WorkbookFacadeBean extends GenericFacade implements WorkbookFacade 
     public WorkbookInfo update(final WorkbookInvoice invoice) {
         final AuthenticationInfo authentication = this.getAuthenticationContext().getAuthentication();
         if (authentication == null) {
-            accessValidationExceptionEmitter.unauthorized();
+            throw accessValidationExceptionProvider.unauthorized();
         }
         final Workbook workbook = workbookRepository.findById(invoice.getId());
         final AccountInfo account = authentication.getAccount();
         if (account.getEmployee() == null && !account.getLogin().equals(workbook.getCandidate().getAccount().getLogin())) {
-            accessValidationExceptionEmitter.unauthorized();
+            throw accessValidationExceptionProvider.unauthorized();
         }
         final String statusCurrent = workbook.getStatus().getId();
         final String statusInvoice = invoice.getStatus();
         if (statusInvoice.equals("CREATED")) {
-            throw new ContractValidationException(Collections.singleton(new PropertyContractViolationInfo("status", statusInvoice, "can not set created")));
+            ContractViolationInfo violation = new PropertyContractViolationInfo("status", statusInvoice, "can not set created");
+            throw contractValidationExceptionProvider.exception(violation);
         }
         if ((statusInvoice.equals("SUBMITTED") || statusInvoice.equals("DISCARDED"))
                 && !(statusCurrent.equals("CREATED"))) {
-            throw new ContractValidationException(Collections.singleton(new PropertyContractViolationInfo("status", statusInvoice, "can not be submitted or discarded")));
+            ContractViolationInfo violation = new PropertyContractViolationInfo("status", statusInvoice, "can not be submitted or discarded");
+            throw contractValidationExceptionProvider.exception(violation);
         }
         workbook.setStatus(statusRepository.findById(invoice.getStatus()));
         if (invoice.getStatus().equals("SUBMITTED")) {

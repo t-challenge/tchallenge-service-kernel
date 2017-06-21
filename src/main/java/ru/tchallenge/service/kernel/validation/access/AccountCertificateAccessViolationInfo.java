@@ -1,10 +1,10 @@
 package ru.tchallenge.service.kernel.validation.access;
 
-public abstract class TokenViolationInfo extends AccessViolationInfo {
+public abstract class AccountCertificateAccessViolationInfo extends AccessViolationInfo {
 
     private final String payload;
 
-    public TokenViolationInfo(final String payload) {
+    public AccountCertificateAccessViolationInfo(final String payload) {
         this.payload = payload;
     }
 
@@ -12,9 +12,10 @@ public abstract class TokenViolationInfo extends AccessViolationInfo {
         return payload;
     }
 
+    @Override
     protected StringBuilder assembleTextcode() {
         return super
                 .assembleTextcode()
-                .append(".TOKEN");
+                .append(".CERTIFICATE");
     }
 }

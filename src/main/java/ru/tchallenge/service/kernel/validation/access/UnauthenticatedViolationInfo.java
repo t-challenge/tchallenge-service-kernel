@@ -8,6 +8,8 @@ public final class UnauthenticatedViolationInfo extends AccessViolationInfo {
     }
 
     protected StringBuilder assembleTextcode() {
-        return super.assembleTextcode().append(".UNAUTHENTICATED");
+        return super
+                .assembleTextcode()
+                .append(".UNAUTHENTICATED");
     }
 }

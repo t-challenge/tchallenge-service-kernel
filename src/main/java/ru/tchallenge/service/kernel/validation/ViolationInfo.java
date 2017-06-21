@@ -4,10 +4,6 @@ import ru.tchallenge.service.kernel.generic.GenericInfo;
 
 public abstract class ViolationInfo extends GenericInfo {
 
-    public ViolationInfo() {
-
-    }
-
     public abstract String getDescription();
 
     public String getTextcode() {

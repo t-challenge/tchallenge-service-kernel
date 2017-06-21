@@ -11,22 +11,22 @@ import ru.tchallenge.service.kernel.conventions.components.FacadeServiceComponen
 import ru.tchallenge.service.kernel.generic.GenericFacade;
 import ru.tchallenge.service.kernel.generic.page.SearchInfo;
 import ru.tchallenge.service.kernel.security.authentication.AuthenticationInfo;
-import ru.tchallenge.service.kernel.validation.access.AccessValidationExceptionEmitter;
+import ru.tchallenge.service.kernel.validation.access.AccessValidationExceptionProvider;
 
 @FacadeServiceComponent
 public class EventFacadeBean extends GenericFacade implements EventFacade {
 
     private final EventRepository eventRepository;
     private final EventMapper eventMapper;
-    private final AccessValidationExceptionEmitter accessValidationExceptionEmitter;
+    private final AccessValidationExceptionProvider accessValidationExceptionProvider;
 
     @Autowired
     public EventFacadeBean(final EventRepository eventRepository,
                            final EventMapper eventMapper,
-                           final AccessValidationExceptionEmitter accessValidationExceptionEmitter) {
+                           final AccessValidationExceptionProvider accessValidationExceptionProvider) {
         this.eventRepository = eventRepository;
         this.eventMapper = eventMapper;
-        this.accessValidationExceptionEmitter = accessValidationExceptionEmitter;
+        this.accessValidationExceptionProvider = accessValidationExceptionProvider;
     }
 
     @Override

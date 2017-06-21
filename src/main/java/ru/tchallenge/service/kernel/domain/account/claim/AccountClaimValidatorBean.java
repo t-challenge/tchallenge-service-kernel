@@ -1,5 +1,7 @@
 package ru.tchallenge.service.kernel.domain.account.claim;
 
+import java.util.ArrayList;
+
 import ru.tchallenge.service.kernel.conventions.components.ValidatorServiceComponent;
 import ru.tchallenge.service.kernel.generic.GenericValidator;
 import ru.tchallenge.service.kernel.validation.ValidationInfo;
@@ -14,6 +16,6 @@ public class AccountClaimValidatorBean extends GenericValidator implements Accou
 
     @Override
     public ValidationInfo validate(final AccountClaimInvoice invoice) {
-        return new ValidationInfo(true);
+        return new ValidationInfo(new ArrayList<>());
     }
 }

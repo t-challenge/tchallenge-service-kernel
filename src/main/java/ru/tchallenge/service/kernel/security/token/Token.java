@@ -1,5 +1,6 @@
 package ru.tchallenge.service.kernel.security.token;
 
+import java.time.Duration;
 import java.time.Instant;
 
 import ru.tchallenge.service.kernel.utility.Generators;
@@ -37,5 +38,9 @@ public final class Token {
 
     public void updateLastUsedAt() {
         this.lastUsedAt = Generators.now();
+    }
+
+    public boolean isDeactivated(final Duration deactivation) {
+        return lastUsedAt.plus(deactivation).isBefore(Instant.now());
     }
 }

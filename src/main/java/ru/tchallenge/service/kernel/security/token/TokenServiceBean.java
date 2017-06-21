@@ -5,42 +5,50 @@ import java.time.Instant;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 
 import ru.tchallenge.service.kernel.conventions.components.ServiceComponent;
-import ru.tchallenge.service.kernel.validation.access.AccessValidationExceptionEmitter;
+import ru.tchallenge.service.kernel.generic.GenericService;
+import ru.tchallenge.service.kernel.validation.access.AccessValidationExceptionProvider;
 
 @ServiceComponent
-public class TokenServiceBean implements TokenService {
+public class TokenServiceBean extends GenericService implements TokenService {
 
-    private final Duration deactivation = Duration.ofMinutes(30);
-    private final Map<String, Token> tokens = new ConcurrentHashMap<>();
+    private Duration deactivation;
+
+    private Map<String, Token> tokens;
+
+    @Autowired
+    private AccessValidationExceptionProvider accessValidationExceptionProvider;
 
     @Autowired
     private TokenMapper tokenMapper;
 
-    @Autowired
-    private AccessValidationExceptionEmitter accessValidationExceptionEmitter;
+    @Value("${tchallenge.security.token.deactivation-in-minutes}")
+    private Integer deactivationInMinutes;
 
     @Override
     public TokenInfo createByLogin(final String login) {
         final Token token = new Token(login);
         tokens.put(token.getId(), token);
-        return tokenInfo(token);
+        return asInfo(token);
     }
 
     @Override
     public TokenInfo getById(final String id) {
         final Token token = tokens.get(id);
         if (token == null) {
-            accessValidationExceptionEmitter.illegalToken();
+            throw accessValidationExceptionProvider.unknownToken(id);
         }
         if (token.getLastUsedAt().plus(deactivation).isBefore(Instant.now())) {
             tokens.remove(id);
-            accessValidationExceptionEmitter.tokenDeactivated();
+            throw accessValidationExceptionProvider.tokenDeactivated(id);
         }
         token.updateLastUsedAt();
-        return tokenInfo(token);
+        return asInfo(token);
     }
 
     @Override
@@ -57,7 +65,13 @@ public class TokenServiceBean implements TokenService {
         });
     }
 
-    private TokenInfo tokenInfo(final Token token) {
+    @PostConstruct
+    protected void onConstructed() {
+        this.deactivation = Duration.ofMinutes(deactivationInMinutes);
+        this.tokens = new ConcurrentHashMap<>();
+    }
+
+    private TokenInfo asInfo(final Token token) {
         return tokenMapper.asInfo(token);
     }
 }

@@ -9,8 +9,7 @@ import ru.tchallenge.service.kernel.domain.account.AccountInfo;
 import ru.tchallenge.service.kernel.domain.account.AccountInvoice;
 import ru.tchallenge.service.kernel.domain.account.AccountService;
 import ru.tchallenge.service.kernel.generic.GenericFacade;
-import ru.tchallenge.service.kernel.security.credential.EmailCredentialInvoice;
-import ru.tchallenge.service.kernel.security.token.TokenFacade;
+import ru.tchallenge.service.kernel.security.token.TokenService;
 import ru.tchallenge.service.kernel.validation.ValidationInfo;
 
 @FacadeServiceComponent
@@ -19,17 +18,17 @@ public class AccountClaimFacadeBean extends GenericFacade implements AccountClai
     private final AccountService accountService;
     private final AccountClaimMapper accountClaimMapper;
     private final AccountClaimValidator accountClaimValidator;
-    private final TokenFacade tokenFacade;
+    private final TokenService tokenService;
 
     @Autowired
     public AccountClaimFacadeBean(final AccountService accountService,
                                   final AccountClaimMapper accountClaimMapper,
                                   final AccountClaimValidator accountClaimValidator,
-                                  final TokenFacade tokenFacade) {
+                                  final TokenService tokenService) {
         this.accountService = accountService;
         this.accountClaimMapper = accountClaimMapper;
         this.accountClaimValidator = accountClaimValidator;
-        this.tokenFacade = tokenFacade;
+        this.tokenService = tokenService;
     }
 
     @Override
@@ -44,10 +43,12 @@ public class AccountClaimFacadeBean extends GenericFacade implements AccountClai
             updateInvoice.setUpdatedProperties(Arrays.asList("status"));
             accountService.update(updateInvoice);
         }
+        /*
         final EmailCredentialInvoice credentialInvoice = new EmailCredentialInvoice();
         credentialInvoice.setFlashback(invoice.getFlashback());
         credentialInvoice.setEmail(accountInfo.getEmail());
         tokenFacade.createAndMail(credentialInvoice);
+        */
         return accountClaimMapper.info(accountInfo);
     }
 

@@ -25,7 +25,7 @@ import ru.tchallenge.service.kernel.domain.task.workflow.TaskWorkflowRepository;
 import ru.tchallenge.service.kernel.generic.GenericFacade;
 import ru.tchallenge.service.kernel.generic.page.SearchInfo;
 import ru.tchallenge.service.kernel.security.authentication.AuthenticationInfo;
-import ru.tchallenge.service.kernel.validation.access.AccessValidationExceptionEmitter;
+import ru.tchallenge.service.kernel.validation.access.AccessValidationExceptionProvider;
 
 @FacadeServiceComponent
 public class TaskFacadeBean extends GenericFacade implements TaskFacade {
@@ -55,7 +55,7 @@ public class TaskFacadeBean extends GenericFacade implements TaskFacade {
     private AccountRepository accountRepository;
 
     @Autowired
-    private AccessValidationExceptionEmitter accessValidationExceptionEmitter;
+    private AccessValidationExceptionProvider accessValidationExceptionProvider;
 
     @Autowired
     private TaskRepository taskRepository;
@@ -137,18 +137,18 @@ public class TaskFacadeBean extends GenericFacade implements TaskFacade {
     private AccountInfo authenticatedEmployee(final String... roles) {
         final AuthenticationInfo authentication = this.getAuthenticationContext().getAuthentication();
         if (authentication == null) {
-            accessValidationExceptionEmitter.unauthorized();
+            accessValidationExceptionProvider.unauthorized();
         }
         final AccountInfo account = authentication.getAccount();
         if (account == null) {
-            accessValidationExceptionEmitter.unauthorized();
+            accessValidationExceptionProvider.unauthorized();
         }
         final EmployeeInfo employee = account.getEmployee();
         if (employee == null) {
-            accessValidationExceptionEmitter.unauthorized();
+            accessValidationExceptionProvider.unauthorized();
         }
         if (roles.length > 0 && Arrays.asList(roles).stream().noneMatch(employee.getRoles()::contains)) {
-            accessValidationExceptionEmitter.unauthorized();
+            accessValidationExceptionProvider.unauthorized();
         }
         return account;
     }

@@ -9,12 +9,12 @@ import ru.tchallenge.service.kernel.domain.account.AccountInfo;
 import ru.tchallenge.service.kernel.generic.entity.EnumeratedEntity;
 import ru.tchallenge.service.kernel.generic.repository.EnumeratedEntityRepository;
 import ru.tchallenge.service.kernel.security.authentication.AuthenticationInfo;
-import ru.tchallenge.service.kernel.validation.access.AccessValidationExceptionEmitter;
+import ru.tchallenge.service.kernel.validation.access.AccessValidationExceptionProvider;
 
 public abstract class EnumeratedEntityFacade<T extends EnumeratedEntity> extends GenericFacade {
 
     @Autowired
-    private AccessValidationExceptionEmitter accessValidationExceptionEmitter;
+    private AccessValidationExceptionProvider accessValidationExceptionProvider;
 
     public Collection<EnumeratedInfo> getAll() {
         authenticated();
@@ -33,11 +33,11 @@ public abstract class EnumeratedEntityFacade<T extends EnumeratedEntity> extends
     private AccountInfo authenticated() {
         final AuthenticationInfo authentication = getAuthenticationContext().getAuthentication();
         if (authentication == null) {
-            accessValidationExceptionEmitter.unauthorized();
+            accessValidationExceptionProvider.unauthorized();
         }
         final AccountInfo account = authentication.getAccount();
         if (account == null) {
-            accessValidationExceptionEmitter.unauthorized();
+            accessValidationExceptionProvider.unauthorized();
         }
         return account;
     }

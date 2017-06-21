@@ -1,6 +1,10 @@
 package ru.tchallenge.service.kernel.security.authentication;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
+import com.google.common.collect.ImmutableSet;
 
 import ru.tchallenge.service.kernel.conventions.components.ServiceComponent;
 import ru.tchallenge.service.kernel.domain.account.Account;
@@ -13,7 +17,7 @@ import ru.tchallenge.service.kernel.security.rescue.RescueService;
 import ru.tchallenge.service.kernel.security.token.TokenInfo;
 import ru.tchallenge.service.kernel.security.token.TokenService;
 import ru.tchallenge.service.kernel.utility.encryption.EncryptionService;
-import ru.tchallenge.service.kernel.validation.access.AccessValidationExceptionEmitter;
+import ru.tchallenge.service.kernel.validation.access.AccessValidationExceptionProvider;
 
 @ServiceComponent
 public class AuthenticationServiceBean extends GenericService implements AuthenticationService {
@@ -34,7 +38,7 @@ public class AuthenticationServiceBean extends GenericService implements Authent
     private TokenService tokenService;
 
     @Autowired
-    private AccessValidationExceptionEmitter accessValidationExceptionEmitter;
+    private AccessValidationExceptionProvider accessValidationExceptionProvider;
 
     @Override
     public AuthenticationInfo createByLoginPasswordPair(final String login,
@@ -80,14 +84,18 @@ public class AuthenticationServiceBean extends GenericService implements Authent
 
     private Account accountByEmail(final String email) {
         final Account account = accountRepository.findByLogin(email);
-        ensureAccountAvailability(account);
+        if (account == null) {
+            throw accessValidationExceptionProvider.unknownAccount(email);
+        }
         ensureAccountStatus(account);
         return account;
     }
 
     private Account accountByLogin(final String login) {
         final Account account = accountRepository.findByLogin(login);
-        ensureAccountAvailability(account);
+        if (account == null) {
+            throw accessValidationExceptionProvider.unknownAccount(login);
+        }
         ensureAccountStatus(account);
         return account;
     }
@@ -97,29 +105,20 @@ public class AuthenticationServiceBean extends GenericService implements Authent
         throw new UnsupportedOperationException();
     }
 
-    private void ensureAccountAvailability(final Account account) {
-        if (account == null) {
-            accessValidationExceptionEmitter.illegalCredential();
-        }
-    }
-
     private void ensureAccountLegality(final Account account, final String secret) {
         final String secretHash = encryptionService.accountSecretHash(secret);
         if (!account.getSecretHash().equals(secretHash)) {
-            accessValidationExceptionEmitter.illegalCredential();
+            final String login = account.getLogin();
+            throw accessValidationExceptionProvider.unknownAccount(login);
         }
     }
 
     private void ensureAccountStatus(final Account account) {
+        final Set<String> illegalStatuses = ImmutableSet.of("CREATED", "SUSPENDED", "BLOCKED");
         final String status = account.getStatus().getId();
-        if (status.equals("CREATED")) {
-            accessValidationExceptionEmitter.accountNotApproved(status);
-        }
-        if (status.equals("SUSPENDED")) {
-            accessValidationExceptionEmitter.accountSuspended(status);
-        }
-        if (status.equals("BLOCKED")) {
-            accessValidationExceptionEmitter.accountBlocked(status);
+        if (illegalStatuses.contains(status)) {
+            final String login = account.getLogin();
+            throw accessValidationExceptionProvider.illegalAccountStatus(login, status);
         }
     }
 

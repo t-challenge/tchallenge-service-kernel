@@ -10,7 +10,7 @@ import ru.tchallenge.service.kernel.domain.person.Person;
 import ru.tchallenge.service.kernel.generic.GenericFacade;
 import ru.tchallenge.service.kernel.generic.page.SearchInfo;
 import ru.tchallenge.service.kernel.security.authentication.AuthenticationInfo;
-import ru.tchallenge.service.kernel.validation.access.AccessValidationExceptionEmitter;
+import ru.tchallenge.service.kernel.validation.access.AccessValidationExceptionProvider;
 
 @FacadeServiceComponent
 public class AccountFacade extends GenericFacade {
@@ -25,7 +25,7 @@ public class AccountFacade extends GenericFacade {
     private AccountService accountService;
 
     @Autowired
-    private AccessValidationExceptionEmitter accessValidationExceptionEmitter;
+    private AccessValidationExceptionProvider accessValidationExceptionProvider;
 
     public AccountInfo create(final AccountInvoice invoice) {
         // TODO: authorize EMPLOYEE(ADMIN)
@@ -40,7 +40,7 @@ public class AccountFacade extends GenericFacade {
     public AccountInfo getAuthenticated() {
         final AuthenticationInfo authentication = getAuthenticationContext().getAuthentication();
         if (authentication == null) {
-            accessValidationExceptionEmitter.unauthorized();
+            accessValidationExceptionProvider.unauthorized();
         }
         final String login = authentication.getAccount().getLogin();
         return accountService.getByLogin(login);
@@ -56,11 +56,11 @@ public class AccountFacade extends GenericFacade {
     public AccountInfo update(final AccountInvoice invoice) {
         final AuthenticationInfo authentication = this.getAuthenticationContext().getAuthentication();
         if (authentication == null) {
-            accessValidationExceptionEmitter.unauthorized();
+            accessValidationExceptionProvider.unauthorized();
         }
         final AccountInfo accountInfo = authentication.getAccount();
         if (!accountInfo.getLogin().equals(invoice.getLoginExisting())) {
-            accessValidationExceptionEmitter.unauthorized();
+            accessValidationExceptionProvider.unauthorized();
         }
         final Account account = accountRepository.findByLogin(accountInfo.getLogin());
         if (invoice.getCandidate() != null) {

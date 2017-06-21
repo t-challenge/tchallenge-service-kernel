@@ -11,7 +11,8 @@ import ru.tchallenge.service.kernel.domain.candidate.Candidate;
 import ru.tchallenge.service.kernel.domain.person.Person;
 import ru.tchallenge.service.kernel.generic.GenericService;
 import ru.tchallenge.service.kernel.utility.encryption.EncryptionService;
-import ru.tchallenge.service.kernel.validation.contract.ContractValidationException;
+import ru.tchallenge.service.kernel.validation.contract.ContractValidationExceptionProvider;
+import ru.tchallenge.service.kernel.validation.contract.ContractViolationInfo;
 import ru.tchallenge.service.kernel.validation.contract.PropertyContractViolationInfo;
 
 @ServiceComponent
@@ -32,9 +33,13 @@ public class AccountService extends GenericService {
     @Autowired
     private EncryptionService encryptionService;
 
+    @Autowired
+    private ContractValidationExceptionProvider contractValidationExceptionProvider;
+
     public AccountInfo create(final AccountInvoice invoice) {
         if (accountRepository.findByEmail(invoice.getEmail()) != null ) {
-            throw new ContractValidationException(Collections.singleton(new PropertyContractViolationInfo("email", invoice.getEmail(), "already registered")));
+            ContractViolationInfo violation = new PropertyContractViolationInfo("email", invoice.getEmail(), "already registered");
+            throw contractValidationExceptionProvider.exception(violation);
         }
         final Account account = new Account();
         account.setEmail(invoice.getEmail());

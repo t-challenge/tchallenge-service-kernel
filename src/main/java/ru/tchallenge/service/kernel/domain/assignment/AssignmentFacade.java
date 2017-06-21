@@ -10,8 +10,9 @@ import ru.tchallenge.service.kernel.domain.account.AccountRepository;
 import ru.tchallenge.service.kernel.domain.assignment.status.AssignmentStatusRepository;
 import ru.tchallenge.service.kernel.generic.GenericFacade;
 import ru.tchallenge.service.kernel.security.authentication.AuthenticationInfo;
-import ru.tchallenge.service.kernel.validation.access.AccessValidationExceptionEmitter;
-import ru.tchallenge.service.kernel.validation.contract.ContractValidationException;
+import ru.tchallenge.service.kernel.validation.access.AccessValidationExceptionProvider;
+import ru.tchallenge.service.kernel.validation.contract.ContractValidationExceptionProvider;
+import ru.tchallenge.service.kernel.validation.contract.ContractViolationInfo;
 import ru.tchallenge.service.kernel.validation.contract.PropertyContractViolationInfo;
 
 @FacadeServiceComponent
@@ -27,21 +28,25 @@ public class AssignmentFacade extends GenericFacade {
     private AccountRepository accountRepository;
 
     @Autowired
-    private AccessValidationExceptionEmitter accessValidationExceptionEmitter;
+    private AccessValidationExceptionProvider accessValidationExceptionProvider;
+
+    @Autowired
+    private ContractValidationExceptionProvider contractValidationExceptionProvider;
 
     public void update(final AssignmentInvoice invoice) {
         final AuthenticationInfo authentication = this.getAuthenticationContext().getAuthentication();
         if (authentication == null) {
-            accessValidationExceptionEmitter.unauthorized();
+            throw accessValidationExceptionProvider.unauthorized();
         }
         final Assignment assignment = assignmentRepository.findById(invoice.getId());
         final AccountInfo account = authentication.getAccount();
         if (!account.getLogin().equals(assignment.getWorkbook().getCandidate().getAccount().getLogin())) {
-            accessValidationExceptionEmitter.unauthorized();
+            throw accessValidationExceptionProvider.unauthorized();
         }
         final String currentStatus = assignment.getStatus().getId();
         if (currentStatus.equals("ASSESSED")) {
-            throw new ContractValidationException(Collections.singleton(new PropertyContractViolationInfo("status", "ASSESSED", "already assessed")));
+            ContractViolationInfo violation = new PropertyContractViolationInfo("status", "ASSESSED", "already assessed");
+            throw contractValidationExceptionProvider.exception(violation);
         }
         assignment.setInput(invoice.getInput());
         assignment.setStatus(assignmentStatusRepository.findById("SUBMITTED"));

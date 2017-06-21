@@ -36,12 +36,12 @@ tchallenge:
 
   security:
 
-    permanentKey:
-      header: 'tchallenge-security-permkey'
+    certificate:
+      header: 'tchallenge-security-certificate-payload'
 
     rescue:
-      deactivation: 10
+      expiration-in-minutes: 10
 
     token:
-      deactivation: 180
-      header: 'tchallenge-security-token'
+      deactivation-in-minutes: 180
+      header: 'tchallenge-security-token-payload'
